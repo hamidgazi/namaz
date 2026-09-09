@@ -650,10 +650,42 @@
     }
 
     .prayer-card.active-target {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: rgba(16, 185, 129, 0.5);
-      box-shadow: 0 4px 18px -2px var(--emerald-glow);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.04) 100%);
+      border-color: rgba(16, 185, 129, 0.55);
+      box-shadow: 0 4px 20px -2px var(--emerald-glow);
     }
+
+    .active-indicator-tag {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(16, 185, 129, 0.22);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-left: 6px;
+      animation: pulseActive 2s infinite ease-in-out;
+    }
+    .active-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+    }
+    .prayer-card.active-target .active-indicator-tag {
+      display: inline-flex;
+    }
+    @keyframes pulseActive {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.75; transform: scale(0.96); }
+    }
+
 
     .prayer-card.sunrise-row {
       opacity: 0.65;
@@ -1367,7 +1399,7 @@
           </div>
 
           <div class="hero-countdown-box">
-            <span class="hero-countdown-label">Time Remaining</span>
+            <span id="heroCountdownLabel" class="hero-countdown-label">Time Remaining</span>
             <div id="heroCountdown" class="hero-countdown-clock">--:--:--</div>
             <button id="btnHeroChime" class="hero-chime-btn" title="Play Melodic Azan Chime">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1533,6 +1565,7 @@
                 <span id="labelDhuhr" class="p-eng">Dhuhr</span>
                 <span id="arDhuhr" class="p-ar" lang="ar" dir="rtl">الظهر</span>
                 <span id="badgeJummah" class="p-jummah-tag" style="display: none;">Jummah</span>
+                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
               </div>
               <span class="p-desc">After Solar Transit (Zawal)</span>
             </div>
@@ -1566,6 +1599,7 @@
                 <span class="p-eng">Asr</span>
                 <span class="p-ar" lang="ar" dir="rtl">العصر</span>
                 <span class="p-hanafi-tag">Hanafi (2&times;)</span>
+                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
               </div>
               <span class="p-desc">Misl-e-Sani (2&times; shadow length)</span>
             </div>
@@ -2211,76 +2245,196 @@
       Isha: "theme-isha"
     };
 
-    function updateLiveHero() {
+        function updateLiveHero() {
       const now = new Date();
       // Decouple: always use real current date for live hero and auto-silent
       const todayDate = new Date();
       const todaySchedule = calculateAccurateHanafiTimes(appState.lat, appState.lng, todayDate, appState.ihtiyat);
 
       const isTodayFriday = todayDate.getDay() === 5;
-      const dhuhrLabel = isTodayFriday ? 'Jummah' : 'Dhuhr';
-      const dhuhrArabic = isTodayFriday ? 'الجمعة' : 'الظهر';
+      const dhuhrName = isTodayFriday ? 'Jummah' : 'Dhuhr';
+      const dhuhrArabic = isTodayFriday ? '&#1575;&#1604;&#1580;&#1605;&#1593;&#1577;' : '&#1575;&#1604;&#1592;&#1607;&#1585;';
 
-      const livePrayers = [
-        { key: 'Fajr', name: 'Fajr', ar: 'الفجر', dec: todaySchedule.fajr, rowId: 'rowFajr', isSalah: true },
-        { key: 'Sunrise', name: 'Sunrise', ar: 'الشروق', dec: todaySchedule.sunrise, rowId: 'rowSunrise', isSalah: false },
-        { key: 'Dhuhr', name: dhuhrLabel, ar: dhuhrArabic, dec: todaySchedule.dhuhr, rowId: 'rowDhuhr', isSalah: true },
-        { key: 'Asr', name: 'Asr', ar: 'العصر', dec: todaySchedule.asr, rowId: 'rowAsr', isSalah: true },
-        { key: 'Maghrib', name: 'Maghrib', ar: 'المغرب', dec: todaySchedule.maghrib, rowId: 'rowMaghrib', isSalah: true },
-        { key: 'Isha', name: 'Isha', ar: 'العشاء', dec: todaySchedule.isha, rowId: 'rowIsha', isSalah: true }
-      ];
+      const tFajr = decimalToDateTime(todaySchedule.fajr, todayDate);
+      const tSunrise = decimalToDateTime(todaySchedule.sunrise, todayDate);
+      const tZawal = decimalToDateTime(todaySchedule.zawalStart, todayDate);
+      const tDhuhr = decimalToDateTime(todaySchedule.dhuhr, todayDate);
+      const tAsr = decimalToDateTime(todaySchedule.asr, todayDate);
+      const tMaghrib = decimalToDateTime(todaySchedule.maghrib, todayDate);
+      const tIsha = decimalToDateTime(todaySchedule.isha, todayDate);
 
-      livePrayers.forEach(p => {
-        const row = document.getElementById(p.rowId);
-        if (row && p.isSalah) row.classList.remove('active-target');
+      const tomorrow = new Date(todayDate);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowSchedule = calculateAccurateHanafiTimes(appState.lat, appState.lng, tomorrow, appState.ihtiyat);
+      const tNextFajr = decimalToDateTime(tomorrowSchedule.fajr, tomorrow);
+
+      const yesterday = new Date(todayDate);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdaySchedule = calculateAccurateHanafiTimes(appState.lat, appState.lng, yesterday, appState.ihtiyat);
+      const tPrevIsha = decimalToDateTime(yesterdaySchedule.isha, yesterday);
+
+      // Clear active-target class from all cards
+      ['rowFajr', 'rowSunrise', 'rowDhuhr', 'rowAsr', 'rowMaghrib', 'rowIsha'].forEach(id => {
+        const row = document.getElementById(id);
+        if (row) row.classList.remove('active-target');
       });
 
-      let nextPrayer = null;
-      let prevPrayer = livePrayers[livePrayers.length - 1];
-      let targetDate = null;
-      let prevDate = null;
+      let state = {};
 
-      for (let i = 0; i < livePrayers.length; i++) {
-        const pDate = decimalToDateTime(livePrayers[i].dec, todayDate);
-        if (pDate > now) {
-          nextPrayer = livePrayers[i];
-          prevPrayer = livePrayers[(i - 1 + livePrayers.length) % livePrayers.length];
-          targetDate = pDate;
-          prevDate = decimalToDateTime(prevPrayer.dec, todayDate);
-          if (prevDate > targetDate) prevDate.setDate(prevDate.getDate() - 1);
-          break;
-        }
+      if (now >= tFajr && now < tSunrise) {
+        // --- FAJR ACTIVE WINDOW ---
+        state = {
+          theme: 'theme-fajr',
+          title: 'Fajr',
+          arabic: '&#1575;&#1604;&#1601;&#1580;&#1585;',
+          tag: 'Current Salah &bull; Active Now',
+          desc: `Window: ${formatTime12(todaySchedule.fajr)} &ndash; ${formatTime12(todaySchedule.sunrise)}`,
+          target: `Next: Sunrise at ${formatTime12(todaySchedule.sunrise)} (Prohibited window starts)`,
+          countdownLabel: 'Remaining in Fajr',
+          targetDate: tSunrise,
+          prevDate: tFajr,
+          prevLabel: `Fajr ${formatTime12(todaySchedule.fajr)}`,
+          nextLabel: `Sunrise ${formatTime12(todaySchedule.sunrise)}`,
+          activeRowId: 'rowFajr',
+          silentPrayer: 'Fajr',
+          silentStart: tFajr
+        };
+      } else if (now >= tSunrise && now < tDhuhr) {
+        // --- POST-SUNRISE / DUHA / ZAWAL WINDOW ---
+        const isZawal = now >= tZawal;
+        state = {
+          theme: 'theme-sunrise',
+          title: dhuhrName,
+          arabic: dhuhrArabic,
+          tag: isZawal ? 'Forbidden Window &bull; Zawal (Makruh)' : 'Next Salah',
+          desc: isZawal ? `Strictly Makruh Tahrimi until ${formatTime12(todaySchedule.dhuhr)}` : `Sunrise was at ${formatTime12(todaySchedule.sunrise)}`,
+          target: `${dhuhrName} starts at ${formatTime12(todaySchedule.dhuhr)}`,
+          countdownLabel: isZawal ? 'Zawal Ends in' : `${dhuhrName} Starts in`,
+          targetDate: tDhuhr,
+          prevDate: tSunrise,
+          prevLabel: `Sunrise ${formatTime12(todaySchedule.sunrise)}`,
+          nextLabel: `${dhuhrName} ${formatTime12(todaySchedule.dhuhr)}`,
+          activeRowId: 'rowDhuhr',
+          silentPrayer: null,
+          silentStart: null
+        };
+      } else if (now >= tDhuhr && now < tAsr) {
+        // --- DHUHR ACTIVE WINDOW ---
+        state = {
+          theme: 'theme-dhuhr',
+          title: dhuhrName,
+          arabic: dhuhrArabic,
+          tag: 'Current Salah &bull; Active Now',
+          desc: `Window: ${formatTime12(todaySchedule.dhuhr)} &ndash; ${formatTime12(todaySchedule.asr)}`,
+          target: `Next: Asr at ${formatTime12(todaySchedule.asr)} (Hanafi 2&times;)`,
+          countdownLabel: `Remaining in ${dhuhrName}`,
+          targetDate: tAsr,
+          prevDate: tDhuhr,
+          prevLabel: `${dhuhrName} ${formatTime12(todaySchedule.dhuhr)}`,
+          nextLabel: `Asr ${formatTime12(todaySchedule.asr)}`,
+          activeRowId: 'rowDhuhr',
+          silentPrayer: dhuhrName,
+          silentStart: tDhuhr
+        };
+      } else if (now >= tAsr && now < tMaghrib) {
+        // --- ASR ACTIVE WINDOW ---
+        state = {
+          theme: 'theme-asr',
+          title: 'Asr',
+          arabic: '&#1575;&#1604;&#1593;&#1589;&#1585;',
+          tag: 'Current Salah &bull; Active Now',
+          desc: `Window: ${formatTime12(todaySchedule.asr)} &ndash; ${formatTime12(todaySchedule.maghrib)} (Hanafi 2&times;)`,
+          target: `Next: Maghrib at ${formatTime12(todaySchedule.maghrib)} (Sunset &amp; Iftar)`,
+          countdownLabel: 'Remaining in Asr',
+          targetDate: tMaghrib,
+          prevDate: tAsr,
+          prevLabel: `Asr ${formatTime12(todaySchedule.asr)}`,
+          nextLabel: `Maghrib ${formatTime12(todaySchedule.maghrib)}`,
+          activeRowId: 'rowAsr',
+          silentPrayer: 'Asr',
+          silentStart: tAsr
+        };
+      } else if (now >= tMaghrib && now < tIsha) {
+        // --- MAGHRIB ACTIVE WINDOW ---
+        state = {
+          theme: 'theme-maghrib',
+          title: 'Maghrib',
+          arabic: '&#1575;&#1604;&#1605;&#1594;&#1585;&#1576;',
+          tag: 'Current Salah &bull; Active Now',
+          desc: `Window: ${formatTime12(todaySchedule.maghrib)} &ndash; ${formatTime12(todaySchedule.isha)}`,
+          target: `Next: Isha at ${formatTime12(todaySchedule.isha)} (Karachi 18&deg;)`,
+          countdownLabel: 'Remaining in Maghrib',
+          targetDate: tIsha,
+          prevDate: tMaghrib,
+          prevLabel: `Maghrib ${formatTime12(todaySchedule.maghrib)}`,
+          nextLabel: `Isha ${formatTime12(todaySchedule.isha)}`,
+          activeRowId: 'rowMaghrib',
+          silentPrayer: 'Maghrib',
+          silentStart: tMaghrib
+        };
+      } else if (now >= tIsha) {
+        // --- ISHA ACTIVE WINDOW (Evening) ---
+        state = {
+          theme: 'theme-isha',
+          title: 'Isha',
+          arabic: '&#1575;&#1604;&#1593;&#1584;&#1575;&#1569;',
+          tag: 'Current Salah &bull; Active Now',
+          desc: `Window: ${formatTime12(todaySchedule.isha)} &ndash; ${formatTime12(tomorrowSchedule.fajr)}`,
+          target: `Next: Fajr at ${formatTime12(tomorrowSchedule.fajr)} (Tomorrow)`,
+          countdownLabel: 'Remaining in Isha',
+          targetDate: tNextFajr,
+          prevDate: tIsha,
+          prevLabel: `Isha ${formatTime12(todaySchedule.isha)}`,
+          nextLabel: `Fajr ${formatTime12(tomorrowSchedule.fajr)}`,
+          activeRowId: 'rowIsha',
+          silentPrayer: 'Isha',
+          silentStart: tIsha
+        };
+      } else {
+        // --- PRE-FAJR WINDOW (Midnight to Fajr morning) ---
+        state = {
+          theme: 'theme-fajr',
+          title: 'Fajr',
+          arabic: '&#1575;&#1604;&#1601;&#1580;&#1585;',
+          tag: 'Next Salah &bull; Dawn Twilight',
+          desc: `Night Window &bull; Sehri Cut-Off at ${formatTime12(todaySchedule.suhoor)}`,
+          target: `Fajr starts at ${formatTime12(todaySchedule.fajr)}`,
+          countdownLabel: 'Fajr Starts in',
+          targetDate: tFajr,
+          prevDate: tPrevIsha,
+          prevLabel: `Isha ${formatTime12(yesterdaySchedule.isha)}`,
+          nextLabel: `Fajr ${formatTime12(todaySchedule.fajr)}`,
+          activeRowId: 'rowFajr',
+          silentPrayer: null,
+          silentStart: null
+        };
       }
 
-      if (!nextPrayer) {
-        nextPrayer = livePrayers[0];
-        prevPrayer = livePrayers[livePrayers.length - 1];
-        const tomorrow = new Date(todayDate);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowSchedule = calculateAccurateHanafiTimes(appState.lat, appState.lng, tomorrow, appState.ihtiyat);
-        targetDate = decimalToDateTime(tomorrowSchedule.fajr, tomorrow);
-        prevDate = decimalToDateTime(todaySchedule.isha, todayDate);
-      }
-
-      // Only highlight target row in table if currently viewing Today
-      if (appState.dateOffset === 0) {
-        const targetRow = document.getElementById(nextPrayer.rowId);
-        if (targetRow && nextPrayer.isSalah) {
+      // Highlight target row in table if currently viewing Today
+      if (appState.dateOffset === 0 && state.activeRowId) {
+        const targetRow = document.getElementById(state.activeRowId);
+        if (targetRow) {
           targetRow.classList.add('active-target');
         }
       }
 
-      const theme = ATMOSPHERE_THEMES[nextPrayer.key] || "theme-asr";
-      heroCard.className = `hero-card ${theme}`;
+      // Update Hero Card Elements
+      heroCard.className = `hero-card ${state.theme}`;
+      heroPrayerTitle.innerText = state.title;
+      heroArabicTitle.innerHTML = state.arabic;
+      heroUpcomingTag.innerHTML = state.tag;
+      heroCurrentDesc.innerHTML = state.desc;
+      heroTimeTarget.innerHTML = state.target;
 
-      heroPrayerTitle.innerText = nextPrayer.name;
-      heroArabicTitle.textContent = nextPrayer.ar;
-      heroTimeTarget.innerHTML = `Starts at ${formatTime12(nextPrayer.dec)} ${nextPrayer.key === 'Asr' ? '(Hanafi 2&times;)' : ''}`;
-      heroCurrentDesc.innerText = `Current Window: ${prevPrayer.name}`;
-      heroPrevLabel.innerText = `${prevPrayer.name} ${formatTime12(prevPrayer.dec)}`;
-      heroNextLabel.innerText = `${nextPrayer.name} ${formatTime12(nextPrayer.dec)}`;
+      const countdownLabelEl = document.getElementById('heroCountdownLabel');
+      if (countdownLabelEl) {
+        countdownLabelEl.innerText = state.countdownLabel;
+      }
 
-      const diffMs = Math.max(0, targetDate - now);
+      heroPrevLabel.innerText = state.prevLabel;
+      heroNextLabel.innerText = state.nextLabel;
+
+      const diffMs = Math.max(0, state.targetDate - now);
       const totalSec = Math.floor(diffMs / 1000);
       const hours = Math.floor(totalSec / 3600);
       const mins = Math.floor((totalSec % 3600) / 60);
@@ -2289,9 +2443,9 @@
       heroCountdown.innerText = 
         `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 
-      if (prevDate && targetDate) {
-        const totalWindowMs = targetDate - prevDate;
-        const elapsedMs = now - prevDate;
+      if (state.prevDate && state.targetDate) {
+        const totalWindowMs = state.targetDate - state.prevDate;
+        const elapsedMs = now - state.prevDate;
         const rawPct = totalWindowMs > 0 ? (elapsedMs / totalWindowMs) * 100.0 : 0.0;
         const pct = Math.min(100.0, Math.max(0.0, rawPct));
         const scale = (pct / 100.0).toFixed(4);
@@ -2300,18 +2454,22 @@
         heroProgressPercent.innerText = `${pct.toFixed(1)}% elapsed`;
       }
 
-      if (appState.autoSilentActive) {
-        const minSincePrev = (now - prevDate) / 60000;
-        if (minSincePrev >= 0 && minSincePrev <= 20 && prevPrayer.isSalah) {
-          txtMosqueStatus.innerText = `Active: Phone Muted for ${prevPrayer.name} Jamaat`;
+      // Handle Mosque Auto-Silent Notification Status
+      if (appState.autoSilentActive && state.silentPrayer && state.silentStart) {
+        const minSinceStart = (now - state.silentStart) / 60000;
+        if (minSinceStart >= 0 && minSinceStart <= 20) {
+          txtMosqueStatus.innerText = `Active: Phone Muted for ${state.silentPrayer} Jamaat`;
           txtMosqueStatus.style.color = '#34d399';
         } else {
-          txtMosqueStatus.innerText = "Standby: Will mute during prayer congregation";
-          txtMosqueStatus.style.color = "var(--text-muted)";
+          txtMosqueStatus.innerText = 'Standby: Will mute during prayer congregation';
+          txtMosqueStatus.style.color = 'var(--text-muted)';
         }
+      } else if (!appState.autoSilentActive) {
+        txtMosqueStatus.innerText = 'Disabled';
+        txtMosqueStatus.style.color = 'var(--text-dim)';
       } else {
-        txtMosqueStatus.innerText = "Disabled";
-        txtMosqueStatus.style.color = "var(--text-dim)";
+        txtMosqueStatus.innerText = 'Standby: Will mute during prayer congregation';
+        txtMosqueStatus.style.color = 'var(--text-muted)';
       }
     }
 

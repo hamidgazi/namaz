@@ -1,0 +1,19 @@
+# Ignore large binary files (>100MB GitHub limit)
+*.apks.zip
+*.apk
+*.zip
+
+# Ignore agent and scratch directories
+.agents/
+scratch/
+
+# Temporary and render test files
+*.log
+render_dump.html
+dom*.html
+test_render.html
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+push_to_github.bat
