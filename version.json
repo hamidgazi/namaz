@@ -1,4 +1,6 @@
 {
-  "version": "1.0.0",
-  "changelog": "Initial release."
+  "version": "1.1.0",
+  "name": "Namaz Times",
+  "updated": "2026-09-09",
+  "changelog": "Zuhr active prayer state fix, on-screen version display, and live update notification engine."
 }

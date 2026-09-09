@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- Cache Control to ensure phones load latest updates -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Namaz Times &mdash; Adajan Patiya, Surat (Hanafi)</title>
 
   <!-- Mobile Web App & PWA Optimization -->
@@ -1300,12 +1304,133 @@
     .credit-pwa-tip strong {
       color: var(--text-muted);
     }
+  
+    /* Version Badges & Update Notification System */
+    .version-badge {
+      font-size: 10px;
+      font-weight: 800;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 4px 8px;
+      border-radius: 12px;
+      letter-spacing: 0.03em;
+      font-family: var(--font-mono);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .update-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95));
+      color: #ffffff;
+      padding: 10px 16px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      backdrop-filter: blur(8px);
+      animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .update-banner-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .update-sparkle {
+      font-size: 14px;
+    }
+
+    .btn-reload-update {
+      background: #ffffff;
+      color: #065f46;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .btn-reload-update:hover {
+      background: #f0fdf4;
+      transform: scale(1.02);
+    }
+    .btn-reload-update:active {
+      transform: scale(0.98);
+    }
+
+    .version-display-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+    }
+    .version-pill {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .version-pill strong {
+      color: var(--text-muted);
+    }
+    .btn-check-update {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--emerald-accent);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-check-update:hover {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .btn-check-update:active {
+      transform: scale(0.97);
+    }
+
   </style>
 </head>
 <body>
 
   <!-- Main Phone / Desktop Shell -->
   <div class="app-shell">
+    <!-- Live Update Notification Banner -->
+    <div id="updateBanner" class="update-banner">
+      <div class="update-banner-text">
+        <span class="update-sparkle">✨</span>
+        <span>Update available (<strong id="txtBannerNewVersion">v1.1.0</strong>)!</span>
+      </div>
+      <button id="btnReloadUpdate" class="btn-reload-update">Update Now</button>
+    </div>
+
 
     <!-- Top Navigation Header -->
     <header class="header">
@@ -1335,6 +1460,7 @@
 
         <!-- Right Badges & Actions -->
         <div class="header-actions">
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.1.0</span>
           <span class="hanafi-badge" title="Strict Hanafi Fiqh & Karachi 18/18 Method">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L9 7h6l-3-5zm0 6l-6 10h12l-6-10z"/>
@@ -1776,6 +1902,16 @@
         </svg>
         Tip: Tap browser menu &rarr; <strong>"Add to Home Screen"</strong> for full-screen app
       </div>
+    
+      <div class="version-display-row">
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.1.0</strong></span>
+        <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          Check for Update
+        </button>
+      </div>
     </footer>
 
     <!-- City Search Modal -->
@@ -1844,6 +1980,25 @@
         </div>
 
         <div class="settings-body">
+
+          <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
+            <div class="setting-label">
+              <span>App Version & Updates</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.1.0</span>
+            </div>
+            <p class="setting-explain" id="txtUpdateStatus">
+              Surat Hanafi Edition. Automatically checks for updates.
+            </p>
+            <div style="margin-top: 10px;">
+              <button id="btnCheckUpdateSettings" class="btn-check-update" style="width: 100%; justify-content: center; padding: 8px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                </svg>
+                Check for Updates Now
+              </button>
+            </div>
+          </div>
+
           
           <div class="setting-group" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
             <div class="setting-label">
@@ -2475,7 +2630,93 @@
 
     accordionToggle.addEventListener('click', () => extraSection.classList.toggle('open'));
 
-    btnPrevDay.addEventListener('click', () => { appState.dateOffset--; refreshAllTimings(); });
+    btnPrevDay.addEventListener('click', () => { appState.dateOffset--; 
+    // --- APP VERSION & AUTO-UPDATE ENGINE ---
+    const CURRENT_APP_VERSION = "1.1.0";
+
+    async function checkForAppUpdates(isManual = false) {
+      const txtStatus = document.getElementById('txtUpdateStatus');
+      const btnFooter = document.getElementById('btnCheckUpdateFooter');
+      const btnSettings = document.getElementById('btnCheckUpdateSettings');
+
+      if (isManual) {
+        if (btnFooter) btnFooter.innerText = "Checking...";
+        if (btnSettings) btnSettings.innerText = "Checking for updates...";
+      }
+
+      try {
+        const response = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
+        if (response.ok) {
+          const data = await response.json();
+          const remoteVersion = data.version;
+
+          if (remoteVersion && remoteVersion !== CURRENT_APP_VERSION) {
+            // New version detected!
+            const updateBanner = document.getElementById('updateBanner');
+            const txtBannerNewVersion = document.getElementById('txtBannerNewVersion');
+            if (txtBannerNewVersion) txtBannerNewVersion.innerText = 'v' + remoteVersion;
+            if (updateBanner) updateBanner.style.display = 'flex';
+
+            if (txtStatus) {
+              txtStatus.innerHTML = '<strong style="color: #34d399;">New version v' + remoteVersion + ' available!</strong> Tap Update Now below.';
+            }
+
+            if (isManual) {
+              alert('New version v' + remoteVersion + ' is available! Tap "Update Now" to get the latest features.');
+            }
+          } else {
+            if (txtStatus) {
+              txtStatus.innerText = 'You are on the latest version (v' + CURRENT_APP_VERSION + ').';
+            }
+            if (isManual) {
+              alert('You are already using the latest version (v' + CURRENT_APP_VERSION + ')!');
+            }
+          }
+        }
+      } catch (err) {
+        if (isManual) {
+          alert('Could not reach update server. Please check your internet connection.');
+        }
+      } finally {
+        if (isManual) {
+          if (btnFooter) {
+            btnFooter.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> Check for Update';
+          }
+          if (btnSettings) {
+            btnSettings.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> Check for Updates Now';
+          }
+        }
+      }
+    }
+
+    function applyAppUpdate() {
+      if ('caches' in window) {
+        caches.keys().then(keys => {
+          keys.forEach(k => caches.delete(k));
+        });
+      }
+      // Force reload ignoring cache
+      window.location.reload(true);
+    }
+
+    const btnReloadUpdate = document.getElementById('btnReloadUpdate');
+    if (btnReloadUpdate) btnReloadUpdate.addEventListener('click', applyAppUpdate);
+
+    const btnCheckUpdateFooter = document.getElementById('btnCheckUpdateFooter');
+    if (btnCheckUpdateFooter) btnCheckUpdateFooter.addEventListener('click', () => checkForAppUpdates(true));
+
+    const btnCheckUpdateSettings = document.getElementById('btnCheckUpdateSettings');
+    if (btnCheckUpdateSettings) btnCheckUpdateSettings.addEventListener('click', () => checkForAppUpdates(true));
+
+    // Check for updates on startup, after 3 seconds, and when tab regains focus
+    setTimeout(() => checkForAppUpdates(false), 2500);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        checkForAppUpdates(false);
+      }
+    });
+
+    refreshAllTimings(); });
     btnNextDay.addEventListener('click', () => { appState.dateOffset++; refreshAllTimings(); });
     btnTodayReset.addEventListener('click', () => { appState.dateOffset = 0; refreshAllTimings(); });
 
