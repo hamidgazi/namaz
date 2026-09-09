@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <!-- Cache Control to ensure phones load latest updates -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+  <!-- Android 9+ Performance & Hardware Acceleration Meta -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="color-scheme" content="dark">
   <title>Namaz Times &mdash; Adajan Patiya, Surat (Hanafi)</title>
 
   <!-- Mobile Web App & PWA Optimization -->
@@ -55,6 +54,11 @@
       --font-arabic: 'Traditional Arabic', 'Simplified Arabic', 'Amiri', 'Geeza Pro', 'Damascus', 'Noto Naskh Arabic', 'Arabic Typesetting', 'Sakkal Majalla', 'Segoe UI', Tahoma, Arial, sans-serif;
     }
 
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text-main);
@@ -65,10 +69,25 @@
       justify-content: center;
       align-items: flex-start;
       padding: 8px 8px 16px;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      position: relative;
+    }
+
+    /* Isolated GPU-composited ambient backdrop: eliminates full-screen repaints during mobile scroll */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
       background-image: 
         radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
         radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
-      background-attachment: fixed;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform;
     }
 
     /* Main Phone Shell */
@@ -84,6 +103,7 @@
       flex-direction: column;
       position: relative;
       margin: 0 auto;
+      contain: layout style;
     }
 
     /* Header Bar */
@@ -194,6 +214,9 @@
       color: var(--text-main);
       background: rgba(255, 255, 255, 0.12);
     }
+    .icon-btn:active {
+      transform: scale(0.94);
+    }
     .icon-btn svg {
       width: 18px;
       height: 18px;
@@ -303,6 +326,9 @@
       color: var(--text-main);
       background: rgba(255, 255, 255, 0.08);
     }
+    .day-arrow-btn:active {
+      transform: scale(0.96);
+    }
 
     .today-pill {
       background: rgba(16, 185, 129, 0.16);
@@ -320,6 +346,9 @@
     }
     .today-pill:hover {
       background: rgba(16, 185, 129, 0.28);
+    }
+    .today-pill:active {
+      transform: scale(0.96);
     }
 
     /* Main Body Area */
@@ -650,15 +679,15 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 200;
       display: flex;
       align-items: flex-end;
       justify-content: center;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
+      transition: opacity 0.28s ease, visibility 0.28s ease;
     }
     .drawer-backdrop.open {
       opacity: 1;
@@ -674,12 +703,16 @@
       max-height: 85vh;
       overflow-y: auto;
       padding: 12px 18px 24px;
-      transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translate3d(0, 100%, 0);
+      transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1);
       box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      will-change: transform;
+      backface-visibility: hidden;
     }
     .drawer-backdrop.open .drawer-content {
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
     .drawer-handle-bar {
       width: 36px;
@@ -752,6 +785,30 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      contain: layout;
+    }
+
+    .prayer-list.slide-from-right {
+      animation: slideInRight 0.22s cubic-bezier(0.2, 0, 0, 1) forwards;
+    }
+    .prayer-list.slide-from-left {
+      animation: slideInLeft 0.22s cubic-bezier(0.2, 0, 0, 1) forwards;
+    }
+    .prayer-list.fade-pop {
+      animation: fadePopIn 0.2s cubic-bezier(0.2, 0, 0, 1) forwards;
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0.2; transform: translate3d(22px, 0, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0.2; transform: translate3d(-22px, 0, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+    @keyframes fadePopIn {
+      from { opacity: 0.25; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     /* Date Browsing Context Banner */
@@ -791,7 +848,7 @@
     }
 
     .prayer-card {
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.78);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 14px;
       padding: 10px 15px;
@@ -800,15 +857,20 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.2s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.12s cubic-bezier(0.2, 0, 0, 1);
       position: relative;
+      contain: content;
+      will-change: transform;
     }
     .prayer-card:hover {
-      background: rgba(30, 41, 59, 0.75);
+      background: rgba(30, 41, 59, 0.82);
       border-color: rgba(255, 255, 255, 0.14);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    .prayer-card:active {
+      transform: scale(0.985);
     }
 
     .prayer-card.active-target {
@@ -832,6 +894,7 @@
       border-radius: 6px;
       margin-left: 6px;
       animation: pulseActive 2s infinite ease-in-out;
+      will-change: transform, opacity;
     }
     .active-dot {
       width: 6px;
@@ -844,8 +907,8 @@
       display: inline-flex;
     }
     @keyframes pulseActive {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.75; transform: scale(0.96); }
+      0%, 100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+      50% { opacity: 0.75; transform: translate3d(0, 0, 0) scale(0.96); }
     }
 
     .prayer-card.sunrise-row {
@@ -996,6 +1059,9 @@
       background: rgba(16, 185, 129, 0.08);
       border-color: rgba(16, 185, 129, 0.22);
     }
+    .bell-btn:active {
+      transform: scale(0.94);
+    }
 
     /* Accordion: Sunnah, Dahwa-e-Kubra & Forbidden Times */
     .extra-section {
@@ -1102,8 +1168,8 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 100;
       display: none;
       align-items: center;
@@ -1126,13 +1192,15 @@
       flex-direction: column;
       padding: 22px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: popIn 0.22s cubic-bezier(0.2, 0, 0, 1);
       overscroll-behavior: contain;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
     }
 
     @keyframes popIn {
-      from { transform: scale(0.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from { transform: translate3d(0, 10px, 0) scale(0.96); opacity: 0; }
+      to { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
     }
 
     .modal-head {
@@ -1239,6 +1307,8 @@
       gap: 4px;
       padding-right: 4px;
       overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
 
     .city-row {
@@ -1254,6 +1324,10 @@
     }
     .city-row:hover {
       background: rgba(255, 255, 255, 0.08);
+    }
+    .city-row:active {
+      transform: scale(0.98);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .city-row-name {
@@ -1283,6 +1357,8 @@
       max-height: 65vh;
       padding-top: 14px;
       overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
 
     .setting-group {
@@ -1594,6 +1670,16 @@
       transform: scale(0.97);
     }
 
+    /* Accessibility & Battery Conservation for Older Android Phones */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1604,7 +1690,7 @@
     <div id="updateBanner" class="update-banner">
       <div class="update-banner-text">
         <span class="update-sparkle">✨</span>
-        <span>Update available (<strong id="txtBannerNewVersion">v1.3.0</strong>)!</span>
+        <span>Update available (<strong id="txtBannerNewVersion">v1.4.0</strong>)!</span>
       </div>
       <button id="btnReloadUpdate" class="btn-reload-update">Update Now</button>
     </div>
@@ -1682,7 +1768,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.3.0</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.4.0</span>
         </div>
       </div>
 
@@ -1990,7 +2076,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.3.0</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.4.0</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -2165,7 +2251,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.3.0</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.4.0</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -2638,6 +2724,10 @@
     const heroPrevLabel = document.getElementById('heroPrevLabel');
     const heroNextLabel = document.getElementById('heroNextLabel');
     const heroProgressPercent = document.getElementById('heroProgressPercent');
+    const heroCountdownLabel = document.getElementById('heroCountdownLabel');
+    const elFastingStrip = document.getElementById('fastingStrip');
+    const elSehriPill = document.querySelector('.f-sehri');
+    const elIftarPill = document.querySelector('.f-iftar');
 
     // Modals & Drawer
     const modalCity = document.getElementById('modalCity');
@@ -2957,9 +3047,9 @@
         if (heroCurrentDesc) heroCurrentDesc.innerHTML = state.desc;
         if (heroTimeTarget) heroTimeTarget.innerHTML = state.target;
 
-        const countdownLabelEl = document.getElementById('heroCountdownLabel');
-        if (countdownLabelEl) {
-          countdownLabelEl.innerText = state.countdownLabel;
+        const lbl = heroCountdownLabel || document.getElementById('heroCountdownLabel');
+        if (lbl) {
+          lbl.innerText = state.countdownLabel;
         }
 
         if (heroPrevLabel) heroPrevLabel.innerText = state.prevLabel;
@@ -3002,13 +3092,13 @@
         }
       }
 
-      const elFastingStrip = document.getElementById('fastingStrip');
-      if (elFastingStrip) {
+      const fastingEl = elFastingStrip || document.getElementById('fastingStrip');
+      if (fastingEl) {
         const isNight = (now < tFajr || now >= tMaghrib);
-        const elSehri = (typeof elFastingStrip.querySelector === 'function') ? elFastingStrip.querySelector('.f-sehri') : document.querySelector('.f-sehri');
-        const elIftar = (typeof elFastingStrip.querySelector === 'function') ? elFastingStrip.querySelector('.f-iftar') : document.querySelector('.f-iftar');
-        if (elSehri && elSehri.classList && typeof elSehri.classList.toggle === 'function') elSehri.classList.toggle('active-phase', isNight);
-        if (elIftar && elIftar.classList && typeof elIftar.classList.toggle === 'function') elIftar.classList.toggle('active-phase', !isNight);
+        const targetSehri = elSehriPill || (typeof fastingEl.querySelector === 'function' ? fastingEl.querySelector('.f-sehri') : document.querySelector('.f-sehri'));
+        const targetIftar = elIftarPill || (typeof fastingEl.querySelector === 'function' ? fastingEl.querySelector('.f-iftar') : document.querySelector('.f-iftar'));
+        if (targetSehri && targetSehri.classList && typeof targetSehri.classList.toggle === 'function') targetSehri.classList.toggle('active-phase', isNight);
+        if (targetIftar && targetIftar.classList && typeof targetIftar.classList.toggle === 'function') targetIftar.classList.toggle('active-phase', !isNight);
       }
 
       if (autoSilentStatusPill) {
@@ -3098,24 +3188,44 @@
       }
     });
 
+    function triggerDaySwitchAnimation(direction) {
+      const prayerList = document.querySelector('.prayer-list');
+      if (!prayerList || !prayerList.classList) return;
+      prayerList.classList.remove('slide-from-right', 'slide-from-left', 'fade-pop');
+      if (typeof prayerList.offsetWidth === 'number') {
+        void prayerList.offsetWidth;
+      }
+      if (direction === 'next') {
+        prayerList.classList.add('slide-from-right');
+      } else if (direction === 'prev') {
+        prayerList.classList.add('slide-from-left');
+      } else {
+        prayerList.classList.add('fade-pop');
+      }
+    }
+
     btnPrevDay.addEventListener('click', () => {
       appState.dateOffset--;
+      triggerDaySwitchAnimation('prev');
       refreshAllTimings();
     });
 
     btnNextDay.addEventListener('click', () => {
       appState.dateOffset++;
+      triggerDaySwitchAnimation('next');
       refreshAllTimings();
     });
 
     btnTodayReset.addEventListener('click', () => {
       appState.dateOffset = 0;
+      triggerDaySwitchAnimation('reset');
       refreshAllTimings();
     });
 
     if (btnResetToTodayInline) {
       btnResetToTodayInline.addEventListener('click', () => {
         appState.dateOffset = 0;
+        triggerDaySwitchAnimation('reset');
         refreshAllTimings();
       });
     }
@@ -3402,7 +3512,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.3.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.4.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -3673,7 +3783,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.3.0";
+    const CURRENT_APP_VERSION = "1.4.0";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');
@@ -3753,6 +3863,13 @@
         checkForAppUpdates(false);
       }
     });
+
+    // --- SERVICE WORKER REGISTRATION (Android 9+ PWA & instant cold start) ---
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
 
     refreshAllTimings();
     setInterval(updateLiveHero, 1000);
