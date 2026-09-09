@@ -2634,6 +2634,7 @@
     }
 
     function refreshAllTimings() {
+      currentActivePrayerKey = null;
       const workingDate = getSelectedDate();
       prayerSchedule = getCachedSchedule(workingDate, appState.lat, appState.lng, appState.ihtiyat);
 
@@ -2873,7 +2874,7 @@
         };
       }
 
-      const newActivePrayerKey = `${state.title}_${state.tag}_${state.activeRowId}_${state.theme}`;
+      const newActivePrayerKey = `${state.title}_${state.tag}_${state.activeRowId}_${state.theme}_${appState.dateOffset}`;
       if (newActivePrayerKey !== currentActivePrayerKey) {
         currentActivePrayerKey = newActivePrayerKey;
 
@@ -2892,7 +2893,11 @@
         if (heroPrevLabel) heroPrevLabel.innerText = state.prevLabel;
         if (heroNextLabel) heroNextLabel.innerText = state.nextLabel;
 
-        document.querySelectorAll('.prayer-card.active-target').forEach(el => el.classList.remove('active-target'));
+        document.querySelectorAll('.active-target').forEach(el => el.classList.remove('active-target'));
+        ['rowFajr', 'rowDhuhr', 'rowAsr', 'rowMaghrib', 'rowIsha'].forEach(id => {
+          const r = document.getElementById(id);
+          if (r) r.classList.remove('active-target');
+        });
 
         if (appState.dateOffset === 0 && state.activeRowId) {
           const targetRow = document.getElementById(state.activeRowId);
