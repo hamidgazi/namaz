@@ -60,10 +60,11 @@
       color: var(--text-main);
       font-family: var(--font-sans);
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 16px 12px 32px;
+      padding: 8px 8px 16px;
       background-image: 
         radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
         radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
@@ -82,12 +83,12 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      margin: auto 0;
+      margin: 0 auto;
     }
 
     /* Header Bar */
     .header {
-      padding: 18px 20px 14px;
+      padding: 12px 16px 10px;
       border-bottom: 1px solid var(--card-border);
       background: rgba(15, 23, 42, 0.5);
     }
@@ -185,13 +186,15 @@
     }
 
     .icon-btn {
-      width: 38px;
-      height: 38px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
@@ -206,13 +209,33 @@
       height: 18px;
     }
 
+    .header-silent-pill {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: #34d399;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.02em;
+    }
+    .header-silent-pill.active {
+      background: rgba(244, 63, 94, 0.18);
+      border-color: rgba(244, 63, 94, 0.4);
+      color: #fb7185;
+      animation: pulseActive 2s infinite ease-in-out;
+    }
+
     /* Day Navigation Strip */
     .day-nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 14px;
-      padding-top: 10px;
+      margin-top: 8px;
+      padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
@@ -222,10 +245,11 @@
       color: var(--text-muted);
       font-size: 12px;
       font-weight: 700;
-      padding: 5px 12px;
+      padding: 6px 14px;
+      min-height: 44px;
       border-radius: 8px;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 4px;
       transition: all 0.2s;
@@ -241,9 +265,12 @@
       color: #34d399;
       font-size: 11px;
       font-weight: 800;
-      padding: 4px 14px;
+      padding: 4px 16px;
+      min-height: 44px;
       border-radius: 20px;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
       transition: all 0.2s;
     }
     .today-pill:hover {
@@ -252,16 +279,16 @@
 
     /* Main Body Area */
     .app-body {
-      padding: 20px;
+      padding: 10px 14px 14px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 8px;
     }
 
     /* Hero Dynamic Atmospheric Card */
     .hero-card {
       border-radius: var(--radius-lg);
-      padding: 22px 20px;
+      padding: 14px 16px;
       position: relative;
       overflow: hidden;
       box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6);
@@ -469,92 +496,172 @@
       opacity: 0.9;
     }
 
-    /* Fasting Strip (Sehri & Iftar) */
-    .fasting-strip {
-      background: var(--card-inner);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-lg);
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    }
-
-    .fasting-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .fasting-icon-box {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: rgba(16, 185, 129, 0.12);
-      color: var(--emerald-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .fasting-icon-box svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .fasting-meta .f-label {
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-    }
-
-    .fasting-meta .f-time {
-      font-family: var(--font-mono);
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .fasting-meta .f-sub {
-      font-size: 9px;
-      color: var(--text-muted);
-    }
-
-    .fasting-divider {
-      width: 1px;
-      height: 36px;
-      background: var(--card-border);
-    }
-
-    /* Mosque Auto-Silent Notification Banner */
-    .mosque-silent-banner {
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: var(--radius-md);
-      padding: 11px 16px;
+    /* Sleek Minimal Single-Line Fasting Strip */
+    .fasting-strip-minimal {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 4px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      min-height: 34px;
+      box-sizing: border-box;
     }
-    .mosque-silent-left {
+
+    .fasting-pill-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 7px;
     }
-    .mosque-silent-left svg {
-      width: 18px;
-      height: 18px;
-      color: var(--emerald-accent);
+
+    .f-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
-    .mosque-silent-title {
+    .f-dot-sehri {
+      background: #34d399;
+      box-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
+    }
+    .f-dot-iftar {
+      background: #fb7185;
+      box-shadow: 0 0 6px rgba(251, 113, 133, 0.5);
+    }
+
+    .f-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .f-mono-time {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f-pill-divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .fasting-pill-item.active-phase .f-name {
+      color: #34d399;
+    }
+    .fasting-pill-item.f-iftar.active-phase .f-name {
+      color: #fb7185;
+    }
+
+    /* Sunnah / Makruh Drawer Trigger Pill */
+    .drawer-trigger-pill {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .drawer-trigger-pill:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .trigger-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 12px;
       font-weight: 700;
+      color: inherit;
+    }
+    .trigger-left svg {
+      color: var(--amber-accent);
+    }
+    .trigger-chevron {
+      color: var(--emerald-accent);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Slide-Up Bottom Drawer */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .drawer-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .drawer-content {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-bottom: none;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 440px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 12px 18px 24px;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+    }
+    .drawer-backdrop.open .drawer-content {
+      transform: translateY(0);
+    }
+    .drawer-handle-bar {
+      width: 36px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 0 auto 12px;
+    }
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .drawer-title {
+      font-size: 16px;
+      font-weight: 800;
       color: var(--text-main);
     }
-    .mosque-silent-desc {
-      font-size: 10px;
+    .drawer-sub {
+      font-size: 11px;
       color: var(--text-muted);
+    }
+    .drawer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     /* Toggle Switch */
@@ -599,7 +706,7 @@
     .prayer-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
     }
 
     /* Date Browsing Context Banner */
@@ -642,7 +749,8 @@
       background: var(--card-inner);
       border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
-      padding: 13px 16px;
+      padding: 7px 14px;
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -695,27 +803,28 @@
       opacity: 0.65;
       background: transparent;
       border: 1px dashed rgba(255, 255, 255, 0.1);
-      padding: 10px 16px;
+      padding: 5px 14px;
+      min-height: 40px;
     }
 
     .prayer-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .prayer-bubble {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
     .prayer-bubble svg {
-      width: 20px;
-      height: 20px;
+      width: 14px;
+      height: 14px;
     }
 
     .b-fajr { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
@@ -784,7 +893,7 @@
     .prayer-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .p-clock {
@@ -800,12 +909,17 @@
       border: none;
       color: var(--text-dim);
       cursor: pointer;
-      padding: 5px;
-      border-radius: 6px;
-      display: flex;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0;
+      border-radius: 8px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       transition: color 0.2s, transform 0.1s;
+      margin: -10px -8px -10px 0;
     }
     .bell-btn svg {
       width: 16px;
@@ -973,15 +1087,18 @@
     .modal-close {
       background: rgba(255, 255, 255, 0.08);
       border: none;
-      width: 30px;
-      height: 30px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
       border-radius: 50%;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 14px;
-      display: flex;
+      font-size: 16px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s;
     }
     .modal-close:hover {
       color: var(--text-main);
@@ -1060,7 +1177,9 @@
     }
 
     .city-row {
-      padding: 10px 12px;
+      padding: 12px 14px;
+      min-height: 48px;
+      box-sizing: border-box;
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
@@ -1208,23 +1327,21 @@
         align-items: start;
       }
 
-      /* Left Column: Hero, Fasting & Mosque Banner */
+      /* Left Column: Hero, Fasting & Drawer Trigger */
       #heroCard {
         grid-column: 1;
         grid-row: 1;
         padding: 16px 18px;
       }
 
-      .fasting-strip {
+      .fasting-strip-minimal {
         grid-column: 1;
         grid-row: 2;
-        padding: 10px 16px;
       }
 
-      .mosque-silent-banner {
+      .drawer-trigger-pill {
         grid-column: 1;
         grid-row: 3;
-        padding: 9px 14px;
       }
 
       /* Right Column: Complete 6-Prayer Schedule */
@@ -1243,18 +1360,12 @@
       }
 
       .prayer-bubble {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
       }
       .prayer-bubble svg {
-        width: 17px;
-        height: 17px;
-      }
-
-      /* Spanning Accordion at Bottom */
-      .extra-section {
-        grid-column: 1 / span 2;
-        grid-row: 4;
+        width: 15px;
+        height: 15px;
       }
     }
 
@@ -1398,14 +1509,16 @@
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--card-border);
       color: var(--emerald-accent);
-      padding: 4px 10px;
-      border-radius: 6px;
+      padding: 8px 14px;
+      min-height: 44px;
+      box-sizing: border-box;
+      border-radius: 8px;
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       transition: all 0.2s;
     }
     .btn-check-update:hover {
@@ -1426,7 +1539,7 @@
     <div id="updateBanner" class="update-banner">
       <div class="update-banner-text">
         <span class="update-sparkle">✨</span>
-        <span>Update available (<strong id="txtBannerNewVersion">v1.1.0</strong>)!</span>
+        <span>Update available (<strong id="txtBannerNewVersion">v1.2.0</strong>)!</span>
       </div>
       <button id="btnReloadUpdate" class="btn-reload-update">Update Now</button>
     </div>
@@ -1460,13 +1573,28 @@
 
         <!-- Right Badges & Actions -->
         <div class="header-actions">
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.1.0</span>
+          <span id="autoSilentStatusPill" class="header-silent-pill" title="Mosque Auto-Silent Active">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+            <span>Auto-Silent</span>
+          </span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.2.0</span>
           <span class="hanafi-badge" title="Strict Hanafi Fiqh & Karachi 18/18 Method">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L9 7h6l-3-5zm0 6l-6 10h12l-6-10z"/>
             </svg>
             Hanafi
           </span>
+          <button id="btnShareImage" class="icon-btn" title="Share Timetable Card (WhatsApp)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </button>
           <button id="btnShareApp" class="icon-btn" title="Share with Friends & Family">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="18" cy="5" r="3"></circle>
@@ -1551,60 +1679,19 @@
 
       </section>
 
-      <!-- Fasting Strip (Sehri & Iftar) -->
-      <section class="fasting-strip">
-        <div class="fasting-item">
-          <div class="fasting-icon-box">
-            <!-- Bowl / Morning SVG -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"></path>
-            </svg>
-          </div>
-          <div class="fasting-meta">
-            <div class="f-label">Sehri Cut-Off</div>
-            <div id="txtSehriTime" class="f-time">05:06 AM</div>
-            <div class="f-sub">(-3m buffer applied)</div>
-          </div>
+      <!-- Sleek Single-Line Fasting Indicator Strip -->
+      <section class="fasting-strip-minimal" id="fastingStrip" title="Sehri Cut-Off & Iftar Timings for Fasting">
+        <div class="fasting-pill-item f-sehri">
+          <span class="f-dot f-dot-sehri"></span>
+          <span class="f-name">SEHRI ENDS</span>
+          <span id="txtSehriTime" class="f-mono-time">05:06 AM</span>
         </div>
-
-        <div class="fasting-divider"></div>
-
-        <div class="fasting-item">
-          <div class="fasting-icon-box">
-            <!-- Sunset / Dates SVG -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 18a5 5 0 0 0-10 0"></path>
-              <line x1="12" y1="2" x2="12" y2="9"></line>
-              <line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line>
-              <line x1="1" y1="18" x2="3" y2="18"></line>
-              <line x1="21" y1="18" x2="23" y2="18"></line>
-              <line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line>
-              <line x1="23" y1="22" x2="1" y2="22"></line>
-            </svg>
-          </div>
-          <div class="fasting-meta">
-            <div class="f-label">Iftar Time</div>
-            <div id="txtIftarTime" class="f-time">06:53 PM</div>
-            <div class="f-sub">(At Maghrib sunset)</div>
-          </div>
+        <div class="f-pill-divider"></div>
+        <div class="fasting-pill-item f-iftar">
+          <span class="f-dot f-dot-iftar"></span>
+          <span class="f-name">IFTAR</span>
+          <span id="txtIftarTime" class="f-mono-time">06:53 PM</span>
         </div>
-      </section>
-
-      <!-- Mosque Auto-Silent Notification Pill -->
-      <section class="mosque-silent-banner">
-        <div class="mosque-silent-left">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L9 7h6l-3-5zm0 6l-6 10h12l-6-10z"/>
-          </svg>
-          <div>
-            <div class="mosque-silent-title">Mosque Auto-Silent Mode</div>
-            <div id="txtMosqueStatus" class="mosque-silent-desc">Mutes ringer during congregation prayer</div>
-          </div>
-        </div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="chkAutoSilent" checked>
-          <span class="slider"></span>
-        </label>
       </section>
 
       <!-- Canonical Daily Prayers List -->
@@ -1636,6 +1723,7 @@
               <div class="prayer-name-arabic">
                 <span class="p-eng">Fajr</span>
                 <span class="p-ar" lang="ar" dir="rtl">الفجر</span>
+                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
               </div>
               <span class="p-desc">Dawn Twilight (Karachi 18&deg;)</span>
             </div>
@@ -1753,6 +1841,7 @@
               <div class="prayer-name-arabic">
                 <span class="p-eng">Maghrib</span>
                 <span class="p-ar" lang="ar" dir="rtl">المغرب</span>
+                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
               </div>
               <span class="p-desc">Sunset & Iftar (+3m Ihtiyat)</span>
             </div>
@@ -1777,6 +1866,7 @@
               <div class="prayer-name-arabic">
                 <span class="p-eng">Isha</span>
                 <span class="p-ar" lang="ar" dir="rtl">العشاء</span>
+                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
               </div>
               <span class="p-desc">White Twilight Disappearance (18&deg;)</span>
             </div>
