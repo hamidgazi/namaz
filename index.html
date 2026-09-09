@@ -1881,23 +1881,71 @@
 
       </section>
 
-      <!-- Expandable Sunnah, Dahwa-e-Kubra & Forbidden Times -->
-      <section id="extraSection" class="extra-section">
-        <div id="accordionToggle" class="accordion-header">
-          <div class="acc-title">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-            <span>Sunnah, Dahwa-e-Kubra & Makruh Times</span>
-          </div>
-          <span class="acc-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </span>
+      <!-- Sunnah, Dahwa-e-Kubra & Makruh Drawer Trigger Pill -->
+      <button id="btnOpenSunnahDrawer" class="drawer-trigger-pill" type="button" aria-label="Open Sunnah, Zawal and Nawafil Timings">
+        <div class="trigger-left">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>Sunnah, Zawal &amp; Nawafil Times</span>
         </div>
-        <div class="accordion-content">
-          
+        <span class="trigger-chevron">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </span>
+      </button>
+
+      <!-- Backward-compatibility placeholder for extraSection -->
+      <div id="extraSection" class="extra-section" style="display:none;" aria-hidden="true"></div>
+
+    </main>
+
+    <!-- App Footer Credit & Info -->
+    <footer class="app-credit-footer">
+      <div class="credit-badge">
+        <span class="credit-dot"></span> Live Calculations for <strong id="footerCity">Adajan Patiya, Surat</strong> (Hanafi)
+      </div>
+      <div class="credit-author">
+        Crafted with care by <strong>Hamid Gazi</strong>
+      </div>
+      <div class="credit-pwa-tip">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        </svg>
+        Tip: Tap browser menu &rarr; <strong>"Add to Home Screen"</strong> for full-screen app
+      </div>
+    
+      <div class="version-display-row">
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.2.0</strong></span>
+        <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          Check for Update
+        </button>
+      </div>
+    </footer>
+
+    <!-- Slide-Up Sunnah & Nawafil Drawer -->
+    <div id="drawerSunnah" class="drawer-backdrop" aria-hidden="true">
+      <div class="drawer-content">
+        <div class="drawer-handle-bar"></div>
+        <div class="drawer-head">
+          <div>
+            <h3 class="drawer-title">Sunnah &amp; Forbidden Times</h3>
+            <p class="drawer-sub">Hanafi Juristic Timings &bull; <span id="drawerCity">Adajan Patiya, Surat</span></p>
+          </div>
+          <button id="btnCloseSunnahDrawer" class="modal-close" aria-label="Close drawer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="drawer-grid">
           <!-- Dahwa-e-Kubra -->
           <div class="extra-card card-dahwa">
             <span class="extra-name">
@@ -1971,38 +2019,9 @@
             <span id="timeTahajjud" class="extra-time">01:42 AM &ndash; 05:06 AM</span>
             <span class="extra-note">Blessed last third of night before Sehri ends</span>
           </div>
-
         </div>
-      </section>
-
-    </main>
-
-    <!-- App Footer Credit & Info -->
-    <footer class="app-credit-footer">
-      <div class="credit-badge">
-        <span class="credit-dot"></span> Live Calculations for <strong id="footerCity">Adajan Patiya, Surat</strong> (Hanafi)
       </div>
-      <div class="credit-author">
-        Crafted with care by <strong>Hamid Gazi</strong>
-      </div>
-      <div class="credit-pwa-tip">
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-          <line x1="12" y1="18" x2="12.01" y2="18"></line>
-        </svg>
-        Tip: Tap browser menu &rarr; <strong>"Add to Home Screen"</strong> for full-screen app
-      </div>
-    
-      <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.1.0</strong></span>
-        <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
-          </svg>
-          Check for Update
-        </button>
-      </div>
-    </footer>
+    </div>
 
     <!-- City Search Modal -->
     <div id="modalCity" class="modal-backdrop">
@@ -2074,7 +2093,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.1.0</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.2.0</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -2087,6 +2106,36 @@
                 Check for Updates Now
               </button>
             </div>
+          </div>
+
+          <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.3);">
+            <div class="setting-label">
+              <span>Islamic (Hijri) Adjustment</span>
+              <span class="setting-badge" id="badgeHijriAdjustment">0 Days</span>
+            </div>
+            <p class="setting-explain">
+              Synchronize with local Indian Moon Sighting (Ruet-e-Hilal Committee) announcements. Advances automatically at Maghrib (sunset).
+            </p>
+            <select id="selHijriAdjustment" class="setting-select">
+              <option value="-2">-2 Days (Delay 2 Days)</option>
+              <option value="-1">-1 Day (Indian Hilal Standard)</option>
+              <option value="0" selected>0 Days (Umm al-Qura Baseline)</option>
+              <option value="1">+1 Day (Advance 1 Day)</option>
+              <option value="2">+2 Days (Advance 2 Days)</option>
+            </select>
+          </div>
+
+          <div class="setting-group">
+            <div class="setting-label">
+              <span>Mosque Auto-Silent Mode</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="chkAutoSilent" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <p class="setting-explain" id="txtMosqueStatus">
+              Alerts you when congregational prayer is in session at local masajid.
+            </p>
           </div>
 
           
@@ -2205,6 +2254,94 @@
       { name: "Kolkata", state: "West Bengal", lat: 22.5726, lng: 88.3639 }
     ];
 
+    // --- AUTHENTIC ISLAMIC (HIJRI) DATE ENGINE ---
+    const ISLAMIC_MONTH_NAMES = [
+      "Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani",
+      "Jumada al-Ula", "Jumada al-Thaniyah", "Rajab", "Sha'ban",
+      "Ramadan", "Shawwal", "Dhul Qi'dah", "Dhul Hijjah"
+    ];
+
+    // Fallback Kuwaiti/Tabular algorithm if browser Intl lacks Islamic calendar
+    function kuwaitiCalendar(date) {
+      let day = date.getDate(), month = date.getMonth(), year = date.getFullYear();
+      let m = month + 1, y = year;
+      if (m < 3) { y -= 1; m += 12; }
+      let a = Math.floor(y / 100);
+      let b = 2 - a + Math.floor(a / 4);
+      let jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + b - 1524;
+      let bjd = jd - 1948440 + 10632;
+      let n = Math.floor((bjd - 1) / 10631);
+      bjd = bjd - 10631 * n + 354;
+      let j = (Math.floor((10985 - bjd) / 5316)) * (Math.floor((50 * bjd) / 17719)) + (Math.floor(bjd / 5670)) * (Math.floor((43 * bjd) / 15238));
+      bjd = bjd - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) - (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
+      let mH = Math.floor((24 * bjd) / 709);
+      let dH = bjd - Math.floor((709 * mH) / 24);
+      let yH = 30 * n + j - 30;
+      return { day: dH, month: mH, year: yH };
+    }
+
+    function getAccurateIslamicDate(targetDate, maghribDecimalHour, hijriOffset = 0, currentClockDate = null) {
+      let shiftDays = parseInt(hijriOffset, 10) || 0;
+      const clock = currentClockDate || new Date();
+      const isToday = (targetDate.toDateString() === clock.toDateString());
+
+      let isPastSunset = false;
+      if (maghribDecimalHour !== undefined && maghribDecimalHour !== null) {
+        let maghribH = 0;
+        if (typeof maghribDecimalHour === 'number') {
+          maghribH = maghribDecimalHour;
+        } else if (typeof maghribDecimalHour === 'string') {
+          const parts = maghribDecimalHour.trim().split(/[: ]/);
+          if (parts.length >= 2) {
+            let h = parseInt(parts[0], 10);
+            const m = parseInt(parts[1], 10);
+            const ampm = (parts[2] || '').toUpperCase();
+            if (ampm === 'PM' && h < 12) h += 12;
+            if (ampm === 'AM' && h === 12) h = 0;
+            maghribH = h + (m / 60.0);
+          }
+        }
+        const currentH = clock.getHours() + (clock.getMinutes() / 60.0) + (clock.getSeconds() / 3600.0);
+        if (isToday && currentH >= maghribH) {
+          isPastSunset = true;
+          shiftDays += 1;
+        }
+      }
+
+      const calcDate = new Date(targetDate);
+      calcDate.setDate(calcDate.getDate() + shiftDays);
+
+      let day = null, month = null, year = null;
+      try {
+        const formatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric'
+        });
+        const parts = formatter.formatToParts(calcDate);
+        day = parseInt(parts.find(p => p.type === 'day')?.value, 10);
+        month = parseInt(parts.find(p => p.type === 'month')?.value, 10);
+        year = parseInt(parts.find(p => p.type === 'year')?.value, 10);
+      } catch (e) {}
+
+      if (!day || !month || !year || month < 1 || month > 12) {
+        const k = kuwaitiCalendar(calcDate);
+        day = k.day;
+        month = k.month;
+        year = k.year;
+      }
+
+      const monthName = ISLAMIC_MONTH_NAMES[month - 1] || ("Month " + month);
+      return {
+        day,
+        month,
+        monthName,
+        year,
+        formatted: day + " " + monthName + " " + year + " AH",
+        isPastSunset
+      };
+    }
+
     // --- HIGH-PRECISION SOLAR EPHEMERIS ENGINE (JEAN MEEUS) ---
     const DEG2RAD = Math.PI / 180.0;
     const RAD2DEG = 180.0 / Math.PI;
@@ -2314,7 +2451,8 @@
 
       const fajr = roundForward(fajrRaw);
       const sunrise = roundBackward(sunriseRaw);
-      const dhuhr = roundForward(dhuhrTransit);
+      const dhuhrStartRaw = dhuhrTransit + (1.0 / 60.0); // +1 min solar disc clearance precaution
+      const dhuhr = roundForward(dhuhrStartRaw);
       const asr = roundForward(asrRaw);
       const maghrib = roundForward(maghribRaw + (maghribBufferMin / 60.0));
       const isha = roundForward(ishaRaw);
@@ -2346,15 +2484,52 @@
       return d;
     }
 
-    // --- APPLICATION STATE ---
+        // --- SAFE STORAGE HELPERS (Guarded against SecurityError / QuotaExceededError) ---
+    function safeStorageGet(key, defaultVal = null) {
+      try {
+        if (typeof localStorage !== 'undefined' && localStorage) {
+          const val = localStorage.getItem(key);
+          return val !== null ? val : defaultVal;
+        }
+      } catch (e) {
+        // Silent fallback on SecurityError or disabled storage
+      }
+      return defaultVal;
+    }
+
+    function safeStorageSet(key, val) {
+      try {
+        if (typeof localStorage !== 'undefined' && localStorage) {
+          localStorage.setItem(key, val);
+        }
+      } catch (e) {
+        // Silent fallback on QuotaExceededError or SecurityError
+      }
+    }
+
+    // --- APPLICATION STATE (Restored safely from storage) ---
+    let savedCity = null;
+    try {
+      const rawCity = safeStorageGet('namaz_city_coords');
+      if (rawCity) {
+        const parsed = JSON.parse(rawCity);
+        if (parsed && typeof parsed === 'object' && parsed.name && typeof parsed.lat === 'number') {
+          savedCity = parsed;
+        }
+      }
+    } catch (e) {
+      savedCity = null;
+    }
+
     let appState = {
-      cityName: "Adajan Patiya, Surat",
-      cityState: "Gujarat",
-      lat: 21.1960,
-      lng: 72.7940,
+      cityName: (savedCity && savedCity.name) ? savedCity.name : "Adajan Patiya, Surat",
+      cityState: (savedCity && savedCity.state) ? savedCity.state : "Gujarat",
+      lat: (savedCity && typeof savedCity.lat === 'number') ? savedCity.lat : 21.1960,
+      lng: (savedCity && typeof savedCity.lng === 'number') ? savedCity.lng : 72.7940,
       ihtiyat: "MOSQUE",
       dateOffset: 0,
-      autoSilentActive: true
+      autoSilentActive: true,
+      hijriOffset: parseInt(safeStorageGet('namaz_hijri_offset', "0"), 10) || 0
     };
 
     let prayerSchedule = null;
@@ -2405,7 +2580,7 @@
       return d;
     }
 
-    function updateHeaderDateString(date) {
+        function updateHeaderDateString(date) {
       const isToday = appState.dateOffset === 0;
       txtDayBadge.innerText = isToday ? "Today" : 
         (appState.dateOffset === 1 ? "Tomorrow" : 
@@ -2413,11 +2588,10 @@
 
       const gregorianStr = date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
       
-      let hijriStr = "25 Safar 1448 AH";
-      try {
-        const hijriFormatter = new Intl.DateTimeFormat('en-TN-u-ca-islamic-umalqura', { day: 'numeric', month: 'long', year: 'numeric' });
-        hijriStr = hijriFormatter.format(date);
-      } catch (e) {}
+      // Calculate authentic Islamic Hijri date with Maghrib sunset transition & user adjustment
+      const todaySched = calculateAccurateHanafiTimes(appState.lat, appState.lng, date, appState.ihtiyat);
+      const hijriInfo = getAccurateIslamicDate(date, todaySched.maghrib, appState.hijriOffset, new Date());
+      const hijriStr = hijriInfo.formatted;
 
       txtDateHeader.innerHTML = `${gregorianStr} &bull; ${hijriStr}`;
 
@@ -2427,13 +2601,13 @@
       const badgeJummah = document.getElementById('badgeJummah');
 
       if (isFriday) {
-        labelDhuhr.textContent = "Jummah";
-        arDhuhr.textContent = "الجمعة";
-        badgeJummah.style.display = "inline-block";
+        if (labelDhuhr) labelDhuhr.textContent = "Jummah";
+        if (arDhuhr) arDhuhr.textContent = "الجمعة";
+        if (badgeJummah) badgeJummah.style.display = "inline-block";
       } else {
-        labelDhuhr.textContent = "Dhuhr";
-        arDhuhr.textContent = "الظهر";
-        badgeJummah.style.display = "none";
+        if (labelDhuhr) labelDhuhr.textContent = "Dhuhr";
+        if (arDhuhr) arDhuhr.textContent = "الظهر";
+        if (badgeJummah) badgeJummah.style.display = "none";
       }
     }
 
@@ -2720,9 +2894,10 @@
 
     accordionToggle.addEventListener('click', () => extraSection.classList.toggle('open'));
 
-    btnPrevDay.addEventListener('click', () => { appState.dateOffset--; 
+    btnPrevDay.addEventListener('click', () => { appState.dateOffset--; refreshAllTimings(); });
+
     // --- APP VERSION & AUTO-UPDATE ENGINE ---
-    const CURRENT_APP_VERSION = "1.1.0";
+    const CURRENT_APP_VERSION = "1.2.0";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');
@@ -2806,7 +2981,261 @@
       }
     });
 
-    refreshAllTimings(); });
+    
+    // --- 1-TAP WHATSAPP SALAH TIMETABLE CANVAS CARD GENERATOR ---
+    async function generateSalahTimetableCanvas() {
+      const workingDate = getSelectedDate();
+      const sched = prayerSchedule || calculateAccurateHanafiTimes(appState.lat, appState.lng, workingDate, appState.ihtiyat);
+      const hijriInfo = getAccurateIslamicDate(workingDate, sched.maghrib, appState.hijriOffset, new Date());
+      const isFriday = workingDate.getDay() === 5;
+      const dhuhrTitle = isFriday ? 'Jummah' : 'Dhuhr';
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const W = 1080;
+      const H = 1350;
+      canvas.width = W;
+      canvas.height = H;
+
+      // Background gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+      bgGrad.addColorStop(0, '#070b14');
+      bgGrad.addColorStop(0.5, '#0d1527');
+      bgGrad.addColorStop(1, '#070b14');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Outer gold/emerald border
+      ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(30, 30, W - 60, H - 60);
+
+      // Inner subtle border
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(40, 40, W - 80, H - 80);
+
+      // Decorative Top Arch Glow
+      const archGrad = ctx.createRadialGradient(W / 2, 80, 20, W / 2, 80, 240);
+      archGrad.addColorStop(0, 'rgba(16, 185, 129, 0.25)');
+      archGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = archGrad;
+      ctx.fillRect(40, 40, W - 80, 260);
+
+      // Title & Header
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 32px system-ui, -apple-system, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🕌 NAMAZ PRAYER TIMINGS', W / 2, 110);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 46px system-ui, -apple-system, sans-serif';
+      ctx.fillText(appState.cityName, W / 2, 175);
+
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '26px system-ui, -apple-system, sans-serif';
+      const gregStr = workingDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      ctx.fillText(gregStr + '  •  ' + hijriInfo.formatted, W / 2, 225);
+
+      // Jurisprudence Badge Pill
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
+      ctx.fillRect(W / 2 - 220, 255, 440, 44);
+      ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(W / 2 - 220, 255, 440, 44);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = 'bold 20px system-ui, -apple-system, sans-serif';
+      ctx.fillText('Hanafi Jurisprudence (Karachi 18°/18°)', W / 2, 284);
+
+      // Fasting Strip (Sehri & Iftar)
+      const fBoxY = 325;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.fillRect(70, fBoxY, W - 140, 85);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.strokeRect(70, fBoxY, W - 140, 85);
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 22px system-ui, -apple-system, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('🌙 Sehri Cut-Off:', 100, fBoxY + 50);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 30px monospace';
+      ctx.fillText(formatTime12(sched.suhoor), 300, fBoxY + 52);
+
+      ctx.fillStyle = '#f43f5e';
+      ctx.font = 'bold 22px system-ui, -apple-system, sans-serif';
+      ctx.fillText('🌅 Iftar Time:', 620, fBoxY + 50);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 30px monospace';
+      ctx.fillText(formatTime12(sched.maghrib), 790, fBoxY + 52);
+
+      // Salah Timings List
+      const rows = [
+        { name: 'Fajr (Dawn Twilight)', ar: 'الفجر', time: formatTime12(sched.fajr), color: '#818cf8' },
+        { name: 'Sunrise (Tulu)', ar: 'الشروق', time: formatTime12(sched.sunrise), color: '#fbbf24' },
+        { name: dhuhrTitle + ' (Solar Transit)', ar: isFriday ? 'الجمعة' : 'الظهر', time: formatTime12(sched.dhuhr), color: '#34d399' },
+        { name: 'Asr (Hanafi 2× Misl-e-Sani)', ar: 'العصر', time: formatTime12(sched.asr), color: '#fb923c' },
+        { name: 'Maghrib (Sunset & Iftar)', ar: 'المغرب', time: formatTime12(sched.maghrib), color: '#fb7185' },
+        { name: 'Isha (White Twilight 18°)', ar: 'العشاء', time: formatTime12(sched.isha), color: '#c084fc' }
+      ];
+
+      let rowY = 440;
+      const rowH = 100;
+
+      rows.forEach((r, idx) => {
+        ctx.fillStyle = (idx % 2 === 0) ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.05)';
+        ctx.fillRect(70, rowY, W - 140, rowH);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.strokeRect(70, rowY, W - 140, rowH);
+
+        // Color accent pill on left
+        ctx.fillStyle = r.color;
+        ctx.fillRect(70, rowY, 8, rowH);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 32px system-ui, -apple-system, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(r.name, 105, rowY + 52);
+
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '30px serif';
+        ctx.fillText(r.ar, 105, rowY + 86);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 38px monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(r.time, W - 100, rowY + 62);
+
+        rowY += rowH + 12;
+      });
+
+      // Extra Timings Row (Dahwa-e-Kubra & Zawal)
+      ctx.fillStyle = 'rgba(244, 63, 94, 0.08)';
+      ctx.fillRect(70, rowY + 10, W - 140, 75);
+      ctx.strokeStyle = 'rgba(244, 63, 94, 0.3)';
+      ctx.strokeRect(70, rowY + 10, W - 140, 75);
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 20px system-ui, -apple-system, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('⭐ Dahwa-e-Kubra: ' + formatTime12(sched.dahwa), 100, rowY + 55);
+
+      ctx.fillStyle = '#fb7185';
+      ctx.fillText('⛔ Zawal (Forbidden): ' + formatTime12(sched.zawalStart) + ' – ' + formatTime12(sched.dhuhr), 550, rowY + 55);
+
+      // Footer Watermark & App Link
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '22px system-ui, -apple-system, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Accurate Offline Solar Ephemeris • https://hamidgazi.github.io/namaz/', W / 2, H - 75);
+
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '18px system-ui, -apple-system, sans-serif';
+      ctx.fillText('Crafted with care by Hamid Gazi • Share with Family & Friends on WhatsApp', W / 2, H - 45);
+
+      return canvas;
+    }
+
+    async function shareTimetableCard() {
+      const btn = document.getElementById('btnShareImage');
+      const originalHtml = btn ? btn.innerHTML : '';
+      if (btn) btn.innerHTML = '<span style="font-size: 11px;">Generating...</span>';
+
+      try {
+        const canvas = await generateSalahTimetableCanvas();
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            alert('Could not create image. Please try again.');
+            if (btn) btn.innerHTML = originalHtml;
+            return;
+          }
+
+          const file = new File([blob], 'namaz-timetable-' + appState.cityName.replace(/[^a-zA-Z0-9]/g, '_') + '.png', { type: 'image/png' });
+
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+              await navigator.share({
+                files: [file],
+                title: "Today's Namaz Timetable — " + appState.cityName,
+                text: "Here is today's authentic Namaz & Salah schedule for " + appState.cityName + " (Hanafi):\nhttps://hamidgazi.github.io/namaz/"
+              });
+            } catch (err) {
+              // Share cancelled by user or not allowed, fallback to download
+              if (err.name !== 'AbortError') {
+                downloadCanvasImage(canvas);
+              }
+            }
+          } else {
+            // Fallback: direct download
+            downloadCanvasImage(canvas);
+          }
+
+          if (btn) btn.innerHTML = originalHtml;
+        }, 'image/png', 0.95);
+      } catch (err) {
+        if (btn) btn.innerHTML = originalHtml;
+        alert('Image generation failed: ' + err.message);
+      }
+    }
+
+    function downloadCanvasImage(canvas) {
+      const a = document.createElement('a');
+      a.download = 'namaz-timetable-' + appState.cityName.replace(/[^a-zA-Z0-9]/g, '_') + '.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      alert('Timetable image downloaded to your device! You can now send it on WhatsApp.');
+    }
+
+    // Attach Share Image Button
+    const btnShareImage = document.getElementById('btnShareImage');
+    if (btnShareImage) {
+      btnShareImage.addEventListener('click', shareTimetableCard);
+    }
+
+    // Hijri Adjustment Dropdown in Settings
+    const selHijriAdjustment = document.getElementById('selHijriAdjustment');
+    const badgeHijriAdjustment = document.getElementById('badgeHijriAdjustment');
+    if (selHijriAdjustment) {
+      selHijriAdjustment.value = String(appState.hijriOffset);
+      if (badgeHijriAdjustment) {
+        badgeHijriAdjustment.innerText = (appState.hijriOffset > 0 ? '+' : '') + appState.hijriOffset + ' Days';
+      }
+      selHijriAdjustment.addEventListener('change', (e) => {
+        appState.hijriOffset = parseInt(e.target.value, 10) || 0;
+        safeStorageSet('namaz_hijri_offset', String(appState.hijriOffset));
+        if (badgeHijriAdjustment) {
+          badgeHijriAdjustment.innerText = (appState.hijriOffset > 0 ? '+' : '') + appState.hijriOffset + ' Days';
+        }
+        refreshAllTimings();
+      });
+    }
+
+    // Slide-up Sunnah & Nawafil Drawer
+    const drawerSunnah = document.getElementById('drawerSunnah');
+    const btnOpenSunnahDrawer = document.getElementById('btnOpenSunnahDrawer');
+    const btnCloseSunnahDrawer = document.getElementById('btnCloseSunnahDrawer');
+    if (btnOpenSunnahDrawer && drawerSunnah) {
+      btnOpenSunnahDrawer.addEventListener('click', () => {
+        drawerSunnah.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+    if (btnCloseSunnahDrawer && drawerSunnah) {
+      btnCloseSunnahDrawer.addEventListener('click', () => {
+        drawerSunnah.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+    if (drawerSunnah) {
+      drawerSunnah.addEventListener('click', (e) => {
+        if (e.target === drawerSunnah) {
+          drawerSunnah.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
     btnNextDay.addEventListener('click', () => { appState.dateOffset++; refreshAllTimings(); });
     btnTodayReset.addEventListener('click', () => { appState.dateOffset = 0; refreshAllTimings(); });
 
@@ -2839,8 +3268,15 @@
 
     chkAutoSilent.addEventListener('change', (e) => {
       appState.autoSilentActive = e.target.checked;
+      safeStorageSet('namaz_auto_silent', String(e.target.checked));
       updateLiveHero();
     });
+
+    const savedAutoSilent = safeStorageGet('namaz_auto_silent');
+    if (savedAutoSilent !== null && chkAutoSilent) {
+      chkAutoSilent.checked = savedAutoSilent === 'true';
+      appState.autoSilentActive = chkAutoSilent.checked;
+    }
 
     /* Modal Body Scroll Lock & Containment Helpers */
     function openModal(modal) {
@@ -2888,6 +3324,7 @@
           appState.cityState = c.state;
           appState.lat = c.lat;
           appState.lng = c.lng;
+          safeStorageSet('namaz_city_coords', JSON.stringify({ name: c.name, state: c.state, lat: c.lat, lng: c.lng }));
           closeModal(modalCity);
           refreshAllTimings();
         });
@@ -2916,6 +3353,7 @@
           appState.cityState = "India";
           appState.lat = pos.coords.latitude;
           appState.lng = pos.coords.longitude;
+          safeStorageSet('namaz_city_coords', JSON.stringify({ name: appState.cityName, state: appState.cityState, lat: appState.lat, lng: appState.lng }));
           btnDetectGps.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></svg> Detect My Exact Location via GPS`;
           closeModal(modalCity);
           refreshAllTimings();
