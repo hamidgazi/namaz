@@ -706,7 +706,7 @@
     .prayer-list {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 8px;
     }
 
     /* Date Browsing Context Banner */
@@ -721,7 +721,7 @@
       border-radius: var(--radius-sm);
       font-size: 0.8rem;
       color: #c7d2fe;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       animation: fadeIn 0.2s ease-in-out;
     }
     .browsing-banner span {
@@ -746,39 +746,44 @@
     }
 
     .prayer-card {
-      background: var(--card-inner);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-md);
-      padding: 7px 14px;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 10px 15px;
       min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
     }
     .prayer-card:hover {
-      background: var(--card-hover);
-      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(30, 41, 59, 0.75);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
     .prayer-card.active-target {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.04) 100%);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(15, 23, 42, 0.85) 100%);
       border-color: rgba(16, 185, 129, 0.55);
-      box-shadow: 0 4px 20px -2px var(--emerald-glow);
+      box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
     .active-indicator-tag {
       display: none;
       align-items: center;
-      gap: 5px;
-      font-size: 10px;
+      gap: 4px;
+      font-size: 9.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: rgba(16, 185, 129, 0.22);
+      letter-spacing: 0.04em;
+      background: rgba(16, 185, 129, 0.25);
       color: #34d399;
       border: 1px solid rgba(16, 185, 129, 0.45);
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
       margin-left: 6px;
       animation: pulseActive 2s infinite ease-in-out;
@@ -798,64 +803,67 @@
       50% { opacity: 0.75; transform: scale(0.96); }
     }
 
-
     .prayer-card.sunrise-row {
-      opacity: 0.65;
-      background: transparent;
-      border: 1px dashed rgba(255, 255, 255, 0.1);
-      padding: 5px 14px;
+      opacity: 0.75;
+      background: rgba(15, 23, 42, 0.35);
+      border: 1px dashed rgba(251, 191, 36, 0.25);
+      padding: 8px 15px;
       min-height: 40px;
     }
 
     .prayer-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      min-width: 0;
     }
 
     .prayer-bubble {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     .prayer-bubble svg {
-      width: 14px;
-      height: 14px;
+      width: 17px;
+      height: 17px;
     }
 
-    .b-fajr { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-    .b-sunrise { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .b-dhuhr { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .b-asr { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
-    .b-maghrib { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
-    .b-isha { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+    .b-fajr { background: rgba(99, 102, 241, 0.16); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.25); }
+    .b-sunrise { background: rgba(245, 158, 11, 0.16); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .b-dhuhr { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
+    .b-asr { background: rgba(249, 115, 22, 0.16); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.25); }
+    .b-maghrib { background: rgba(244, 63, 94, 0.16); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.25); }
+    .b-isha { background: rgba(168, 85, 247, 0.16); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
 
     .prayer-title-group {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .prayer-name-arabic {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: nowrap;
     }
 
     .p-eng {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
-      color: var(--text-main);
+      color: #f8fafc;
       letter-spacing: -0.01em;
     }
 
     .p-ar {
       font-family: var(--font-arabic);
-      font-size: 15px;
-      color: var(--text-dim);
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.45);
       direction: rtl;
       unicode-bidi: isolate;
       text-rendering: optimizeLegibility;
@@ -885,28 +893,36 @@
     }
 
     .p-desc {
-      font-size: 10px;
+      font-size: 10.5px;
       color: var(--text-muted);
       margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .prayer-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .p-clock {
       font-family: var(--font-mono);
-      font-size: 15px;
+      font-size: 15.5px;
       font-weight: 800;
-      color: var(--text-main);
+      color: #ffffff;
       letter-spacing: -0.01em;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .bell-btn {
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       color: var(--text-dim);
       cursor: pointer;
       width: 44px;
@@ -914,22 +930,26 @@
       min-width: 44px;
       min-height: 44px;
       padding: 0;
-      border-radius: 8px;
+      border-radius: 10px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: color 0.2s, transform 0.1s;
-      margin: -10px -8px -10px 0;
+      transition: all 0.2s;
+      margin: 0;
     }
     .bell-btn svg {
       width: 16px;
       height: 16px;
     }
     .bell-btn:hover {
+      background: rgba(16, 185, 129, 0.1);
       color: var(--emerald-accent);
+      border-color: rgba(16, 185, 129, 0.3);
     }
     .bell-btn.active {
       color: var(--emerald-accent);
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.22);
     }
 
     /* Accordion: Sunnah, Dahwa-e-Kubra & Forbidden Times */
@@ -1348,24 +1368,24 @@
       .prayer-list {
         grid-column: 2;
         grid-row: 1 / span 3;
-        gap: 6px;
+        gap: 10px;
       }
 
       .prayer-card {
-        padding: 8px 14px;
+        padding: 11px 16px;
       }
 
       .prayer-card.sunrise-row {
-        padding: 6px 14px;
+        padding: 8px 16px;
       }
 
       .prayer-bubble {
-        width: 30px;
-        height: 30px;
+        width: 38px;
+        height: 38px;
       }
       .prayer-bubble svg {
-        width: 15px;
-        height: 15px;
+        width: 18px;
+        height: 18px;
       }
     }
 
@@ -1539,7 +1559,7 @@
     <div id="updateBanner" class="update-banner">
       <div class="update-banner-text">
         <span class="update-sparkle">✨</span>
-        <span>Update available (<strong id="txtBannerNewVersion">v1.2.0</strong>)!</span>
+        <span>Update available (<strong id="txtBannerNewVersion">v1.3.0</strong>)!</span>
       </div>
       <button id="btnReloadUpdate" class="btn-reload-update">Update Now</button>
     </div>
@@ -1581,7 +1601,7 @@
             </svg>
             <span>Auto-Silent</span>
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.2.0</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.3.0</span>
           <span class="hanafi-badge" title="Strict Hanafi Fiqh & Karachi 18/18 Method">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L9 7h6l-3-5zm0 6l-6 10h12l-6-10z"/>
@@ -1918,7 +1938,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.2.0</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.3.0</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -2093,7 +2113,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.2.0</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.3.0</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -3330,7 +3350,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.2.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.3.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -3601,7 +3621,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.2.0";
+    const CURRENT_APP_VERSION = "1.3.0";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');
