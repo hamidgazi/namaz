@@ -6,9 +6,9 @@ const SHELL_ASSETS = [
   './',
   'index.html',
   'manifest.json',
-  'icon-192.png',
-  'icon-512.png',
-  'icon.svg'
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+  'icons/icon.svg'
 ];
 
 // Install: Pre-cache core app shell assets for instant cold start
