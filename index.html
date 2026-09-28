@@ -3098,6 +3098,87 @@
       cachedAnnualAnalysis = {};
     }
 
+    // --- MONTHLY & FULL YEAR TIMETABLE ENGINE ---
+    let cachedMonthlyTimetables = {}; // key: "lat_lng_year_month_ihtiyat_hijriOffset"
+
+    function calculateMonthlyTimetable(lat, lng, year, monthIndex, ihtiyatMode = 'MOSQUE', hijriOffset = 0) {
+      const targetYear = parseInt(year, 10) || new Date().getFullYear();
+      const mIdx = parseInt(monthIndex, 10);
+      const hOffset = parseInt(hijriOffset, 10) || 0;
+      const cacheKey = `${lat.toFixed(4)}_${lng.toFixed(4)}_${targetYear}_${mIdx}_${ihtiyatMode}_${hOffset}`;
+      if (cachedMonthlyTimetables[cacheKey]) {
+        return cachedMonthlyTimetables[cacheKey];
+      }
+
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      const daysInMonth = new Date(targetYear, mIdx + 1, 0).getDate();
+      const today = new Date();
+      const todayYear = today.getFullYear();
+      const todayMonth = today.getMonth();
+      const todayDate = today.getDate();
+      const days = [];
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dt = new Date(targetYear, mIdx, d, 12, 0, 0);
+        const times = calculateAccurateHanafiTimes(lat, lng, dt, ihtiyatMode);
+        const islamic = getAccurateIslamicDate(dt, times.maghrib, hOffset);
+        const isToday = (targetYear === todayYear && mIdx === todayMonth && d === todayDate);
+
+        days.push({
+          dayNum: d,
+          dayNumPad: String(d).padStart(2, '0'),
+          dayName: dayNames[dt.getDay()],
+          dateIso: `${targetYear}-${String(mIdx + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`,
+          hijriDay: islamic.day,
+          hijriMonth: islamic.monthName,
+          hijriFormatted: `${islamic.day} ${islamic.monthName}`,
+          sehri: formatTime12(times.suhoor),
+          fajr: formatTime12(times.fajr),
+          sunrise: formatTime12(times.sunrise),
+          zawalStart: formatTime12(times.zawalStart),
+          dhuhr: formatTime12(times.dhuhr),
+          asr: formatTime12(times.asr),
+          maghrib: formatTime12(times.maghrib),
+          isha: formatTime12(times.isha),
+          isToday
+        });
+      }
+
+      const result = {
+        year: targetYear,
+        monthIndex: mIdx,
+        monthName: monthNames[mIdx],
+        shortMonthName: shortMonthNames[mIdx],
+        daysInMonth,
+        days
+      };
+
+      cachedMonthlyTimetables[cacheKey] = result;
+      return result;
+    }
+
+    function calculateYearTimetable(lat, lng, year, ihtiyatMode = 'MOSQUE', hijriOffset = 0) {
+      const months = [];
+      for (let m = 0; m < 12; m++) {
+        months.push(calculateMonthlyTimetable(lat, lng, year, m, ihtiyatMode, hijriOffset));
+      }
+      return {
+        year: parseInt(year, 10) || new Date().getFullYear(),
+        lat,
+        lng,
+        ihtiyatMode,
+        hijriOffset,
+        months
+      };
+    }
+
+    function clearMonthlyTimetableCache() {
+      cachedMonthlyTimetables = {};
+    }
+
     // --- SAFE STORAGE HELPERS (Guarded against SecurityError / QuotaExceededError) ---
     function safeStorageGet(key, defaultVal = null) {
       try {
@@ -3165,6 +3246,9 @@
       cachedDaySchedules = {};
       if (typeof clearAnnualAnalysisCache === 'function') {
         clearAnnualAnalysisCache();
+      }
+      if (typeof clearMonthlyTimetableCache === 'function') {
+        clearMonthlyTimetableCache();
       }
     }
 
