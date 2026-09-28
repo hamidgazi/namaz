@@ -9,6 +9,7 @@ const { runTier3Tests } = require('./tier3_cross_feature.test.js');
 const { runTier4Tests } = require('./tier4_real_world_scenarios.test.js');
 const { runTier5Tests } = require('./tier5_adversarial_ephemeris.test.js');
 const { runAnnualPhase1Tests } = require('./annual_analysis_phase1.test.js');
+const { runAnnualPhase2UITests } = require('./annual_analysis_phase2_ui.test.js');
 
 const THRESHOLDS = {
   tier1Min: 50,
@@ -75,6 +76,15 @@ async function main() {
   console.log(`   [PASS] ${p1Passed}/${p1Results.length} tests passed in ${p1Duration} ms\n`);
   allResults = allResults.concat(p1Results.map(r => ({ ...r, tier: 'Phase 1 Annual' })));
 
+  // --- PHASE 2 & 3: ANNUAL UI & MODAL LIFECYCLE ---
+  console.log('>> [PHASE 2 & 3] Running Annual Prayer Timing UI & Modal Suite...');
+  const p2Start = performance.now();
+  const p2Results = runAnnualPhase2UITests();
+  const p2Duration = (performance.now() - p2Start).toFixed(2);
+  const p2Passed = p2Results.filter(r => r.passed).length;
+  console.log(`   [PASS] ${p2Passed}/${p2Results.length} tests passed in ${p2Duration} ms\n`);
+  allResults = allResults.concat(p2Results.map(r => ({ ...r, tier: 'Phase 2 & 3 UI' })));
+
   // --- TIER 5 (Adversarial Ephemeris & Stress Suite) ---
   const includeTier5 = process.argv.includes('--tier5') || process.argv.includes('--include-tier5') || process.argv.includes('--all');
   let t5Results = [];
@@ -100,6 +110,7 @@ async function main() {
   console.log(` Tier 3 (Cross-Feature Combos)   :  ${t3Passed.toString().padStart(3)} / ${t3Results.length.toString().padEnd(3)} passed  (Min req: ${THRESHOLDS.tier3Min})`);
   console.log(` Tier 4 (Real-World Scenarios)   :  ${t4Passed.toString().padStart(3)} / ${t4Results.length.toString().padEnd(3)} passed  (Min req: ${THRESHOLDS.tier4Min})`);
   console.log(` Phase 1 (Annual Ephemeris)      :  ${p1Passed.toString().padStart(3)} / ${p1Results.length.toString().padEnd(3)} passed  (Min req: 10)`);
+  console.log(` Phase 2 & 3 (Almanac UI/Modal)  :  ${p2Passed.toString().padStart(3)} / ${p2Results.length.toString().padEnd(3)} passed  (Min req: 8)`);
   if (includeTier5) {
     console.log(` Tier 5 (Adversarial Ephemeris)  :  ${t5Passed.toString().padStart(3)} / ${t5Results.length.toString().padEnd(3)} passed  (Min req: ${THRESHOLDS.tier5Min})`);
   }

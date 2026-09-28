@@ -460,9 +460,9 @@ class MockDocument {
   querySelectorAll(selector) {
     const matched = [];
     if (selector.startsWith('.')) {
-      const cls = selector.slice(1);
+      const classes = selector.split('.').filter(Boolean);
       for (const el of this.elementsById.values()) {
-        if (el.classList.contains(cls)) matched.push(el);
+        if (classes.every(cls => el.classList.contains(cls))) matched.push(el);
       }
     }
     return matched;
@@ -626,7 +626,9 @@ function loadApp(options = {}) {
     'btnOpenSunnahDrawer', 'btnCloseSunnahDrawer', 'selHijriAdjustment',
     'headerVersionBadge', 'footerVersionText', 'settingsVersionBadge',
     'txtBannerNewVersion', 'btnCheckUpdateFooter', 'btnCheckUpdateSettings',
-    'btnReloadUpdate', 'txtUpdateStatus', 'updateBanner', 'fastingStrip'
+    'btnReloadUpdate', 'txtUpdateStatus', 'updateBanner', 'fastingStrip',
+    'btnOpenAlmanac', 'btnCloseAlmanac', 'btnOpenAlmanacFromSettings',
+    'modalAlmanac', 'almanacBodyContent', 'almanacLocationSubtitle'
   ];
 
   knownIds.forEach(id => {
@@ -647,6 +649,8 @@ function loadApp(options = {}) {
     const dataPrayerMatch = attrsStr.match(/\bdata-prayer=["']([^"']+)["']/i);
     const titleMatch = attrsStr.match(/\btitle=["']([^"']+)["']/i);
     const roleMatch = attrsStr.match(/\brole=["']([^"']+)["']/i);
+    const ariaLabelMatch = attrsStr.match(/\baria-label=["']([^"']+)["']/i);
+    const ariaModalMatch = attrsStr.match(/\baria-modal=["']([^"']+)["']/i);
 
     if (idMatch || classMatch) {
       const id = idMatch ? idMatch[1] : `auto_elem_${++autoIdCount}`;
@@ -656,6 +660,8 @@ function loadApp(options = {}) {
       if (dataPrayerMatch) el.setAttribute('data-prayer', dataPrayerMatch[1]);
       if (titleMatch) el.setAttribute('title', titleMatch[1]);
       if (roleMatch) el.setAttribute('role', roleMatch[1]);
+      if (ariaLabelMatch) el.setAttribute('aria-label', ariaLabelMatch[1]);
+      if (ariaModalMatch) el.setAttribute('aria-modal', ariaModalMatch[1]);
       if (tagName.toLowerCase() === 'button') el.setAttribute('role', 'button');
     }
   }

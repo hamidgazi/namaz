@@ -191,7 +191,7 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
     }
 
@@ -220,6 +220,23 @@
     .icon-btn svg {
       width: 18px;
       height: 18px;
+    }
+
+    @media (max-width: 375px) {
+      .header-actions {
+        gap: 3px;
+      }
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        border-radius: 10px;
+      }
+      .icon-btn svg {
+        width: 16px;
+        height: 16px;
+      }
     }
 
     /* Sub-bar for Date & Badges */
@@ -1361,6 +1378,190 @@
       scroll-behavior: smooth;
     }
 
+    /* Almanac Modal Styling */
+    .modal-card-almanac {
+      max-width: 500px;
+      /* Use flex-column layout so body fills remaining space — no fixed max-height needed */
+      height: min(90vh, calc(100dvh - 32px));
+      max-height: min(90vh, calc(100dvh - 32px));
+      padding: 18px;
+      /* Override base modal-card flex column to ensure body scrolls */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .almanac-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      /* Flex-grow fills all remaining space after modal header */
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding-top: 6px;
+      padding-right: 4px;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      /* GPU layer for momentum scrolling on Android 9 */
+      -webkit-transform: translateZ(0);
+    }
+
+    @media (max-width: 360px) {
+      .modal-backdrop {
+        padding: 8px;
+      }
+      .modal-card-almanac {
+        padding: 14px;
+        border-radius: 18px;
+      }
+      .almanac-metric-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+      .almanac-fast-bar {
+        padding: 10px;
+      }
+    }
+
+    .almanac-hero-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.5) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .almanac-hero-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .almanac-hero-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .almanac-section-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--emerald-accent);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .almanac-card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .almanac-metric-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .almanac-metric-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .almanac-metric-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .almanac-metric-shift {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .almanac-metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .almanac-metric-val {
+      font-weight: 700;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .almanac-fast-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+    }
+
+    .almanac-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .almanac-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .almanac-table th {
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .almanac-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .almanac-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .almanac-table tr:hover td {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
     .setting-group {
       background: var(--card-inner);
       border: 1px solid var(--card-border);
@@ -1690,7 +1891,7 @@
     <div id="updateBanner" class="update-banner">
       <div class="update-banner-text">
         <span class="update-sparkle">✨</span>
-        <span>Update available (<strong id="txtBannerNewVersion">v1.4.0</strong>)!</span>
+        <span>Update available (<strong id="txtBannerNewVersion">v1.5.0</strong>)!</span>
       </div>
       <button id="btnReloadUpdate" class="btn-reload-update">Update Now</button>
     </div>
@@ -1740,6 +1941,15 @@
               <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
             </svg>
           </button>
+          <button id="btnOpenAlmanac" class="icon-btn" title="Annual Prayer Almanac & Analysis" aria-label="Open Annual Prayer Almanac">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <line x1="3.6" y1="9" x2="20.4" y2="9"></line>
+              <line x1="3.6" y1="15" x2="20.4" y2="15"></line>
+              <path d="M11.5 3a17 17 0 0 0 0 18"></path>
+              <path d="M12.5 3a17 17 0 0 1 0 18"></path>
+            </svg>
+          </button>
           <button id="btnOpenSettings" class="icon-btn" title="Settings">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3"></circle>
@@ -1768,7 +1978,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.4.0</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.5.0</span>
         </div>
       </div>
 
@@ -2076,7 +2286,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.4.0</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.5.0</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -2230,6 +2440,28 @@
       </div>
     </div>
 
+    <!-- Annual Prayer Almanac & Analysis Modal -->
+    <div id="modalAlmanac" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="almanacModalTitle">
+      <div class="modal-card modal-card-almanac">
+        <div class="modal-head">
+          <div>
+            <h3 class="modal-title" id="almanacModalTitle">Annual Prayer Almanac</h3>
+            <p style="font-size: 11px; color: var(--emerald-accent); font-weight: 600;" id="almanacLocationSubtitle">Adajan Patiya, Surat</p>
+          </div>
+          <button id="btnCloseAlmanac" class="modal-close" aria-label="Close Almanac modal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="settings-body almanac-body" id="almanacBodyContent">
+          <!-- Populated dynamically by renderAnnualAlmanacView() -->
+        </div>
+      </div>
+    </div>
+
     <!-- Settings Modal -->
     <div id="modalSettings" class="modal-backdrop">
       <div class="modal-card">
@@ -2251,7 +2483,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.4.0</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.5.0</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -2262,6 +2494,25 @@
                   <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
                 </svg>
                 Check for Updates Now
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-group" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+            <div class="setting-label">
+              <span>Annual Prayer Almanac</span>
+              <span class="setting-badge">Yearly Extremes</span>
+            </div>
+            <p class="setting-explain">
+              Explore 365-day shortest/longest prayer times, Fasting (Roza) ranges, and solar shifts for your active city.
+            </p>
+            <div style="margin-top: 8px;">
+              <button id="btnOpenAlmanacFromSettings" class="btn-check-update" style="width: 100%; justify-content: center; padding: 8px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M12 3v18"></path>
+                </svg>
+                View Annual Almanac & Extremes
               </button>
             </div>
           </div>
@@ -2940,11 +3191,17 @@
     // Modals & Drawer
     const modalCity = document.getElementById('modalCity');
     const modalSettings = document.getElementById('modalSettings');
+    const modalAlmanac = document.getElementById('modalAlmanac');
     const drawerSunnah = document.getElementById('drawerSunnah');
     const btnOpenCityModal = document.getElementById('btnOpenCityModal');
     const btnCloseCity = document.getElementById('btnCloseCity');
     const btnOpenSettings = document.getElementById('btnOpenSettings');
     const btnCloseSettings = document.getElementById('btnCloseSettings');
+    const btnOpenAlmanac = document.getElementById('btnOpenAlmanac');
+    const btnCloseAlmanac = document.getElementById('btnCloseAlmanac');
+    const btnOpenAlmanacFromSettings = document.getElementById('btnOpenAlmanacFromSettings');
+    const almanacBodyContent = document.getElementById('almanacBodyContent');
+    const almanacLocationSubtitle = document.getElementById('almanacLocationSubtitle');
     const btnOpenSunnahDrawer = document.getElementById('btnOpenSunnahDrawer');
     const btnCloseSunnahDrawer = document.getElementById('btnCloseSunnahDrawer');
     const inputCitySearch = document.getElementById('inputCitySearch');
@@ -3720,7 +3977,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.4.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.5.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -3937,6 +4194,239 @@
       if (e.target === modalSettings) closeModal(modalSettings);
     });
 
+    // --- ANNUAL ALMANAC MODAL CONTROLLER ---
+    function renderAnnualAlmanacView() {
+      const container = document.getElementById('almanacBodyContent');
+      const subtitle = document.getElementById('almanacLocationSubtitle');
+      if (!container) return;
+
+      const year = new Date().getFullYear();
+      const analysis = calculateAnnualAnalysis(appState.lat, appState.lng, year, appState.ihtiyat);
+
+      if (subtitle) {
+        subtitle.textContent = `${appState.cityName}, ${appState.cityState} (${appState.lat.toFixed(2)}° N, ${appState.lng.toFixed(2)}° E)`;
+      }
+
+      const ext = analysis.extremes;
+      const fst = analysis.fasting;
+      const win = analysis.windows;
+      const asrC = analysis.asrComparison;
+
+      container.innerHTML = `
+        <div class="almanac-hero-banner">
+          <div class="almanac-hero-title">
+            <span>${appState.cityName} &bull; ${year} Almanac</span>
+            <span class="setting-badge">${appState.ihtiyat === 'ASTRONOMICAL' ? 'Astronomical' : appState.ihtiyat === 'RAMADAN_SAFE' ? 'Ramadan Safe' : 'Mosque Standard'}</span>
+          </div>
+          <div class="almanac-hero-meta">
+            Karachi Univ. 18°/18° &bull; Hanafi 2× Asr (<em>Misl-e-Sani</em>) &bull; 
+            ${appState.ihtiyat === 'ASTRONOMICAL' ? 'Zero Precautionary Margins' : appState.ihtiyat === 'RAMADAN_SAFE' ? '-10m Suhoor, +3m Iftar Margins' : '-3m Suhoor, +3m Iftar Margins'}
+          </div>
+        </div>
+
+        <div class="almanac-section-title">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Annual Prayer Extremes (Shortest &amp; Longest)
+        </div>
+
+        <div class="almanac-card-grid">
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Fajr (True Dawn)</span>
+              <span class="almanac-metric-shift">Shift: ${ext.fajr.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Earliest: <strong class="almanac-metric-val">${ext.fajr.earliest.time}</strong> <span style="font-size:10px;">(${ext.fajr.earliest.date}, ${ext.fajr.earliest.day})</span></span>
+              <span>Latest: <strong class="almanac-metric-val">${ext.fajr.latest.time}</strong> <span style="font-size:10px;">(${ext.fajr.latest.date}, ${ext.fajr.latest.day})</span></span>
+            </div>
+          </div>
+
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Sehri Cut-Off (${appState.ihtiyat === 'ASTRONOMICAL' ? '0m' : appState.ihtiyat === 'RAMADAN_SAFE' ? '-10m' : '-3m'})</span>
+              <span class="almanac-metric-shift">Shift: ${ext.suhoor.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Earliest: <strong class="almanac-metric-val">${ext.suhoor.earliest.time}</strong> <span style="font-size:10px;">(${ext.suhoor.earliest.date}, ${ext.suhoor.earliest.day})</span></span>
+              <span>Latest: <strong class="almanac-metric-val">${ext.suhoor.latest.time}</strong> <span style="font-size:10px;">(${ext.suhoor.latest.date}, ${ext.suhoor.latest.day})</span></span>
+            </div>
+          </div>
+
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Sunrise (Tulu-e-Aftab)</span>
+              <span class="almanac-metric-shift">Shift: ${ext.sunrise.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Earliest: <strong class="almanac-metric-val">${ext.sunrise.earliest.time}</strong> <span style="font-size:10px;">(${ext.sunrise.earliest.date}, ${ext.sunrise.earliest.day})</span></span>
+              <span>Latest: <strong class="almanac-metric-val">${ext.sunrise.latest.time}</strong> <span style="font-size:10px;">(${ext.sunrise.latest.date}, ${ext.sunrise.latest.day})</span></span>
+            </div>
+          </div>
+
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Solar Noon (Zawal / Dhuhr)</span>
+              <span class="almanac-metric-shift" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3);">EoT: ${ext.solarNoon.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Earliest: <strong class="almanac-metric-val">${ext.solarNoon.earliest.time}</strong> <span style="font-size:10px;">(${ext.solarNoon.earliest.date})</span></span>
+              <span>Latest: <strong class="almanac-metric-val">${ext.solarNoon.latest.time}</strong> <span style="font-size:10px;">(${ext.solarNoon.latest.date})</span></span>
+            </div>
+          </div>
+
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Asr (Hanafi 2× &bull; Shafi 1×)</span>
+              <span class="almanac-metric-shift">Shift: ${ext.hanafiAsr.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Hanafi: <strong class="almanac-metric-val">${ext.hanafiAsr.earliest.time}</strong> &rarr; <strong class="almanac-metric-val">${ext.hanafiAsr.latest.time}</strong></span>
+              <span>Shafi: <strong class="almanac-metric-val">${ext.shafiAsr.earliest.time}</strong> &rarr; <strong class="almanac-metric-val">${ext.shafiAsr.latest.time}</strong></span>
+            </div>
+          </div>
+
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Maghrib / Iftar (+3m Precaution)</span>
+              <span class="almanac-metric-shift">Shift: ${ext.maghrib.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Earliest: <strong class="almanac-metric-val">${ext.maghrib.earliest.time}</strong> <span style="font-size:10px;">(${ext.maghrib.earliest.date}, ${ext.maghrib.earliest.day})</span></span>
+              <span>Latest: <strong class="almanac-metric-val">${ext.maghrib.latest.time}</strong> <span style="font-size:10px;">(${ext.maghrib.latest.date}, ${ext.maghrib.latest.day})</span></span>
+            </div>
+          </div>
+
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Isha (Karachi 18.0°)</span>
+              <span class="almanac-metric-shift">Shift: ${ext.isha.delta}</span>
+            </div>
+            <div class="almanac-metric-row">
+              <span>Earliest: <strong class="almanac-metric-val">${ext.isha.earliest.time}</strong> <span style="font-size:10px;">(${ext.isha.earliest.date})</span></span>
+              <span>Latest: <strong class="almanac-metric-val">${ext.isha.latest.time}</strong> <span style="font-size:10px;">(${ext.isha.latest.date})</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="almanac-section-title">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          Fasting (Roza) Seasonal Dynamics
+        </div>
+
+        <div class="almanac-fast-bar">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:11px; color:var(--text-muted);">Longest Fast (Summer Solstice)</div>
+              <div style="font-size:15px; font-weight:800; color:#34d399;">${fst.longest.durationStr}</div>
+              <div style="font-size:10px; color:var(--text-muted);">${fst.longest.date} (${fst.longest.day}) &bull; ${fst.longest.fajr} &rarr; ${fst.longest.maghrib}</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:11px; color:var(--text-muted);">Shortest Fast (Winter Solstice)</div>
+              <div style="font-size:15px; font-weight:800; color:#60a5fa;">${fst.shortest.durationStr}</div>
+              <div style="font-size:10px; color:var(--text-muted);">${fst.shortest.date} (${fst.shortest.day}) &bull; ${fst.shortest.fajr} &rarr; ${fst.shortest.maghrib}</div>
+            </div>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:4px; border-top:1px solid rgba(255,255,255,0.06); padding-top:6px; display:flex; justify-content:space-between;">
+            <span>Seasonal Fasting Swing:</span>
+            <strong style="color:#fbbf24;">${fst.deltaStr} difference</strong>
+          </div>
+        </div>
+
+        <div class="almanac-section-title">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 10"></polyline></svg>
+          Available Prayer Window Spans
+        </div>
+
+        <div class="almanac-card-grid">
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Fajr Window (Fajr &rarr; Sunrise)</span>
+              <span style="font-size:11px; font-weight:700; color:var(--text-main);">${win.fajr.shortest.minutes}m &ndash; ${win.fajr.longest.minutes}m</span>
+            </div>
+          </div>
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Dhuhr Window (Dhuhr &rarr; Hanafi Asr)</span>
+              <span style="font-size:11px; font-weight:700; color:var(--text-main);">${Math.floor(win.dhuhr.shortest.minutes/60)}h ${win.dhuhr.shortest.minutes%60}m &ndash; ${Math.floor(win.dhuhr.longest.minutes/60)}h ${win.dhuhr.longest.minutes%60}m</span>
+            </div>
+          </div>
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Asr Window (Asr &rarr; Sunset)</span>
+              <span style="font-size:11px; font-weight:700; color:var(--text-main);">${win.asr.shortest.minutes}m &ndash; ${win.asr.longest.minutes}m</span>
+            </div>
+          </div>
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Maghrib Window (Maghrib &rarr; Isha)</span>
+              <span style="font-size:11px; font-weight:700; color:var(--text-main);">${win.maghrib.shortest.minutes}m &ndash; ${win.maghrib.longest.minutes}m</span>
+            </div>
+          </div>
+          <div class="almanac-metric-card">
+            <div class="almanac-metric-head">
+              <span class="almanac-metric-name">Hanafi vs Shafi Asr Gap</span>
+              <span style="font-size:11px; font-weight:700; color:var(--emerald-accent);">+${asrC.minGap.minutes}m (Winter) &rarr; +${asrC.maxGap.minutes}m (Summer)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="almanac-section-title">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          12-Month Reference Timetable (1st of Each Month)
+        </div>
+
+        <div class="almanac-table-wrap">
+          <table class="almanac-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Fajr</th>
+                <th>Sunrise</th>
+                <th>Dhuhr</th>
+                <th>Asr (H)</th>
+                <th>Maghrib</th>
+                <th>Isha</th>
+                <th>Fast</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${analysis.monthlyTable.filter(r => r.dayOfMonth === 1).map(r => `
+                <tr>
+                  <td><strong>${r.dateFormatted}</strong> <span style="font-size:9.5px; opacity:0.7;">${r.dayOfWeek}</span></td>
+                  <td>${r.fajr}</td>
+                  <td>${r.sunrise}</td>
+                  <td>${r.dhuhr}</td>
+                  <td>${r.asr}</td>
+                  <td>${r.maghrib}</td>
+                  <td>${r.isha}</td>
+                  <td style="color:#34d399; font-weight:700;">${r.fastDuration}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function openAlmanacModal() {
+      renderAnnualAlmanacView();
+      openModal(modalAlmanac);
+    }
+
+    if (btnOpenAlmanac) btnOpenAlmanac.addEventListener('click', openAlmanacModal);
+    if (btnOpenAlmanacFromSettings) {
+      btnOpenAlmanacFromSettings.addEventListener('click', () => {
+        closeModal(modalSettings);
+        openAlmanacModal();
+      });
+    }
+    if (btnCloseAlmanac) btnCloseAlmanac.addEventListener('click', () => closeModal(modalAlmanac));
+    if (modalAlmanac) {
+      modalAlmanac.addEventListener('click', (e) => {
+        if (e.target === modalAlmanac) closeModal(modalAlmanac);
+      });
+    }
+
     function playMelodicChime() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -3991,7 +4481,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.4.0";
+    const CURRENT_APP_VERSION = "1.5.0";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');

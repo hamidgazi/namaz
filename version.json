@@ -1,6 +1,6 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "name": "Namaz Times",
-  "updated": "2026-09-09",
-  "changelog": "Performance & Smoothness Release: Ultra-fast cold boot on Android 9+ via offline Service Worker, buttery 60 FPS scrolling with hardware-composited backgrounds, CSS layout containment, and fluid day-switching slide animations."
+  "updated": "2026-09-28",
+  "changelog": "Annual Prayer Almanac & Astronomical Analysis: Interactive modal featuring 365-day prayer extremes, Fasting (Roza) seasonal ranges, prayer window spans, Hanafi vs. Shafi Asr deltas, and 12-month reference timetable."
 }
