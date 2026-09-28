@@ -1406,6 +1406,26 @@
       -webkit-transform: translateZ(0);
     }
 
+    /* ── Timetable panel layout fix ──────────────────────────────────────────
+       The timetable panel must be a rigid flex-column so the toolbar & month
+       ribbon stay pinned while only the table rows scroll.
+       We override the shared .almanac-body defaults specifically for this panel.
+    ── */
+    #almanacPanelTimetable {
+      overflow: hidden;          /* panel itself does NOT scroll */
+      gap: 0;                    /* no gap between toolbar / ribbon / table */
+      padding-right: 0;         /* table wrapper handles its own padding */
+    }
+
+    /* Only the table container scrolls vertically */
+    #timetableMonthContainer {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overflow-x: hidden;        /* horizontal scroll is inside .timetable-table-wrap */
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
     @media (max-width: 360px) {
       .modal-backdrop {
         padding: 8px;
@@ -1627,7 +1647,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 2px 0 6px;
+      padding: 8px 0 6px;      /* top-pad replaces the panel gap that was removed */
       flex-wrap: wrap;
       flex-shrink: 0;
     }
@@ -1708,6 +1728,7 @@
       gap: 5px;
       overflow-x: auto;
       padding: 2px 2px 6px;
+      margin-bottom: 6px;        /* breathing room above the table */
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       scroll-behavior: smooth;
