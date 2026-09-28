@@ -2585,9 +2585,17 @@
       const hFajr = computeHourAngle(-18.0, lat, solar.declination);
       const fajrRaw = hFajr ? fixHour(dhuhrTransit - hFajr) : fixHour(sunriseRaw - 1.5);
 
-      // Asr: Hanafi 2x shadow factor
+      // Asr: Hanafi 2x shadow factor & Shafi 1x shadow factor
       const noonAltitude = 90.0 - Math.abs(lat - (solar.declination * RAD2DEG));
       const noonShadow = Math.tan((90.0 - noonAltitude) * DEG2RAD);
+
+      // Shafi Asr (1x shadow)
+      const asrShafiAltitude = Math.atan(1.0 / (1.0 + noonShadow)) * RAD2DEG;
+      const hAsrShafi = computeHourAngle(asrShafiAltitude, lat, solar.declination) || 3.0;
+      const asrShafiRaw = fixHour(dhuhrTransit + hAsrShafi);
+      const shafiAsr = roundForward(asrShafiRaw);
+
+      // Hanafi Asr (2x shadow)
       const asrAltitude = Math.atan(1.0 / (2.0 + noonShadow)) * RAD2DEG;
       const hAsr = computeHourAngle(asrAltitude, lat, solar.declination) || 3.0;
       const asrRaw = fixHour(dhuhrTransit + hAsr);
@@ -2623,7 +2631,7 @@
       const nightDuration = fixHour(24.0 - maghribRaw + fajrRaw);
       const tahajjudStart = roundBackward(fixHour(maghribRaw + (nightDuration * (2.0 / 3.0))));
 
-      return { fajr, sunrise, dhuhr, asr, maghrib, isha, suhoor, dahwa, zawalStart, ishraq, chasht, tahajjudStart };
+      return { fajr, sunrise, dhuhr, asr, maghrib, isha, suhoor, dahwa, zawalStart, ishraq, chasht, tahajjudStart, shafiAsr, dhuhrTransit, noonAltitude, noonShadow };
     }
 
     function formatTime12(decimalHour) {
@@ -2642,7 +2650,204 @@
       return d;
     }
 
-        // --- SAFE STORAGE HELPERS (Guarded against SecurityError / QuotaExceededError) ---
+    // --- ANNUAL ASTRONOMICAL & PRAYER TIMING ENGINE ---
+    let cachedAnnualAnalysis = {}; // key: "lat_lng_year_ihtiyat"
+
+    function calculateAnnualAnalysis(lat, lng, year, ihtiyatMode = 'MOSQUE') {
+      const targetYear = year || new Date().getFullYear();
+      const cacheKey = `${lat.toFixed(4)}_${lng.toFixed(4)}_${targetYear}_${ihtiyatMode}`;
+      if (cachedAnnualAnalysis[cacheKey]) {
+        return cachedAnnualAnalysis[cacheKey];
+      }
+
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      function checkExtreme(currVal, obj, minRef, maxRef) {
+        if (!minRef.val || currVal < minRef.val.val) minRef.val = { val: currVal, ...obj };
+        if (!maxRef.val || currVal > maxRef.val.val) maxRef.val = { val: currVal, ...obj };
+      }
+
+      let fajrMinRef = { val: null }, fajrMaxRef = { val: null };
+      let suhoorMinRef = { val: null }, suhoorMaxRef = { val: null };
+      let sunriseMinRef = { val: null }, sunriseMaxRef = { val: null };
+      let noonMinRef = { val: null }, noonMaxRef = { val: null };
+      let hAsrMinRef = { val: null }, hAsrMaxRef = { val: null };
+      let sAsrMinRef = { val: null }, sAsrMaxRef = { val: null };
+      let maghribMinRef = { val: null }, maghribMaxRef = { val: null };
+      let ishaMinRef = { val: null }, ishaMaxRef = { val: null };
+
+      let fastLongRef = { val: null }, fastShortRef = { val: null };
+      let fWinMinRef = { val: null }, fWinMaxRef = { val: null };
+      let dWinMinRef = { val: null }, dWinMaxRef = { val: null };
+      let aWinMinRef = { val: null }, aWinMaxRef = { val: null };
+      let mWinMinRef = { val: null }, mWinMaxRef = { val: null };
+      let tWinMinRef = { val: null }, tWinMaxRef = { val: null };
+      let gapMinRef = { val: null }, gapMaxRef = { val: null };
+
+      for (let m = 0; m < 12; m++) {
+        const daysInMonth = new Date(targetYear, m + 1, 0).getDate();
+        for (let d = 1; d <= daysInMonth; d++) {
+          const dt = new Date(targetYear, m, d, 12, 0, 0);
+          const sched = calculateAccurateHanafiTimes(lat, lng, dt, ihtiyatMode);
+          const dayOfWeek = dayNames[dt.getDay()];
+          const dateStr = `${String(d).padStart(2, '0')} ${shortMonthNames[m]}`;
+
+          const fastHours = sched.maghrib - sched.fajr;
+          const fajrWindowMin = Math.round((sched.sunrise - sched.fajr) * 60);
+          const dhuhrWindowMin = Math.round((sched.asr - sched.dhuhr) * 60);
+          const asrWindowMin = Math.round((sched.maghrib - sched.asr) * 60);
+          const maghribWindowMin = Math.round((sched.isha - sched.maghrib) * 60);
+          const tahajjudWindowMin = Math.round((fixHour(sched.fajr - sched.tahajjudStart)) * 60);
+          const asrGapMin = Math.round((sched.asr - sched.shafiAsr) * 60);
+
+          checkExtreme(sched.fajr, { time: formatTime12(sched.fajr), date: dateStr, day: dayOfWeek }, fajrMinRef, fajrMaxRef);
+          checkExtreme(sched.suhoor, { time: formatTime12(sched.suhoor), date: dateStr, day: dayOfWeek }, suhoorMinRef, suhoorMaxRef);
+          checkExtreme(sched.sunrise, { time: formatTime12(sched.sunrise), date: dateStr, day: dayOfWeek }, sunriseMinRef, sunriseMaxRef);
+          checkExtreme(sched.dhuhrTransit, { time: formatTime12(sched.dhuhrTransit), date: dateStr, day: dayOfWeek }, noonMinRef, noonMaxRef);
+          checkExtreme(sched.asr, { time: formatTime12(sched.asr), date: dateStr, day: dayOfWeek }, hAsrMinRef, hAsrMaxRef);
+          checkExtreme(sched.shafiAsr, { time: formatTime12(sched.shafiAsr), date: dateStr, day: dayOfWeek }, sAsrMinRef, sAsrMaxRef);
+          checkExtreme(sched.maghrib, { time: formatTime12(sched.maghrib), date: dateStr, day: dayOfWeek }, maghribMinRef, maghribMaxRef);
+          checkExtreme(sched.isha, { time: formatTime12(sched.isha), date: dateStr, day: dayOfWeek }, ishaMinRef, ishaMaxRef);
+
+          if (!fastLongRef.val || fastHours > fastLongRef.val.hours) {
+            fastLongRef.val = {
+              hours: fastHours,
+              durationStr: `${Math.floor(fastHours)}h ${Math.round((fastHours % 1) * 60)}m`,
+              date: dateStr,
+              day: dayOfWeek,
+              fajr: formatTime12(sched.fajr),
+              maghrib: formatTime12(sched.maghrib)
+            };
+          }
+          if (!fastShortRef.val || fastHours < fastShortRef.val.hours) {
+            fastShortRef.val = {
+              hours: fastHours,
+              durationStr: `${Math.floor(fastHours)}h ${Math.round((fastHours % 1) * 60)}m`,
+              date: dateStr,
+              day: dayOfWeek,
+              fajr: formatTime12(sched.fajr),
+              maghrib: formatTime12(sched.maghrib)
+            };
+          }
+
+          checkExtreme(fajrWindowMin, { minutes: fajrWindowMin, date: dateStr, day: dayOfWeek }, fWinMinRef, fWinMaxRef);
+          checkExtreme(dhuhrWindowMin, { minutes: dhuhrWindowMin, date: dateStr, day: dayOfWeek }, dWinMinRef, dWinMaxRef);
+          checkExtreme(asrWindowMin, { minutes: asrWindowMin, date: dateStr, day: dayOfWeek }, aWinMinRef, aWinMaxRef);
+          checkExtreme(maghribWindowMin, { minutes: maghribWindowMin, date: dateStr, day: dayOfWeek }, mWinMinRef, mWinMaxRef);
+          checkExtreme(tahajjudWindowMin, { minutes: tahajjudWindowMin, date: dateStr, day: dayOfWeek }, tWinMinRef, tWinMaxRef);
+          checkExtreme(asrGapMin, { minutes: asrGapMin, date: dateStr, day: dayOfWeek }, gapMinRef, gapMaxRef);
+        }
+      }
+
+      function formatDelta(minVal, maxVal) {
+        const diffMin = Math.round((maxVal - minVal) * 60);
+        const h = Math.floor(diffMin / 60);
+        const m = diffMin % 60;
+        if (h > 0) return `${h}h ${m}m`;
+        return `${m} mins`;
+      }
+
+      const monthlyTable = [];
+      for (let m = 0; m < 12; m++) {
+        [1, 15].forEach(day => {
+          const dt = new Date(targetYear, m, day, 12, 0, 0);
+          const s = calculateAccurateHanafiTimes(lat, lng, dt, ihtiyatMode);
+          const fast = s.maghrib - s.fajr;
+          const dl = s.maghrib - s.sunrise;
+          const gap = Math.round((s.asr - s.shafiAsr) * 60);
+          monthlyTable.push({
+            dateFormatted: `${String(day).padStart(2, '0')} ${shortMonthNames[m]}`,
+            monthIndex: m,
+            dayOfMonth: day,
+            dayOfWeek: dayNames[dt.getDay()],
+            fajr: formatTime12(s.fajr),
+            suhoor: formatTime12(s.suhoor),
+            sunrise: formatTime12(s.sunrise),
+            dhuhr: formatTime12(s.dhuhr),
+            shafiAsr: formatTime12(s.shafiAsr),
+            asr: formatTime12(s.asr),
+            maghrib: formatTime12(s.maghrib),
+            isha: formatTime12(s.isha),
+            fastDuration: `${Math.floor(fast)}h ${Math.round((fast % 1) * 60)}m`,
+            daylightDuration: `${Math.floor(dl)}h ${Math.round((dl % 1) * 60)}m`,
+            asrGap: `+${gap}m`
+          });
+        });
+      }
+
+      const astronomicalMilestones = [
+        { name: 'Vernal Equinox', dateStr: `20 Mar ${targetYear}`, dt: new Date(targetYear, 2, 20, 12, 0, 0) },
+        { name: 'Summer Solstice', dateStr: `21 Jun ${targetYear}`, dt: new Date(targetYear, 5, 21, 12, 0, 0) },
+        { name: 'Autumnal Equinox', dateStr: `22 Sep ${targetYear}`, dt: new Date(targetYear, 8, 22, 12, 0, 0) },
+        { name: 'Winter Solstice', dateStr: `21 Dec ${targetYear}`, dt: new Date(targetYear, 11, 21, 12, 0, 0) }
+      ].map(evt => {
+        const s = calculateAccurateHanafiTimes(lat, lng, evt.dt, ihtiyatMode);
+        const fast = s.maghrib - s.fajr;
+        const dl = s.maghrib - s.sunrise;
+        return {
+          name: evt.name,
+          date: evt.dateStr,
+          day: dayNames[evt.dt.getDay()],
+          daylight: `${Math.floor(dl)}h ${Math.round((dl % 1) * 60)}m`,
+          fastLength: `${Math.floor(fast)}h ${Math.round((fast % 1) * 60)}m`,
+          fajr: formatTime12(s.fajr),
+          sunrise: formatTime12(s.sunrise),
+          dhuhr: formatTime12(s.dhuhr),
+          asr: formatTime12(s.asr),
+          maghrib: formatTime12(s.maghrib),
+          isha: formatTime12(s.isha)
+        };
+      });
+
+      const fastDeltaMinutes = Math.round((fastLongRef.val.hours - fastShortRef.val.hours) * 60);
+
+      const result = {
+        year: targetYear,
+        lat,
+        lng,
+        ihtiyatMode,
+        extremes: {
+          fajr: { earliest: fajrMinRef.val, latest: fajrMaxRef.val, delta: formatDelta(fajrMinRef.val.val, fajrMaxRef.val.val) },
+          suhoor: { earliest: suhoorMinRef.val, latest: suhoorMaxRef.val, delta: formatDelta(suhoorMinRef.val.val, suhoorMaxRef.val.val) },
+          sunrise: { earliest: sunriseMinRef.val, latest: sunriseMaxRef.val, delta: formatDelta(sunriseMinRef.val.val, sunriseMaxRef.val.val) },
+          solarNoon: { earliest: noonMinRef.val, latest: noonMaxRef.val, delta: formatDelta(noonMinRef.val.val, noonMaxRef.val.val) },
+          shafiAsr: { earliest: sAsrMinRef.val, latest: sAsrMaxRef.val, delta: formatDelta(sAsrMinRef.val.val, sAsrMaxRef.val.val) },
+          hanafiAsr: { earliest: hAsrMinRef.val, latest: hAsrMaxRef.val, delta: formatDelta(hAsrMinRef.val.val, hAsrMaxRef.val.val) },
+          maghrib: { earliest: maghribMinRef.val, latest: maghribMaxRef.val, delta: formatDelta(maghribMinRef.val.val, maghribMaxRef.val.val) },
+          isha: { earliest: ishaMinRef.val, latest: ishaMaxRef.val, delta: formatDelta(ishaMinRef.val.val, ishaMaxRef.val.val) }
+        },
+        fasting: {
+          longest: fastLongRef.val,
+          shortest: fastShortRef.val,
+          deltaMinutes: fastDeltaMinutes,
+          deltaStr: `${Math.floor(fastDeltaMinutes / 60)}h ${fastDeltaMinutes % 60}m`
+        },
+        windows: {
+          fajr: { shortest: fWinMinRef.val, longest: fWinMaxRef.val },
+          dhuhr: { shortest: dWinMinRef.val, longest: dWinMaxRef.val },
+          asr: { shortest: aWinMinRef.val, longest: aWinMaxRef.val },
+          maghrib: { shortest: mWinMinRef.val, longest: mWinMaxRef.val },
+          tahajjud: { shortest: tWinMinRef.val, longest: tWinMaxRef.val }
+        },
+        asrComparison: {
+          minGap: gapMinRef.val,
+          maxGap: gapMaxRef.val
+        },
+        monthlyTable,
+        astronomicalMilestones
+      };
+
+      cachedAnnualAnalysis[cacheKey] = result;
+      return result;
+    }
+
+    function clearAnnualAnalysisCache() {
+      cachedAnnualAnalysis = {};
+    }
+
+    // --- SAFE STORAGE HELPERS (Guarded against SecurityError / QuotaExceededError) ---
     function safeStorageGet(key, defaultVal = null) {
       try {
         if (typeof localStorage !== 'undefined' && localStorage) {
@@ -2707,6 +2912,9 @@
     }
     function clearScheduleCache() {
       cachedDaySchedules = {};
+      if (typeof clearAnnualAnalysisCache === 'function') {
+        clearAnnualAnalysisCache();
+      }
     }
 
     // Elements
