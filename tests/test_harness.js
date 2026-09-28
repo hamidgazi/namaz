@@ -279,9 +279,69 @@ class MockElement {
   set innerHTML(val) {
     this._innerHTML = String(val);
     this._innerText = this._innerHTML.replace(/<[^>]*>/g, '').trim();
-    if (!this._innerHTML) {
-      this.children = [];
+    this.children = [];
+    if (!this._innerHTML) return;
+
+    const tagRegex = /<([a-z0-9]+)(\s+[^>]*)?>/gi;
+    let m;
+    while ((m = tagRegex.exec(this._innerHTML)) !== null) {
+      const tagName = m[1];
+      const attrsStr = m[2] || '';
+      const tagEndIndex = tagRegex.lastIndex;
+
+      const child = new MockElement(tagName);
+      child.parentElement = this;
+
+      const attrRegex = /([a-z0-9_-]+)(?:=["']([^"']*)["'])?/gi;
+      let am;
+      while ((am = attrRegex.exec(attrsStr)) !== null) {
+        child.setAttribute(am[1], am[2] !== undefined ? am[2] : '');
+      }
+
+      const closeTag = `</${tagName}>`;
+      const closeIndex = this._innerHTML.indexOf(closeTag, tagEndIndex);
+      if (closeIndex !== -1) {
+        child._innerHTML = this._innerHTML.slice(tagEndIndex, closeIndex);
+        child._innerText = child._innerHTML.replace(/<[^>]*>/g, '').trim();
+      } else {
+        const nextLt = this._innerHTML.indexOf('<', tagEndIndex);
+        if (nextLt !== -1) {
+          child._innerText = this._innerHTML.slice(tagEndIndex, nextLt).trim();
+          child._innerHTML = child._innerText;
+        }
+      }
+
+      this.children.push(child);
     }
+  }
+
+  querySelectorAll(selector) {
+    if (this.children.length === 0 && this._innerHTML) {
+      this.innerHTML = this._innerHTML;
+    }
+    const results = [];
+    const parts = selector.trim().split(/\s+/);
+    const lastPart = parts[parts.length - 1];
+
+    for (const child of this.children) {
+      let isMatch = false;
+      if (lastPart.startsWith('.')) {
+        const classes = lastPart.split('.').filter(Boolean);
+        if (classes.every(c => child.classList.contains(c))) isMatch = true;
+      } else if (lastPart.startsWith('#')) {
+        if (child.id === lastPart.slice(1)) isMatch = true;
+      } else {
+        if (child.tagName === lastPart.toUpperCase()) isMatch = true;
+      }
+
+      if (isMatch) results.push(child);
+    }
+    return results;
+  }
+
+  querySelector(selector) {
+    const list = this.querySelectorAll(selector);
+    return list.length > 0 ? list[0] : null;
   }
 
   get innerText() { return this._innerText; }
@@ -628,7 +688,10 @@ function loadApp(options = {}) {
     'txtBannerNewVersion', 'btnCheckUpdateFooter', 'btnCheckUpdateSettings',
     'btnReloadUpdate', 'txtUpdateStatus', 'updateBanner', 'fastingStrip',
     'btnOpenAlmanac', 'btnCloseAlmanac', 'btnOpenAlmanacFromSettings',
-    'modalAlmanac', 'almanacBodyContent', 'almanacLocationSubtitle'
+    'modalAlmanac', 'almanacBodyContent', 'almanacLocationSubtitle',
+    'tabAlmanacOverview', 'tabAlmanacTimetable', 'almanacPanelOverview', 'almanacPanelTimetable',
+    'btnTimetablePrevYear', 'btnTimetableNextYear', 'txtTimetableYear',
+    'btnTimetableToday', 'btnTimetablePrint', 'almanacMonthRibbon', 'timetableMonthContainer'
   ];
 
   knownIds.forEach(id => {

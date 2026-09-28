@@ -1422,6 +1422,23 @@
       .almanac-fast-bar {
         padding: 10px;
       }
+      .almanac-tab-btn {
+        font-size: 10.5px;
+        padding: 6px 8px;
+        gap: 4px;
+      }
+      .timetable-toolbar {
+        gap: 6px;
+      }
+      .timetable-action-btn {
+        padding: 4px 7px;
+        font-size: 10px;
+      }
+      .timetable-full-table th,
+      .timetable-full-table td {
+        padding: 6px 8px;
+        font-size: 10px;
+      }
     }
 
     .almanac-hero-banner {
@@ -1560,6 +1577,329 @@
 
     .almanac-table tr:hover td {
       background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Segmented Tab Control in Almanac Modal */
+    .almanac-tab-bar {
+      display: flex;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin: 8px 0 10px;
+      flex-shrink: 0;
+    }
+
+    .almanac-tab-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 36px;
+    }
+
+    .almanac-tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .almanac-tab-btn.active {
+      background: var(--emerald-accent);
+      color: #022c22;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Timetable Toolbar & Controls */
+    .timetable-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .timetable-year-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 6px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+    }
+
+    .timetable-stepper-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .timetable-stepper-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .timetable-year-display {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+      min-width: 42px;
+      text-align: center;
+    }
+
+    .timetable-action-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .timetable-action-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+      min-height: 32px;
+    }
+
+    .timetable-action-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .timetable-print-btn {
+      color: var(--emerald-accent);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    /* 12-Month Ribbon */
+    .almanac-month-ribbon {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding: 2px 2px 6px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+      flex-shrink: 0;
+    }
+
+    .almanac-month-ribbon::-webkit-scrollbar {
+      display: none;
+    }
+
+    .almanac-month-pill {
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .almanac-month-pill:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .almanac-month-pill.active {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border-color: rgba(16, 185, 129, 0.45);
+      font-weight: 800;
+    }
+
+    /* Full Month Timetable Table & Sticky Columns */
+    .timetable-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.6);
+      position: relative;
+    }
+
+    .timetable-full-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 11px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .timetable-full-table th {
+      padding: 8px 10px;
+      background: #162032;
+      color: var(--text-muted);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .timetable-full-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Sticky First Column: Date & Day */
+    .timetable-full-table th:first-child,
+    .timetable-full-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background: #111827;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .timetable-full-table th:first-child {
+      z-index: 4;
+      background: #162032;
+    }
+
+    /* Today's Row Highlight */
+    .timetable-row-today td {
+      background: rgba(16, 185, 129, 0.15) !important;
+      color: #ecfdf5 !important;
+      font-weight: 700;
+    }
+
+    .timetable-row-today td:first-child {
+      background: #064e3b !important;
+      border-left: 3px solid var(--emerald-accent);
+    }
+
+    /* Interactive Row Hover & Click */
+    .timetable-row-interactive {
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .timetable-row-interactive:hover td {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .timetable-today-badge {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 6px;
+      background: var(--emerald-accent);
+      color: #022c22;
+      font-weight: 800;
+      margin-left: 4px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #modalAlmanac,
+      #modalAlmanac #almanacPanelTimetable,
+      #modalAlmanac #almanacPanelTimetable * {
+        visibility: visible !important;
+      }
+      #modalAlmanac {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        display: block !important;
+      }
+      .modal-card-almanac {
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 10px !important;
+      }
+      .modal-head,
+      .modal-close,
+      .almanac-tab-bar,
+      .timetable-toolbar,
+      .almanac-month-ribbon {
+        display: none !important;
+      }
+      .timetable-table-wrap {
+        border: 1px solid #999999 !important;
+        background: #ffffff !important;
+        overflow: visible !important;
+      }
+      .timetable-full-table {
+        color: #000000 !important;
+        width: 100% !important;
+      }
+      .timetable-full-table th,
+      .timetable-full-table td {
+        border-color: #cccccc !important;
+        color: #000000 !important;
+        background: #ffffff !important;
+        padding: 6px 8px !important;
+        font-size: 10pt !important;
+      }
+      .timetable-full-table th {
+        background: #f1f5f9 !important;
+        font-weight: bold !important;
+      }
+      .timetable-row-today td {
+        background: #e2e8f0 !important;
+        font-weight: bold !important;
+      }
+      .timetable-today-badge {
+        border: 1px solid #333 !important;
+        background: #e2e8f0 !important;
+        color: #000 !important;
+      }
     }
 
     .setting-group {
@@ -1891,7 +2231,7 @@
     <div id="updateBanner" class="update-banner">
       <div class="update-banner-text">
         <span class="update-sparkle">✨</span>
-        <span>Update available (<strong id="txtBannerNewVersion">v1.5.0</strong>)!</span>
+        <span>Update available (<strong id="txtBannerNewVersion">v1.6.0</strong>)!</span>
       </div>
       <button id="btnReloadUpdate" class="btn-reload-update">Update Now</button>
     </div>
@@ -1978,7 +2318,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.5.0</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.0</span>
         </div>
       </div>
 
@@ -2286,7 +2626,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.5.0</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.0</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -2456,8 +2796,80 @@
           </button>
         </div>
 
-        <div class="settings-body almanac-body" id="almanacBodyContent">
-          <!-- Populated dynamically by renderAnnualAlmanacView() -->
+        <!-- Segmented Tab Navigation -->
+        <div class="almanac-tab-bar" role="tablist" aria-label="Almanac Views">
+          <button id="tabAlmanacOverview" class="almanac-tab-btn active" role="tab" aria-selected="true" aria-controls="almanacPanelOverview">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            Overview &amp; Extremes
+          </button>
+          <button id="tabAlmanacTimetable" class="almanac-tab-btn" role="tab" aria-selected="false" aria-controls="almanacPanelTimetable">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Full Year Timetable
+          </button>
+        </div>
+
+        <!-- Panel 1: Overview & Extremes -->
+        <div id="almanacPanelOverview" class="settings-body almanac-body" role="tabpanel" aria-labelledby="tabAlmanacOverview">
+          <div id="almanacBodyContent">
+            <!-- Populated dynamically by renderAnnualAlmanacView() -->
+          </div>
+        </div>
+
+        <!-- Panel 2: Full Year Timetable -->
+        <div id="almanacPanelTimetable" class="settings-body almanac-body" role="tabpanel" aria-labelledby="tabAlmanacTimetable" style="display: none;">
+          <!-- Controls Toolbar: Year Stepper + Today + Print/Save PDF -->
+          <div class="timetable-toolbar">
+            <div class="timetable-year-stepper">
+              <button id="btnTimetablePrevYear" class="timetable-stepper-btn" aria-label="Previous Year">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span id="txtTimetableYear" class="timetable-year-display">2026</span>
+              <button id="btnTimetableNextYear" class="timetable-stepper-btn" aria-label="Next Year">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <div class="timetable-action-group">
+              <button id="btnTimetableToday" class="timetable-action-btn" title="Jump to Current Month &amp; Today">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Today
+              </button>
+              <button id="btnTimetablePrint" class="timetable-action-btn timetable-print-btn" title="Print or Save PDF for this Month">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                  <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                Print / PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- 12 Quick-Switch Month Tabs Ribbon -->
+          <div class="almanac-month-ribbon" id="almanacMonthRibbon" role="tablist" aria-label="Months of the Year">
+            <!-- 12 month buttons (Jan–Dec) populated dynamically -->
+          </div>
+
+          <!-- Monthly Timetable Table Container -->
+          <div id="timetableMonthContainer">
+            <!-- Populated dynamically by renderMonthlyTimetableView() -->
+          </div>
         </div>
       </div>
     </div>
@@ -2483,7 +2895,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.5.0</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.6.0</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -3286,6 +3698,17 @@
     const btnOpenAlmanacFromSettings = document.getElementById('btnOpenAlmanacFromSettings');
     const almanacBodyContent = document.getElementById('almanacBodyContent');
     const almanacLocationSubtitle = document.getElementById('almanacLocationSubtitle');
+    const tabAlmanacOverview = document.getElementById('tabAlmanacOverview');
+    const tabAlmanacTimetable = document.getElementById('tabAlmanacTimetable');
+    const almanacPanelOverview = document.getElementById('almanacPanelOverview');
+    const almanacPanelTimetable = document.getElementById('almanacPanelTimetable');
+    const btnTimetablePrevYear = document.getElementById('btnTimetablePrevYear');
+    const btnTimetableNextYear = document.getElementById('btnTimetableNextYear');
+    const txtTimetableYear = document.getElementById('txtTimetableYear');
+    const btnTimetableToday = document.getElementById('btnTimetableToday');
+    const btnTimetablePrint = document.getElementById('btnTimetablePrint');
+    const almanacMonthRibbon = document.getElementById('almanacMonthRibbon');
+    const timetableMonthContainer = document.getElementById('timetableMonthContainer');
     const btnOpenSunnahDrawer = document.getElementById('btnOpenSunnahDrawer');
     const btnCloseSunnahDrawer = document.getElementById('btnCloseSunnahDrawer');
     const inputCitySearch = document.getElementById('inputCitySearch');
@@ -4061,7 +4484,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.5.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.6.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -4492,12 +4915,229 @@
       `;
     }
 
-    function openAlmanacModal() {
-      renderAnnualAlmanacView();
+    // --- ANNUAL ALMANAC & MONTHLY TIMETABLE CONTROLLER ---
+    let almanacState = {
+      activeTab: 'overview', // 'overview' | 'timetable'
+      timetableYear: new Date().getFullYear(),
+      timetableMonth: new Date().getMonth() // 0-11
+    };
+
+    function switchAlmanacTab(tabName) {
+      almanacState.activeTab = tabName;
+      if (tabName === 'overview') {
+        if (tabAlmanacOverview) {
+          tabAlmanacOverview.classList.add('active');
+          tabAlmanacOverview.setAttribute('aria-selected', 'true');
+        }
+        if (tabAlmanacTimetable) {
+          tabAlmanacTimetable.classList.remove('active');
+          tabAlmanacTimetable.setAttribute('aria-selected', 'false');
+        }
+        if (almanacPanelOverview) almanacPanelOverview.style.display = '';
+        if (almanacPanelTimetable) almanacPanelTimetable.style.display = 'none';
+        renderAnnualAlmanacView();
+      } else {
+        if (tabAlmanacOverview) {
+          tabAlmanacOverview.classList.remove('active');
+          tabAlmanacOverview.setAttribute('aria-selected', 'false');
+        }
+        if (tabAlmanacTimetable) {
+          tabAlmanacTimetable.classList.add('active');
+          tabAlmanacTimetable.setAttribute('aria-selected', 'true');
+        }
+        if (almanacPanelOverview) almanacPanelOverview.style.display = 'none';
+        if (almanacPanelTimetable) almanacPanelTimetable.style.display = '';
+        renderMonthlyTimetableView();
+      }
+    }
+
+    const ALMANAC_MONTH_NAMES = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const ALMANAC_SHORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    function renderAlmanacMonthRibbon() {
+      if (!almanacMonthRibbon) return;
+      almanacMonthRibbon.innerHTML = ALMANAC_SHORT_MONTHS.map((name, idx) => `
+        <button class="almanac-month-pill ${idx === almanacState.timetableMonth ? 'active' : ''}" data-month="${idx}" role="tab" aria-selected="${idx === almanacState.timetableMonth}">
+          ${name}
+        </button>
+      `).join('');
+
+      const pills = almanacMonthRibbon.querySelectorAll('.almanac-month-pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const m = parseInt(pill.getAttribute('data-month'), 10);
+          if (!isNaN(m)) {
+            almanacState.timetableMonth = m;
+            pills.forEach(p => {
+              p.classList.remove('active');
+              p.setAttribute('aria-selected', 'false');
+            });
+            pill.classList.add('active');
+            pill.setAttribute('aria-selected', 'true');
+            renderMonthlyTimetableView();
+          }
+        });
+      });
+    }
+
+    function renderMonthlyTimetableGrid() {
+      if (!timetableMonthContainer) return;
+
+      const monthData = calculateMonthlyTimetable(
+        appState.lat,
+        appState.lng,
+        almanacState.timetableYear,
+        almanacState.timetableMonth,
+        appState.ihtiyat,
+        appState.hijriOffset
+      );
+
+      const monthName = monthData.monthName;
+      const days = monthData.days;
+
+      let html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:800; color:var(--text-main);">
+            ${monthName} ${almanacState.timetableYear}
+            <span style="font-size:10px; color:var(--text-muted); font-weight:600; margin-left:6px;">(${days.length} Days)</span>
+          </div>
+          <div style="font-size:10px; color:var(--emerald-accent); font-weight:700;">
+            Tap row to jump
+          </div>
+        </div>
+
+        <div class="timetable-table-wrap">
+          <table class="timetable-full-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Hijri</th>
+                <th>Sehri/Fajr</th>
+                <th>Sunrise</th>
+                <th>Zawal / Dhuhr</th>
+                <th>Asr (H)</th>
+                <th>Maghrib</th>
+                <th>Isha</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      days.forEach(d => {
+        const todayClass = d.isToday ? ' timetable-row-today' : '';
+        const todayBadge = d.isToday ? '<span class="timetable-today-badge">TODAY</span>' : '';
+
+        html += `
+          <tr class="timetable-row-interactive${todayClass}" data-date-iso="${d.dateIso}">
+            <td><strong>${d.dayNumPad} ${monthData.shortMonthName}</strong> <span style="font-size:9.5px; opacity:0.75;">${d.dayName}</span>${todayBadge}</td>
+            <td style="color:#94a3b8; font-size:10px;">${d.hijriFormatted}</td>
+            <td><strong>${d.sehri}</strong></td>
+            <td>${d.sunrise}</td>
+            <td><strong>${d.dhuhr}</strong> <span style="font-size:9px; opacity:0.65;">(${d.zawalStart})</span></td>
+            <td>${d.asr}</td>
+            <td style="color:#34d399; font-weight:700;">${d.maghrib}</td>
+            <td>${d.isha}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      timetableMonthContainer.innerHTML = html;
+
+      // Attach row click listeners for Date-Jump planning toolkit
+      const rows = timetableMonthContainer.querySelectorAll('.timetable-row-interactive');
+      rows.forEach(row => {
+        row.addEventListener('click', () => {
+          const dateIso = row.getAttribute('data-date-iso');
+          if (dateIso) {
+            const target = new Date(dateIso + 'T12:00:00');
+            const now = new Date();
+            const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+            const diffMs = target.getTime() - todayMid.getTime();
+            const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+            appState.dateOffset = diffDays;
+            closeModal(modalAlmanac);
+            refreshAllTimings();
+            if (typeof updateBrowsingDateUI === 'function') {
+              updateBrowsingDateUI();
+            }
+          }
+        });
+      });
+    }
+
+    function renderMonthlyTimetableView() {
+      if (txtTimetableYear) {
+        txtTimetableYear.textContent = String(almanacState.timetableYear);
+      }
+      renderAlmanacMonthRibbon();
+      renderMonthlyTimetableGrid();
+    }
+
+    function openAlmanacModal(targetTab = null) {
+      if (targetTab) {
+        switchAlmanacTab(targetTab);
+      } else {
+        switchAlmanacTab(almanacState.activeTab || 'overview');
+      }
       openModal(modalAlmanac);
     }
 
-    if (btnOpenAlmanac) btnOpenAlmanac.addEventListener('click', openAlmanacModal);
+    // Tab Listeners
+    if (tabAlmanacOverview) {
+      tabAlmanacOverview.addEventListener('click', () => switchAlmanacTab('overview'));
+    }
+    if (tabAlmanacTimetable) {
+      tabAlmanacTimetable.addEventListener('click', () => switchAlmanacTab('timetable'));
+    }
+
+    // Year Stepper Listeners
+    if (btnTimetablePrevYear) {
+      btnTimetablePrevYear.addEventListener('click', () => {
+        almanacState.timetableYear--;
+        renderMonthlyTimetableView();
+      });
+    }
+    if (btnTimetableNextYear) {
+      btnTimetableNextYear.addEventListener('click', () => {
+        almanacState.timetableYear++;
+        renderMonthlyTimetableView();
+      });
+    }
+
+    // Jump to Today
+    if (btnTimetableToday) {
+      btnTimetableToday.addEventListener('click', () => {
+        const today = new Date();
+        almanacState.timetableYear = today.getFullYear();
+        almanacState.timetableMonth = today.getMonth();
+        renderMonthlyTimetableView();
+        if (almanacMonthRibbon) {
+          const activePill = almanacMonthRibbon.querySelector('.almanac-month-pill.active');
+          if (activePill && typeof activePill.scrollIntoView === 'function') {
+            activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
+        }
+      });
+    }
+
+    // Print / PDF Button
+    if (btnTimetablePrint) {
+      btnTimetablePrint.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    if (btnOpenAlmanac) btnOpenAlmanac.addEventListener('click', () => openAlmanacModal());
     if (btnOpenAlmanacFromSettings) {
       btnOpenAlmanacFromSettings.addEventListener('click', () => {
         closeModal(modalSettings);
@@ -4565,7 +5205,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.5.0";
+    const CURRENT_APP_VERSION = "1.6.0";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');
