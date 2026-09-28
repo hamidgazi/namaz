@@ -1741,17 +1741,17 @@
 
     .almanac-month-pill {
       flex: 0 0 auto;
-      padding: 6px 12px;
+      padding: 6px 14px;          /* C1: wider hit target */
       font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.07);  /* C2: more visible inactive state */
       border: 1px solid var(--card-border);
       border-radius: 16px;
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
-      min-height: 32px;
+      min-height: 36px;           /* C1: taller tap target */
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1853,6 +1853,45 @@
       margin-left: 4px;
       vertical-align: middle;
       display: inline-block;
+    }
+
+    /* A1 — Right-edge scroll shadow tells users table scrolls horizontally */
+    .timetable-table-wrap {
+      box-shadow: inset -32px 0 20px -12px rgba(15, 23, 42, 0.95);
+    }
+
+    /* A4 — Today row: small arrow in the sticky date cell hints "tap to jump" */
+    .timetable-row-today td:first-child::after {
+      content: ' ›';
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--emerald-accent);
+      opacity: 0.85;
+      margin-left: 2px;
+    }
+
+    /* B1 — Sunrise column hidden on phones narrower than 440px (saves ~55px width) */
+    @media (max-width: 440px) {
+      .tt-col-sunrise {
+        display: none;
+      }
+    }
+
+    /* C3 — On very narrow screens (<= 380px) hide button labels, show icons only */
+    @media (max-width: 380px) {
+      .btn-text {
+        display: none;
+      }
+      .timetable-action-btn {
+        padding: 6px 9px;
+        min-width: 34px;
+        justify-content: center;
+      }
+    }
+
+    /* D3 — Subtle alternating row tint improves row-tracking across wide table */
+    .timetable-full-table tbody tr:nth-child(odd) td:not(:first-child) {
+      background: rgba(255, 255, 255, 0.022);
     }
 
     @media print {
@@ -2869,7 +2908,7 @@
                   <circle cx="12" cy="12" r="10"></circle>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
-                Today
+                <span class="btn-text">Today</span>
               </button>
               <button id="btnTimetablePrint" class="timetable-action-btn timetable-print-btn" title="Print or Save PDF for this Month">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -2877,7 +2916,7 @@
                   <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                   <rect x="6" y="14" width="12" height="8"></rect>
                 </svg>
-                Print / PDF
+                <span class="btn-text">Print / PDF</span>
               </button>
             </div>
           </div>
@@ -5019,15 +5058,14 @@
       const monthName = monthData.monthName;
       const days = monthData.days;
 
+      // A3: Subtle hint replaces prominent "Tap row to jump" label
       let html = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:0 2px;">
           <div style="font-size:12px; font-weight:800; color:var(--text-main);">
             ${monthName} ${almanacState.timetableYear}
-            <span style="font-size:10px; color:var(--text-muted); font-weight:600; margin-left:6px;">(${days.length} Days)</span>
+            <span style="font-size:10px; color:var(--text-muted); font-weight:600; margin-left:6px;">${days.length} days</span>
           </div>
-          <div style="font-size:10px; color:var(--emerald-accent); font-weight:700;">
-            Tap row to jump
-          </div>
+          <div style="font-size:9.5px; color:var(--text-muted); opacity:0.7;">tap row → jump</div>
         </div>
 
         <div class="timetable-table-wrap">
@@ -5035,13 +5073,13 @@
             <thead>
               <tr>
                 <th>Date</th>
-                <th>Hijri</th>
-                <th>Sehri/Fajr</th>
-                <th>Sunrise</th>
-                <th>Zawal / Dhuhr</th>
-                <th>Asr (H)</th>
-                <th>Maghrib</th>
-                <th>Isha</th>
+                <th>Hijri 🌙</th>
+                <th>Sehri ⭐</th>
+                <th class="tt-col-sunrise">Sunrise 🌅</th>
+                <th>Dhuhr ☀️</th>
+                <th>Asr 🌤</th>
+                <th>Maghrib 🌇</th>
+                <th>Isha 🌙</th>
               </tr>
             </thead>
             <tbody>
@@ -5049,15 +5087,20 @@
 
       days.forEach(d => {
         const todayClass = d.isToday ? ' timetable-row-today' : '';
-        const todayBadge = d.isToday ? '<span class="timetable-today-badge">TODAY</span>' : '';
+        const todayBadge = d.isToday ? ' <span class="timetable-today-badge">TODAY</span>' : '';
+        // A2: 3-letter day abbreviation stacked under the number
+        const dayAbbr = d.dayName ? d.dayName.slice(0, 3) : '';
 
         html += `
           <tr class="timetable-row-interactive${todayClass}" data-date-iso="${d.dateIso}">
-            <td><strong>${d.dayNumPad} ${monthData.shortMonthName}</strong> <span style="font-size:9.5px; opacity:0.75;">${d.dayName}</span>${todayBadge}</td>
+            <td>
+              <strong style="font-size:13px; line-height:1.1;">${d.dayNumPad}</strong>
+              <span style="font-size:9px; opacity:0.55; display:block; line-height:1; margin-top:2px;">${dayAbbr}</span>${todayBadge}
+            </td>
             <td style="color:#94a3b8; font-size:10px;">${d.hijriFormatted}</td>
             <td><strong>${d.sehri}</strong></td>
-            <td>${d.sunrise}</td>
-            <td><strong>${d.dhuhr}</strong> <span style="font-size:9px; opacity:0.65;">(${d.zawalStart})</span></td>
+            <td class="tt-col-sunrise">${d.sunrise}</td>
+            <td><strong>${d.dhuhr}</strong></td>
             <td>${d.asr}</td>
             <td style="color:#34d399; font-weight:700;">${d.maghrib}</td>
             <td>${d.isha}</td>
@@ -5094,7 +5137,16 @@
           }
         });
       });
+
+      // D2: Auto-scroll to today's row when it exists in the current month
+      const todayRow = timetableMonthContainer.querySelector('.timetable-row-today');
+      if (todayRow) {
+        setTimeout(() => {
+          todayRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 80);
+      }
     }
+
 
     function renderMonthlyTimetableView() {
       if (txtTimetableYear) {

@@ -91,7 +91,7 @@ function runTimetablePhase2UITests() {
     assert.ok(headers.length >= 8, `Expected at least 8 column headers, found ${headers.length}`);
     assert.ok(headers[0].textContent.includes('Date'));
     assert.ok(headers[1].textContent.includes('Hijri'));
-    assert.ok(headers[2].textContent.includes('Sehri/Fajr'));
+    assert.ok(headers[2].textContent.includes('Sehri'));
   });
 
   test('T2-07: Current month table renders correct row count and highlights today', () => {
