@@ -1378,16 +1378,94 @@
       scroll-behavior: smooth;
     }
 
-    /* Almanac Modal Styling */
+    /* ── Almanac Modal — Adaptive Responsive Design ───────────────────────────
+       PHASE 1 (Mobile-First): Full-Screen Native Sheet on phones.
+         No backdrop padding, no border-radius, no floating gaps — every pixel used.
+       PHASE 1 (Desktop): Wide Executive Workspace (≥ 768px).
+         1040px canvas shows all 8 table columns & 12 month pills without clipping.
+    ── */
+
+    /* Mobile base: almanac backdrop is edge-to-edge, zero padding */
+    #modalAlmanac {
+      padding: 0;
+      align-items: stretch;
+    }
+
+    /* Mobile base: card fills entire screen — no border, no rounded corners */
     .modal-card-almanac {
-      max-width: 500px;
-      /* Use flex-column layout so body fills remaining space — no fixed max-height needed */
-      height: min(90vh, calc(100dvh - 32px));
-      max-height: min(90vh, calc(100dvh - 32px));
-      padding: 18px;
-      /* Override base modal-card flex column to ensure body scrolls */
+      max-width: 100%;
+      width: 100%;
+      height: 100vh;            /* fallback for browsers without dvh support */
+      height: 100dvh;           /* shrinks with on-screen keyboard (Android/iOS) */
+      max-height: 100vh;
+      max-height: 100dvh;
+      border-radius: 0;
+      border: none;
+      padding: 14px 12px;
+      /* Respect notch / home-bar safe areas on notched phones */
+      padding-top: max(14px, env(safe-area-inset-top));
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
+    }
+
+    /* ── Desktop & Tablet (≥ 768px): Wide Executive Workspace ─────────────── */
+    @media (min-width: 768px) {
+      /* Restore backdrop padding and centered card positioning */
+      #modalAlmanac {
+        padding: 16px;
+        align-items: center;
+      }
+      /* Wide canvas: up to 1040px so all 8 columns + 12 month pills fit cleanly */
+      .modal-card-almanac {
+        max-width: min(1040px, 94vw);
+        width: min(1040px, 94vw);
+        height: min(88vh, 860px);
+        max-height: min(88vh, 860px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 22px 28px;
+      }
+
+      /* PHASE 2 — Month ribbon: all 12 pills visible in one row, no clipping */
+      .almanac-month-ribbon {
+        overflow-x: visible;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 4px;
+        margin-bottom: 8px;
+      }
+      .almanac-month-pill {
+        flex: 1 1 0;        /* equal width — fills the ribbon evenly */
+        min-width: 0;
+        font-size: 12px;
+        padding: 7px 6px;
+      }
+
+      /* PHASE 2 — Toolbar: never wraps on desktop, generous spacing */
+      .timetable-toolbar {
+        flex-wrap: nowrap;
+        padding: 10px 0 8px;
+      }
+
+      /* PHASE 2 — Table: larger, more comfortable cells for desktop reading */
+      .timetable-full-table th,
+      .timetable-full-table td {
+        padding: 9px 12px;
+        font-size: 12px;
+      }
+
+      /* PHASE 2 — Sticky date column: slightly wider to show day name comfortably */
+      .timetable-full-table th:first-child,
+      .timetable-full-table td:first-child {
+        min-width: 72px;
+      }
+
+      /* PHASE 2 — Tab buttons: more spacious on desktop */
+      .almanac-tab-btn {
+        font-size: 13px;
+        padding: 9px 16px;
+      }
     }
 
     .almanac-body {
@@ -1429,10 +1507,6 @@
     @media (max-width: 360px) {
       .modal-backdrop {
         padding: 8px;
-      }
-      .modal-card-almanac {
-        padding: 14px;
-        border-radius: 18px;
       }
       .almanac-metric-row {
         flex-direction: column;
@@ -1733,6 +1807,9 @@
       scrollbar-width: none;
       scroll-behavior: smooth;
       flex-shrink: 0;
+      /* Scroll-snap: pills click into position cleanly on mobile swipe */
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 8px;
     }
 
     .almanac-month-ribbon::-webkit-scrollbar {
@@ -1755,6 +1832,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      scroll-snap-align: start;   /* snaps cleanly into view on mobile swipe */
     }
 
     .almanac-month-pill:hover {
