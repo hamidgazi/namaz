@@ -1466,7 +1466,70 @@
         font-size: 13px;
         padding: 9px 16px;
       }
+
+      /* ── PHASE 3: Overview Tab — 2-column card grid on desktop ──────────── */
+      .almanac-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      /* Hero banner: more spacious on desktop */
+      .almanac-hero-banner {
+        padding: 14px 18px;
+        gap: 6px;
+      }
+      .almanac-hero-title {
+        font-size: 14px;
+      }
+      .almanac-hero-meta {
+        font-size: 12px;
+      }
+
+      /* Section titles: slightly larger on desktop */
+      .almanac-section-title {
+        font-size: 12.5px;
+        margin-top: 8px;
+      }
+
+      /* Metric cards: more comfortable padding + larger text */
+      .almanac-metric-card {
+        padding: 12px 14px;
+        gap: 8px;
+      }
+      .almanac-metric-name {
+        font-size: 13px;
+      }
+      .almanac-metric-row {
+        font-size: 12px;
+      }
+      .almanac-metric-shift {
+        font-size: 11px;
+      }
+
+      /* Fast bar: more spacious on desktop */
+      .almanac-fast-bar {
+        padding: 14px 18px;
+        gap: 8px;
+      }
+
+      /* 12-month reference table: larger, more comfortable reading */
+      .almanac-table {
+        font-size: 12px;
+      }
+      .almanac-table th,
+      .almanac-table td {
+        padding: 9px 12px;
+      }
     }
+
+    /* ── Desktop ≥ 1024px: Upgrade to 3-column card grid ─────────────────── */
+    @media (min-width: 1024px) {
+      .almanac-card-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+    }
+
 
     .almanac-body {
       display: flex;
