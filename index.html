@@ -1420,6 +1420,7 @@
       padding-bottom: max(14px, env(safe-area-inset-bottom)) !important;
       display: flex !important;
       flex-direction: column !important;
+      overflow: hidden !important;
     }
 
     /* ── Desktop & Tablet (≥ 768px): Wide Executive Workspace ─────────────── */
@@ -1590,6 +1591,7 @@
       overflow-x: hidden;        /* horizontal scroll is inside .timetable-table-wrap */
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
     }
 
     @media (max-width: 360px) {
@@ -2544,7 +2546,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.1</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.2</span>
         </div>
       </div>
 
@@ -2852,7 +2854,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.1</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.2</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -2861,6 +2863,7 @@
         </button>
       </div>
     </footer>
+  </div> <!-- /.app-shell -->
 
     <!-- Slide-Up Sunnah & Nawafil Drawer -->
     <div id="drawerSunnah" class="drawer-backdrop" aria-hidden="true">
@@ -3121,7 +3124,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.6.1</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.6.2</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -3237,8 +3240,6 @@
         </div>
       </div>
     </div>
-
-  </div>
 
   <script>
     // --- 100+ INDIAN CITIES DATABASE ---
@@ -4710,7 +4711,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.6.1 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.6.2 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -5444,7 +5445,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.6.1";
+    const CURRENT_APP_VERSION = "1.6.2";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');

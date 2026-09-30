@@ -1,6 +1,6 @@
 {
-  "version": "1.6.1",
+  "version": "1.6.2",
   "name": "Namaz Times",
   "updated": "2026-09-30",
-  "changelog": "Mobile full-screen native almanac sheet with zero margin and zero wasted space, immediate cache-bust update, and wide desktop workspace."
+  "changelog": "Fix modal containment: moved modals outside app-shell to viewport root, preventing bottom clipping, rounded card containment, and navigation bar overlap."
 }
