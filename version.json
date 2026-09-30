@@ -1,6 +1,6 @@
 {
-  "version": "1.6.2",
+  "version": "1.6.3",
   "name": "Namaz Times",
   "updated": "2026-09-30",
-  "changelog": "Fix modal containment: moved modals outside app-shell to viewport root, preventing bottom clipping, rounded card containment, and navigation bar overlap."
+  "changelog": "Desktop compact redesign (780px balanced width with snug column spacing and 8-10 rows visible), bottom navigation bar clearance, and auto-refresh SW lifecycle."
 }

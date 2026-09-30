@@ -1433,7 +1433,7 @@
         justify-content: center !important;
       }
 
-      /* Wide canvas: up to 1040px so all 8 columns + 12 month pills fit cleanly */
+      /* Compact canvas: 780px fits all 8 columns comfortably with no unnecessary gaps */
       #modalAlmanac .modal-card-almanac {
         position: relative !important;
         inset: auto !important;
@@ -1441,56 +1441,57 @@
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
-        max-width: min(1040px, 94vw) !important;
-        width: min(1040px, 94vw) !important;
-        height: min(88vh, 860px) !important;
-        max-height: min(88vh, 860px) !important;
-        border-radius: 24px !important;
+        max-width: min(780px, 92vw) !important;
+        width: min(780px, 92vw) !important;
+        height: min(88vh, 740px) !important;
+        max-height: min(88vh, 740px) !important;
+        border-radius: 20px !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
         animation: popIn 0.22s cubic-bezier(0.2, 0, 0, 1) !important;
-        padding: 22px 28px !important;
+        padding: 16px 20px !important;
         margin: auto !important;
       }
 
-      /* PHASE 2 — Month ribbon: all 12 pills visible in one row, no clipping */
+      /* PHASE 2 — Month ribbon: all 12 pills visible, compact height */
       .almanac-month-ribbon {
         overflow-x: visible;
         flex-wrap: nowrap;
         justify-content: space-between;
-        gap: 4px;
-        margin-bottom: 8px;
+        gap: 3px;
+        margin-bottom: 6px;
       }
       .almanac-month-pill {
         flex: 1 1 0;        /* equal width — fills the ribbon evenly */
         min-width: 0;
-        font-size: 12px;
-        padding: 7px 6px;
+        font-size: 11px;
+        padding: 5px 3px;
+        min-height: 30px;
       }
 
-      /* PHASE 2 — Toolbar: never wraps on desktop, generous spacing */
+      /* PHASE 2 — Toolbar: compact vertical padding so rows are immediately visible */
       .timetable-toolbar {
         flex-wrap: nowrap;
-        padding: 10px 0 8px;
+        padding: 4px 0 6px;
       }
 
-      /* PHASE 2 — Table: larger, more comfortable cells for desktop reading */
+      /* PHASE 2 — Table: snug, comfortable cells with zero wasted gaps between columns */
       .timetable-full-table th,
       .timetable-full-table td {
-        padding: 9px 12px;
-        font-size: 12px;
+        padding: 7px 9px;
+        font-size: 11px;
       }
 
-      /* PHASE 2 — Sticky date column: slightly wider to show day name comfortably */
+      /* PHASE 2 — Sticky date column */
       .timetable-full-table th:first-child,
       .timetable-full-table td:first-child {
-        min-width: 72px;
+        min-width: 62px;
       }
 
-      /* PHASE 2 — Tab buttons: more spacious on desktop */
+      /* PHASE 2 — Tab buttons: compact on desktop */
       .almanac-tab-btn {
-        font-size: 13px;
-        padding: 9px 16px;
+        font-size: 12px;
+        padding: 7px 14px;
       }
 
       /* ── PHASE 3: Overview Tab — 2-column card grid on desktop ──────────── */
@@ -1591,7 +1592,7 @@
       overflow-x: hidden;        /* horizontal scroll is inside .timetable-table-wrap */
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      padding-bottom: max(60px, calc(env(safe-area-inset-bottom) + 40px));
     }
 
     @media (max-width: 360px) {
@@ -2546,7 +2547,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.2</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.3</span>
         </div>
       </div>
 
@@ -2854,7 +2855,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.2</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.3</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -3014,7 +3015,10 @@
       <div class="modal-card modal-card-almanac">
         <div class="modal-head">
           <div>
-            <h3 class="modal-title" id="almanacModalTitle">Annual Prayer Almanac</h3>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <h3 class="modal-title" id="almanacModalTitle">Annual Prayer Almanac</h3>
+              <span id="almanacModalVersionTag" class="version-badge" style="font-size: 9.5px; padding: 2px 6px;">v1.6.3</span>
+            </div>
             <p style="font-size: 11px; color: var(--emerald-accent); font-weight: 600;" id="almanacLocationSubtitle">Adajan Patiya, Surat</p>
           </div>
           <button id="btnCloseAlmanac" class="modal-close" aria-label="Close Almanac modal">
@@ -3124,7 +3128,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.6.2</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.6.3</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -4711,7 +4715,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.6.2 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.6.3 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -5445,7 +5449,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.6.2";
+    const CURRENT_APP_VERSION = "1.6.3";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');
@@ -5529,7 +5533,17 @@
     // --- SERVICE WORKER REGISTRATION (Android 9+ PWA & instant cold start) ---
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+          reg.update(); // Proactively query network for updated sw.js on every boot
+        }).catch(() => {});
+      });
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
       });
     }
 
