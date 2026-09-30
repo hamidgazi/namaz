@@ -1,6 +1,6 @@
 {
-  "version": "1.6.3",
+  "version": "1.6.4",
   "name": "Namaz Times",
   "updated": "2026-09-30",
-  "changelog": "Desktop compact redesign (780px balanced width with snug column spacing and 8-10 rows visible), bottom navigation bar clearance, and auto-refresh SW lifecycle."
+  "changelog": "Single-page A4 print overhaul (0 blank pages, 0 scrollbars), compact 760px desktop modal with snug columns, and mobile full-screen edge-to-edge sheet."
 }
