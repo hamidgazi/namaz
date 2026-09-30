@@ -1385,46 +1385,71 @@
          1040px canvas shows all 8 table columns & 12 month pills without clipping.
     ── */
 
-    /* Mobile base: almanac backdrop is edge-to-edge, zero padding */
+    /* Mobile base: almanac backdrop fills full viewport with zero padding */
     #modalAlmanac {
-      padding: 0;
-      align-items: stretch;
+      padding: 0 !important;
     }
 
-    /* Mobile base: card fills entire screen — no border, no rounded corners */
-    .modal-card-almanac {
-      max-width: 100%;
-      width: 100%;
-      height: 100vh;            /* fallback for browsers without dvh support */
-      height: 100dvh;           /* shrinks with on-screen keyboard (Android/iOS) */
-      max-height: 100vh;
-      max-height: 100dvh;
-      border-radius: 0;
-      border: none;
-      padding: 14px 12px;
+    #modalAlmanac.open {
+      display: block !important; /* block layout eliminates all flexbox vertical centering quirks */
+    }
+
+    /* Mobile base: card pinned directly to viewport edges (top:0, bottom:0, left:0, right:0) */
+    #modalAlmanac .modal-card-almanac {
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      height: 100dvh !important;
+      max-height: 100% !important;
+      max-height: 100dvh !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      transform: none !important;
+      animation: none !important;
+      padding: 12px 10px !important;
       /* Respect notch / home-bar safe areas on notched phones */
-      padding-top: max(14px, env(safe-area-inset-top));
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-      display: flex;
-      flex-direction: column;
+      padding-top: max(12px, env(safe-area-inset-top)) !important;
+      padding-bottom: max(14px, env(safe-area-inset-bottom)) !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
 
     /* ── Desktop & Tablet (≥ 768px): Wide Executive Workspace ─────────────── */
     @media (min-width: 768px) {
       /* Restore backdrop padding and centered card positioning */
-      #modalAlmanac {
-        padding: 16px;
-        align-items: center;
+      #modalAlmanac.open {
+        display: flex !important;
+        padding: 16px !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
+
       /* Wide canvas: up to 1040px so all 8 columns + 12 month pills fit cleanly */
-      .modal-card-almanac {
-        max-width: min(1040px, 94vw);
-        width: min(1040px, 94vw);
-        height: min(88vh, 860px);
-        max-height: min(88vh, 860px);
-        border-radius: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 22px 28px;
+      #modalAlmanac .modal-card-almanac {
+        position: relative !important;
+        inset: auto !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        max-width: min(1040px, 94vw) !important;
+        width: min(1040px, 94vw) !important;
+        height: min(88vh, 860px) !important;
+        max-height: min(88vh, 860px) !important;
+        border-radius: 24px !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
+        animation: popIn 0.22s cubic-bezier(0.2, 0, 0, 1) !important;
+        padding: 22px 28px !important;
+        margin: auto !important;
       }
 
       /* PHASE 2 — Month ribbon: all 12 pills visible in one row, no clipping */
@@ -2519,7 +2544,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.0</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.1</span>
         </div>
       </div>
 
@@ -2827,7 +2852,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.0</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.1</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -3096,7 +3121,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.6.0</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.6.1</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -4685,7 +4710,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.6.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.6.1 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -5419,7 +5444,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.6.0";
+    const CURRENT_APP_VERSION = "1.6.1";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');

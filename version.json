@@ -1,6 +1,6 @@
 {
-  "version": "1.6.0",
+  "version": "1.6.1",
   "name": "Namaz Times",
-  "updated": "2026-09-28",
-  "changelog": "Full Year Timetable & Planning Engine: Interactive 365-day monthly timetable browser with 12 quick-switch month tabs, sticky date & day columns, tap-to-jump date switching, year navigation (◀ 2026 ▶), today locator, and clean printable PDF export."
+  "updated": "2026-09-30",
+  "changelog": "Mobile full-screen native almanac sheet with zero margin and zero wasted space, immediate cache-bust update, and wide desktop workspace."
 }
