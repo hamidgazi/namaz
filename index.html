@@ -717,6 +717,30 @@
       display: flex !important;
     }
 
+    /* Automatic Widget Mode when window is small (< 360px wide or < 250px high) */
+    @media (max-width: 360px), (max-height: 250px) {
+      body {
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: #060a12 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .app-shell,
+      .modal,
+      .toast,
+      #toastContainer {
+        display: none !important;
+      }
+      #stickyWidgetView {
+        display: flex !important;
+      }
+    }
+
     .sticky-widget-container {
       display: none;
       width: 100%;

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#060a12">
+  <title>📌 Namaz Times — Sticky Clock</title>
+  <link rel="icon" type="image/x-icon" href="icons/app.ico">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #060a12;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body {
+      padding: 6px;
+    }
+
+    .widget-card {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #0f172a 0%, #070d19 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 1;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .widget-badge-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .widget-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: widgetPulse 2s infinite ease-in-out;
+    }
+
+    .widget-prayer-name {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #f8fafc;
+    }
+
+    .widget-city-tag {
+      font-size: 10.5px;
+      color: #94a3b8;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 110px;
+    }
+
+    .widget-actions {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .widget-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #94a3b8;
+      font-size: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .widget-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+
+    .widget-btn:active {
+      transform: scale(0.95);
+    }
+
+    .widget-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 2px 0;
+    }
+
+    .widget-countdown-giant {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 900;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 5px;
+      line-height: 1;
+      text-align: center;
+      transition: color 0.3s ease;
+    }
+
+    .widget-countdown-number {
+      font-size: clamp(34px, 15vw, 48px);
+      letter-spacing: -0.03em;
+      font-weight: 900;
+    }
+
+    .widget-countdown-unit {
+      font-size: clamp(12px, 5vw, 16px);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* Dynamic Urgency Colors */
+    .urgency-normal {
+      color: #34d399;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
+    }
+
+    .urgency-warning {
+      color: #fbbf24;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+    }
+
+    .urgency-alert {
+      color: #f87171;
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+      animation: widgetUrgentPulse 1.4s infinite ease-in-out;
+    }
+
+    @keyframes widgetPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @keyframes widgetUrgentPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .widget-footer {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="widget-card">
+    <div class="widget-header">
+      <div class="widget-badge-group">
+        <span class="widget-live-dot"></span>
+        <span id="txtPrayerName" class="widget-prayer-name">--</span>
+      </div>
+      <div id="txtCityName" class="widget-city-tag">Surat</div>
+      <div class="widget-actions">
+        <button id="btnPip" class="widget-btn" title="Always on Top (Floating Stick Note)" aria-label="Always on Top">📌</button>
+        <button id="btnExpand" class="widget-btn" title="Open Full App" aria-label="Open Full App">⤢</button>
+      </div>
+    </div>
+
+    <div class="widget-body">
+      <div id="countdownGiant" class="widget-countdown-giant urgency-normal">
+        <span id="countdownNumber" class="widget-countdown-number">--</span>
+        <span id="countdownUnit" class="widget-countdown-unit">MIN LEFT</span>
+      </div>
+    </div>
+
+    <div id="txtSubtext" class="widget-footer">Ends at --:-- • Next: --</div>
+  </div>
+
+  <script>
+    // --- ACCURATE ASTRONOMICAL SOLAR ENGINE (JEAN MEEUS) ---
+    const DEG2RAD = Math.PI / 180.0;
+    const RAD2DEG = 180.0 / Math.PI;
+
+    function fixAngle(a) { a = a % 360.0; return a < 0 ? a + 360.0 : a; }
+    function fixHour(h) { h = h % 24.0; return h < 0 ? h + 24.0 : h; }
+
+    function getJulianDay(year, month, day) {
+      if (month <= 2) { year -= 1; month += 12; }
+      const a = Math.floor(year / 100);
+      const b = 2 - a + Math.floor(a / 4);
+      return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
+    }
+
+    function calculateSolarCoordinates(jd) {
+      const T = (jd - 2451545.0) / 36525.0;
+      const L0 = fixAngle(280.46646 + 36000.76983 * T);
+      const M = fixAngle(357.52911 + 35999.05029 * T);
+      const C = (1.914602 - 0.004817 * T) * Math.sin(M * DEG2RAD)
+              + (0.019993 - 0.000101 * T) * Math.sin(2 * M * DEG2RAD)
+              + 0.000289 * Math.sin(3 * M * DEG2RAD);
+      const trueLong = fixAngle(L0 + C);
+      const eps = 23.439291 - 0.0130042 * T;
+      const sinDec = Math.sin(eps * DEG2RAD) * Math.sin(trueLong * DEG2RAD);
+      const declination = Math.asin(sinDec);
+      
+      const y = Math.tan((eps / 2.0) * DEG2RAD) ** 2;
+      const eotRad = y * Math.sin(2 * L0 * DEG2RAD)
+                   - 2 * 0.0167086 * Math.sin(M * DEG2RAD)
+                   + 4 * 0.0167086 * y * Math.sin(M * DEG2RAD) * Math.cos(2 * L0 * DEG2RAD)
+                   - 0.5 * (y ** 2) * Math.sin(4 * L0 * DEG2RAD)
+                   - 1.25 * (0.0167086 ** 2) * Math.sin(2 * M * DEG2RAD);
+      const eotMinutes = 4.0 * (eotRad * RAD2DEG);
+
+      return { declination, eotMinutes };
+    }
+
+    function computeHourAngle(altitudeDeg, latDeg, declinationRad) {
+      const altRad = altitudeDeg * DEG2RAD;
+      const latRad = latDeg * DEG2RAD;
+      const cosH = (Math.sin(altRad) - Math.sin(latRad) * Math.sin(declinationRad)) /
+                   (Math.cos(latRad) * Math.cos(declinationRad));
+      if (cosH > 1.0 || cosH < -1.0) return null;
+      return (Math.acos(cosH) * RAD2DEG) / 15.0;
+    }
+
+    function roundForward(decimalHour) {
+      const totalSeconds = Math.round(decimalHour * 3600);
+      const hours = Math.floor(totalSeconds / 3600) % 24;
+      let minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      if (seconds > 0) minutes++;
+      return hours + (minutes / 60.0);
+    }
+
+    function roundBackward(decimalHour) {
+      const totalSeconds = Math.floor(decimalHour * 3600);
+      const hours = Math.floor(totalSeconds / 3600) % 24;
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      return hours + (minutes / 60.0);
+    }
+
+    function calculateTimes(lat, lng, date) {
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const tzOffsetHours = 5.5;
+
+      const jd = getJulianDay(year, month, day);
+      const solar = calculateSolarCoordinates(jd);
+
+      const transitUTC = 12.0 - (lng / 15.0) - (solar.eotMinutes / 60.0);
+      const dhuhrTransit = fixHour(transitUTC + tzOffsetHours);
+
+      const h0 = computeHourAngle(-0.8333, lat, solar.declination) || 6.0;
+      const sunriseRaw = fixHour(dhuhrTransit - h0);
+      const maghribRaw = fixHour(dhuhrTransit + h0);
+
+      const hFajr = computeHourAngle(-18.0, lat, solar.declination);
+      const fajrRaw = hFajr ? fixHour(dhuhrTransit - hFajr) : fixHour(sunriseRaw - 1.5);
+
+      const noonAltitude = 90.0 - Math.abs(lat - (solar.declination * RAD2DEG));
+      const noonShadow = Math.tan((90.0 - noonAltitude) * DEG2RAD);
+      const asrAltitude = Math.atan(1.0 / (2.0 + noonShadow)) * RAD2DEG;
+      const hAsr = computeHourAngle(asrAltitude, lat, solar.declination) || 3.0;
+      const asrRaw = fixHour(dhuhrTransit + hAsr);
+
+      const hIsha = computeHourAngle(-18.0, lat, solar.declination);
+      const ishaRaw = hIsha ? fixHour(dhuhrTransit + hIsha) : fixHour(maghribRaw + 1.5);
+
+      return {
+        fajr: roundForward(fajrRaw),
+        sunrise: roundBackward(sunriseRaw),
+        dhuhr: roundForward(dhuhrTransit + (1.0 / 60.0)),
+        asr: roundForward(asrRaw),
+        maghrib: roundForward(maghribRaw + (3.0 / 60.0)),
+        isha: roundForward(ishaRaw)
+      };
+    }
+
+    function decimalToDateTime(decHour, baseDate) {
+      const d = new Date(baseDate);
+      const h = Math.floor(decHour);
+      const remainderMinutes = (decHour - h) * 60.0;
+      const m = Math.floor(remainderMinutes);
+      const s = Math.round((remainderMinutes - m) * 60.0);
+      d.setHours(h, m, s, 0);
+      return d;
+    }
+
+    function formatTime12(dateOrDec) {
+      let h, m;
+      if (dateOrDec instanceof Date) {
+        h = dateOrDec.getHours();
+        m = dateOrDec.getMinutes();
+      } else {
+        h = Math.floor(dateOrDec);
+        m = Math.round((dateOrDec - h) * 60.0);
+      }
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const dispH = h % 12 || 12;
+      return `${dispH}:${String(m).padStart(2, '0')} ${ampm}`;
+    }
+
+    // Load saved settings if any
+    let cityName = 'Adajan Patiya, Surat';
+    let lat = 21.1960;
+    let lng = 72.7940;
+    try {
+      const savedCity = localStorage.getItem('namaz_city_name');
+      const savedLat = parseFloat(localStorage.getItem('namaz_lat'));
+      const savedLng = parseFloat(localStorage.getItem('namaz_lng'));
+      if (savedCity) cityName = savedCity;
+      if (!isNaN(savedLat) && !isNaN(savedLng)) {
+        lat = savedLat;
+        lng = savedLng;
+      }
+    } catch (_) {}
+
+    const elCityName = document.getElementById('txtCityName');
+    if (elCityName) elCityName.innerText = cityName.split(',')[0];
+
+    function updateWidget() {
+      const now = new Date();
+      const todayTimes = calculateTimes(lat, lng, now);
+
+      const tFajr = decimalToDateTime(todayTimes.fajr, now);
+      const tSunrise = decimalToDateTime(todayTimes.sunrise, now);
+      const tDhuhr = decimalToDateTime(todayTimes.dhuhr, now);
+      const tAsr = decimalToDateTime(todayTimes.asr, now);
+      const tMaghrib = decimalToDateTime(todayTimes.maghrib, now);
+      const tIsha = decimalToDateTime(todayTimes.isha, now);
+
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowTimes = calculateTimes(lat, lng, tomorrow);
+      const tNextFajr = decimalToDateTime(tomorrowTimes.fajr, tomorrow);
+
+      let pName = 'SALAH';
+      let targetDate = tDhuhr;
+      let nextName = 'Dhuhr';
+
+      const isFriday = now.getDay() === 5;
+      const dhuhrTitle = isFriday ? 'JUMMAH' : 'DHUHR';
+
+      if (now >= tFajr && now < tSunrise) {
+        pName = 'FAJR';
+        targetDate = tSunrise;
+        nextName = 'Sunrise';
+      } else if (now >= tSunrise && now < tDhuhr) {
+        pName = dhuhrTitle;
+        targetDate = tDhuhr;
+        nextName = dhuhrTitle;
+      } else if (now >= tDhuhr && now < tAsr) {
+        pName = dhuhrTitle;
+        targetDate = tAsr;
+        nextName = 'Asr';
+      } else if (now >= tAsr && now < tMaghrib) {
+        pName = 'ASR';
+        targetDate = tMaghrib;
+        nextName = 'Maghrib';
+      } else if (now >= tMaghrib && now < tIsha) {
+        pName = 'MAGHRIB';
+        targetDate = tIsha;
+        nextName = 'Isha';
+      } else if (now >= tIsha) {
+        pName = 'ISHA';
+        targetDate = tNextFajr;
+        nextName = 'Fajr';
+      } else {
+        pName = 'FAJR';
+        targetDate = tFajr;
+        nextName = 'Fajr';
+      }
+
+      const diffMs = Math.max(0, targetDate - now);
+      const totalSec = Math.floor(diffMs / 1000);
+      const totalMin = Math.floor(totalSec / 60);
+      const hours = Math.floor(totalSec / 3600);
+      const mins = Math.floor((totalSec % 3600) / 60);
+      const secs = totalSec % 60;
+
+      let numStr = '';
+      let unitStr = 'MIN LEFT';
+
+      if (hours > 0) {
+        numStr = mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+        unitStr = 'LEFT';
+      } else if (totalMin > 0) {
+        numStr = `${totalMin}`;
+        unitStr = totalMin === 1 ? 'MIN LEFT' : 'MINS LEFT';
+      } else {
+        numStr = `${secs}`;
+        unitStr = 'SEC LEFT';
+      }
+
+      let urgencyClass = 'urgency-normal';
+      if (totalMin <= 10) {
+        urgencyClass = 'urgency-alert';
+      } else if (totalMin <= 20) {
+        urgencyClass = 'urgency-warning';
+      }
+
+      document.getElementById('txtPrayerName').innerText = pName;
+      document.getElementById('countdownNumber').innerText = numStr;
+      document.getElementById('countdownUnit').innerText = unitStr;
+      document.getElementById('countdownGiant').className = `widget-countdown-giant ${urgencyClass}`;
+      document.getElementById('txtSubtext').innerText = `Ends at ${formatTime12(targetDate)} • Next: ${nextName}`;
+
+      document.title = `📌 ${pName} • ${numStr} ${unitStr}`;
+    }
+
+    updateWidget();
+    setInterval(updateWidget, 1000);
+
+    // Expand to full app
+    document.getElementById('btnExpand').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    // Picture-in-Picture floating mode
+    document.getElementById('btnPip').addEventListener('click', async () => {
+      if ('documentPictureInPicture' in window && typeof window.documentPictureInPicture.requestWindow === 'function') {
+        try {
+          const pipWin = await window.documentPictureInPicture.requestWindow({
+            width: 290,
+            height: 175
+          });
+          pipWin.document.title = document.title;
+          const clone = document.querySelector('.widget-card').cloneNode(true);
+          const style = document.querySelector('style').cloneNode(true);
+          pipWin.document.head.appendChild(style);
+          pipWin.document.body.appendChild(clone);
+          return;
+        } catch (_) {}
+      }
+      alert('Picture-in-Picture is active in this dedicated window.');
+    });
+  </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ const CACHE_NAME = 'namaz-times-v1.6.6';
 const SHELL_ASSETS = [
   './',
   'index.html',
+  'widget.html',
   'manifest.json',
   'icons/icon-192.png',
   'icons/icon-512.png',
