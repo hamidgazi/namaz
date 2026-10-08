@@ -1,14 +1,16 @@
-// sw.js — Namaz Times Service Worker (v1.6.5)
+// sw.js — Namaz Times Service Worker (v1.6.6)
 // High-performance offline caching & instant startup for Android 9+ and modern devices
 
-const CACHE_NAME = 'namaz-times-v1.6.5';
+const CACHE_NAME = 'namaz-times-v1.6.6';
 const SHELL_ASSETS = [
   './',
   'index.html',
   'manifest.json',
   'icons/icon-192.png',
   'icons/icon-512.png',
-  'icons/icon.svg'
+  'icons/icon.svg',
+  'icons/favicon.ico',
+  'icons/app.ico'
 ];
 
 // Install: Pre-cache core app shell assets for instant cold start

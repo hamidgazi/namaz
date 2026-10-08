@@ -693,6 +693,188 @@
       transform: scale(0.96);
     }
 
+    /* Ultra-Compact Sticky Widget Mode & Big-Font Countdown */
+    body.widget-mode {
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: #060a12 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    body.widget-mode .app-shell,
+    body.widget-mode .modal,
+    body.widget-mode .toast,
+    body.widget-mode #toastContainer {
+      display: none !important;
+    }
+
+    body.widget-mode #stickyWidgetView {
+      display: flex !important;
+    }
+
+    .sticky-widget-container {
+      display: none;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+    }
+
+    .sticky-widget-card {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #0f172a 0%, #070d19 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      user-select: none;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sticky-widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 1;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .sticky-widget-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f8fafc;
+    }
+
+    .widget-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: widgetPulse 2s infinite ease-in-out;
+    }
+
+    .sticky-widget-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .widget-action-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #94a3b8;
+      font-size: 12px;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .widget-action-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      transform: scale(1.06);
+    }
+
+    .widget-action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .sticky-widget-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-height: 0;
+      padding: 6px 0;
+    }
+
+    .widget-countdown-giant {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 900;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 6px;
+      line-height: 1;
+      text-align: center;
+      transition: color 0.3s ease;
+    }
+
+    .widget-countdown-number {
+      font-size: clamp(36px, 16vw, 54px);
+      letter-spacing: -0.03em;
+      font-weight: 900;
+    }
+
+    .widget-countdown-unit {
+      font-size: clamp(13px, 5vw, 17px);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* Dynamic Urgency Glows */
+    .urgency-normal {
+      color: #34d399;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
+    }
+
+    .urgency-warning {
+      color: #fbbf24;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+    }
+
+    .urgency-alert {
+      color: #f87171;
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+      animation: widgetUrgentPulse 1.4s infinite ease-in-out;
+    }
+
+    @keyframes widgetPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @keyframes widgetUrgentPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .sticky-widget-footer {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-top: 5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
     .desktop-left-column {
       display: contents;
     }
@@ -2758,6 +2940,31 @@
 </head>
 <body>
 
+  <!-- Ultra-Compact Big Font Sticky Note Widget -->
+  <div id="stickyWidgetView" class="sticky-widget-container">
+    <div class="sticky-widget-card">
+      <div class="sticky-widget-header">
+        <div class="sticky-widget-badge">
+          <span class="widget-live-dot"></span>
+          <span id="widgetPrayerName">ASR</span>
+        </div>
+        <div class="sticky-widget-actions">
+          <button id="widgetBtnPip" class="widget-action-btn" title="Always on Top (Floating Sticky Note)" aria-label="Always on Top">📌</button>
+          <button id="widgetBtnExpand" class="widget-action-btn" title="Expand to Full App" aria-label="Expand to Full App">⤢</button>
+        </div>
+      </div>
+      <div class="sticky-widget-body">
+        <div class="widget-countdown-giant" id="widgetCountdownGiant">
+          <span id="widgetCountdownNum" class="widget-countdown-number">--</span>
+          <span id="widgetCountdownUnit" class="widget-countdown-unit">MIN LEFT</span>
+        </div>
+      </div>
+      <div class="sticky-widget-footer">
+        <span id="widgetSubtext">Ends at --:-- • Next: --</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Phone / Desktop Shell -->
   <div class="app-shell">
     <!-- Live Update Notification Banner -->
@@ -2798,9 +3005,13 @@
 
         <!-- Right Actions: Share Image, Share App, Settings Gear (Always Visible) -->
         <div class="header-actions">
+          <button id="btnToggleMiniWidget" class="sticky-nav-pill-btn" title="Toggle Compact Mini Widget (Big Font)" aria-label="Toggle Compact Mini Widget">
+            <span class="sticky-pin-icon" aria-hidden="true">🗗</span>
+            <span class="btn-text">Mini Widget</span>
+          </button>
           <button id="btnStickyClockHeader" class="sticky-nav-pill-btn" title="Open Desktop Sticky Note Clock (Always on Top)" aria-label="Open Desktop Sticky Note Clock">
             <span class="sticky-pin-icon" aria-hidden="true">📌</span>
-            <span class="btn-text">Sticky Clock</span>
+            <span class="btn-text">Always on Top</span>
           </button>
           <button id="btnShareImage" class="icon-btn" title="Share Timetable Card (WhatsApp)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2855,7 +3066,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.5</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.6</span>
         </div>
       </div>
 
@@ -3196,7 +3407,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.5</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.6</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -3358,7 +3569,7 @@
           <div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <h3 class="modal-title" id="almanacModalTitle">Annual Prayer Almanac</h3>
-              <span id="almanacModalVersionTag" class="version-badge" style="font-size: 9.5px; padding: 2px 6px;">v1.6.5</span>
+              <span id="almanacModalVersionTag" class="version-badge" style="font-size: 9.5px; padding: 2px 6px;">v1.6.6</span>
             </div>
             <p style="font-size: 11px; color: var(--emerald-accent); font-weight: 600;" id="almanacLocationSubtitle">Adajan Patiya, Surat</p>
           </div>
@@ -3469,7 +3680,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.6.5</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.6.6</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -4646,9 +4857,12 @@
         elClockDate.innerText = now.toLocaleDateString('en-GB', opt);
       }
 
-      // Synchronize Desktop Sticky Note PiP window if active
+      // Synchronize Desktop Sticky Note PiP window & Compact Big-Font Widget if active
       if (typeof updateStickyPipWindowData === 'function') {
         updateStickyPipWindowData(now, state, todaySchedule);
+      }
+      if (typeof updateStickyWidgetView === 'function') {
+        updateStickyWidgetView(now, state);
       }
 
       if (state.prevDate && state.targetDate && heroProgressBar) {
@@ -5083,7 +5297,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.6.5 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.6.6 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -5762,6 +5976,99 @@
     // --- PC STICKY NOTE CLOCK & PICTURE-IN-PICTURE (ALWAYS-ON-TOP) ---
     let activeStickyPipWindow = null;
 
+    function updateStickyWidgetView(now, state) {
+      if (!state || !state.targetDate) return;
+
+      const n = now || new Date();
+      const diffMs = Math.max(0, state.targetDate - n);
+      const totalSec = Math.floor(diffMs / 1000);
+      const totalMin = Math.floor(totalSec / 60);
+      const hours = Math.floor(totalSec / 3600);
+      const mins = Math.floor((totalSec % 3600) / 60);
+      const secs = totalSec % 60;
+
+      let numStr = '';
+      let unitStr = 'MIN LEFT';
+
+      if (hours > 0) {
+        numStr = mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+        unitStr = 'LEFT';
+      } else if (totalMin > 0) {
+        numStr = `${totalMin}`;
+        unitStr = totalMin === 1 ? 'MIN LEFT' : 'MINS LEFT';
+      } else {
+        numStr = `${secs}`;
+        unitStr = 'SEC LEFT';
+      }
+
+      // Dynamic Urgency Colors:
+      // Emerald/Cyan (> 20m), Amber/Gold (10-20m), Warm Rose/Red (< 10m alert)
+      let urgencyClass = 'urgency-normal';
+      if (totalMin <= 10) {
+        urgencyClass = 'urgency-alert';
+      } else if (totalMin <= 20) {
+        urgencyClass = 'urgency-warning';
+      }
+
+      const rawPrayerName = (state.title || 'SALAH').toUpperCase();
+
+      let endTimeStr = '';
+      if (state.targetDate instanceof Date) {
+        const rawH = state.targetDate.getHours();
+        const ampm = rawH >= 12 ? 'PM' : 'AM';
+        const h12 = rawH % 12 || 12;
+        const m12 = String(state.targetDate.getMinutes()).padStart(2, '0');
+        endTimeStr = `${h12}:${m12} ${ampm}`;
+      }
+      let nextStr = state.nextLabel ? state.nextLabel.replace(/<[^>]+>/g, '').split(' ')[0] : '';
+      let subtext = endTimeStr ? `Ends at ${endTimeStr}` : '';
+      if (nextStr) {
+        subtext += ` • Next: ${nextStr}`;
+      }
+
+      // 1. In-Page Widget Updates
+      const elPrayerName = document.getElementById('widgetPrayerName');
+      const elNum = document.getElementById('widgetCountdownNum');
+      const elUnit = document.getElementById('widgetCountdownUnit');
+      const elGiant = document.getElementById('widgetCountdownGiant');
+      const elSubtext = document.getElementById('widgetSubtext');
+
+      if (elPrayerName) elPrayerName.innerText = rawPrayerName;
+      if (elNum) elNum.innerText = numStr;
+      if (elUnit) elUnit.innerText = unitStr;
+      if (elSubtext) elSubtext.innerText = subtext;
+      if (elGiant) {
+        elGiant.className = `widget-countdown-giant ${urgencyClass}`;
+      }
+
+      // In widget mode, show compact title
+      if (document.body && document.body.classList && document.body.classList.contains('widget-mode')) {
+        document.title = `📌 ${rawPrayerName} • ${numStr} ${unitStr}`;
+      }
+
+      // 2. Picture-in-Picture Floating Window Updates
+      if (activeStickyPipWindow && !activeStickyPipWindow.closed && activeStickyPipWindow.document) {
+        const pDoc = activeStickyPipWindow.document;
+        const pPrayer = pDoc.getElementById('pipWidgetPrayerName');
+        const pNum = pDoc.getElementById('pipWidgetCountdownNum');
+        const pUnit = pDoc.getElementById('pipWidgetCountdownUnit');
+        const pGiant = pDoc.getElementById('pipWidgetCountdownGiant');
+        const pSub = pDoc.getElementById('pipWidgetSubtext');
+        const pCity = pDoc.getElementById('pipCityName');
+
+        if (pPrayer) pPrayer.innerText = rawPrayerName;
+        if (pNum) pNum.innerText = numStr;
+        if (pUnit) pUnit.innerText = unitStr;
+        if (pSub) pSub.innerText = subtext;
+        if (pGiant) {
+          pGiant.className = `widget-countdown-giant ${urgencyClass}`;
+        }
+        if (pCity && appState.cityName) pCity.innerText = appState.cityName;
+
+        pDoc.title = `📌 ${rawPrayerName} • ${numStr} ${unitStr}`;
+      }
+    }
+
     function updateStickyPipWindowData(now, state, todaySchedule) {
       if (!activeStickyPipWindow || activeStickyPipWindow.closed) return;
       const doc = activeStickyPipWindow.document;
@@ -5824,188 +6131,145 @@
         if (elSehri && schedule.suhoor) elSehri.innerText = formatTime12(schedule.suhoor);
         if (elIftar && schedule.maghrib) elIftar.innerText = formatTime12(schedule.maghrib);
       }
+
+      updateStickyWidgetView(n, state);
     }
 
     function initStickyWindowDOM(win) {
       const doc = win.document;
-      doc.title = '📌 Namaz Sticky Clock';
+      doc.title = '📌 Namaz Sticky Note';
 
       const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📌 Namaz Sticky Clock</title>
+  <title>📌 Namaz Sticky Note</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       width: 100%;
       height: 100%;
-      background: #070c16;
+      background: #060a12;
       color: #f8fafc;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       user-select: none;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow: hidden;
+      display: flex;
     }
     body {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      padding: 6px;
     }
     .pip-card {
-      background: linear-gradient(145deg, #101726 0%, #0a0f1d 100%);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      border-radius: 16px;
-      padding: 14px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      background: linear-gradient(145deg, #0f172a 0%, #070d19 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      justify-content: space-between;
       flex: 1;
+      width: 100%;
+      height: 100%;
     }
     .pip-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      line-height: 1;
+      padding-bottom: 4px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 8px;
     }
     .pip-pin-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 10px;
+      gap: 6px;
+      font-size: 13px;
       font-weight: 800;
-      color: #34d399;
       letter-spacing: 0.06em;
       text-transform: uppercase;
+      color: #f8fafc;
     }
     .pip-pulse-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       background: #10b981;
       border-radius: 50%;
-      box-shadow: 0 0 6px #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pipPulse 2s infinite ease-in-out;
     }
     .pip-city {
-      font-size: 11px;
+      font-size: 10.5px;
       color: #94a3b8;
       font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 160px;
+      max-width: 130px;
     }
-    .pip-clock-hero {
-      text-align: center;
-      padding: 6px 0 10px;
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .pip-time-digits {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      line-height: 1.1;
-      text-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
-    }
-    .pip-time-ampm {
-      font-size: 13px;
-      font-weight: 800;
-      color: #34d399;
-      margin-left: 4px;
-    }
-    .pip-date-str {
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    .pip-prayer-target {
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 10px;
-      padding: 9px 12px;
+    .pip-body {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 2px 0;
     }
-    .pip-target-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .pip-target-desc {
-      font-size: 10px;
-      color: #34d399;
-      font-weight: 600;
-      margin-top: 1px;
-    }
-    .pip-countdown-box {
-      text-align: right;
-    }
-    .pip-countdown-label {
-      font-size: 8.5px;
-      font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
-    }
-    .pip-countdown-val {
+    .widget-countdown-giant {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 16px;
       font-weight: 900;
-      color: #34d399;
-    }
-    .pip-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
-    .pip-cell {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      padding: 6px 4px;
-      text-align: center;
-    }
-    .pip-cell.active-now {
-      background: rgba(16, 185, 129, 0.18);
-      border-color: rgba(16, 185, 129, 0.45);
-    }
-    .pip-cell-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
-    }
-    .pip-cell.active-now .pip-cell-label {
-      color: #34d399;
-    }
-    .pip-cell-time {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 11px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-top: 2px;
-    }
-    .pip-fasting {
       display: flex;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 10px;
-      color: #94a3b8;
+      align-items: baseline;
+      justify-content: center;
+      gap: 5px;
+      line-height: 1;
+      text-align: center;
+      transition: color 0.3s ease;
     }
-    .pip-fasting strong {
+    .widget-countdown-number {
+      font-size: clamp(34px, 15vw, 48px);
+      letter-spacing: -0.03em;
+      font-weight: 900;
+    }
+    .widget-countdown-unit {
+      font-size: clamp(12px, 5vw, 16px);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .urgency-normal {
+      color: #34d399;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
+    }
+    .urgency-warning {
       color: #fbbf24;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+    }
+    .urgency-alert {
+      color: #f87171;
+      text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+      animation: pipAlertPulse 1.4s infinite ease-in-out;
+    }
+    @keyframes pipPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    @keyframes pipAlertPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    .pip-footer {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
   </style>
 </head>
@@ -6013,63 +6277,18 @@
   <div class="pip-card">
     <div class="pip-header">
       <div class="pip-pin-badge">
-        <span>📌</span>
-        <span>Sticky Clock</span>
         <span class="pip-pulse-dot"></span>
+        <span id="pipWidgetPrayerName">ASR</span>
       </div>
-      <div id="pipCityName" class="pip-city">Adajan Patiya, Surat</div>
+      <div id="pipCityName" class="pip-city">Surat</div>
     </div>
-
-    <div class="pip-clock-hero">
-      <div class="pip-time-digits">
-        <span id="pipClockTime">--:--:--</span>
-        <span id="pipClockAmpm" class="pip-time-ampm">--</span>
-      </div>
-      <div id="pipClockDate" class="pip-date-str">Loading...</div>
-    </div>
-
-    <div class="pip-prayer-target">
-      <div>
-        <div id="pipTargetTitle" class="pip-target-name">--</div>
-        <div id="pipTargetDesc" class="pip-target-desc">--</div>
-      </div>
-      <div class="pip-countdown-box">
-        <div id="pipCountdownLabel" class="pip-countdown-label">Remaining</div>
-        <div id="pipCountdownVal" class="pip-countdown-val">--:--:--</div>
+    <div class="pip-body">
+      <div id="pipWidgetCountdownGiant" class="widget-countdown-giant urgency-normal">
+        <span id="pipWidgetCountdownNum" class="widget-countdown-number">--</span>
+        <span id="pipWidgetCountdownUnit" class="widget-countdown-unit">MIN LEFT</span>
       </div>
     </div>
-
-    <div class="pip-grid">
-      <div id="pipCellFajr" class="pip-cell">
-        <div class="pip-cell-label">Fajr</div>
-        <div id="pipTimeFajr" class="pip-cell-time">--:--</div>
-      </div>
-      <div id="pipCellSunrise" class="pip-cell">
-        <div class="pip-cell-label">Sunrise</div>
-        <div id="pipTimeSunrise" class="pip-cell-time">--:--</div>
-      </div>
-      <div id="pipCellDhuhr" class="pip-cell">
-        <div class="pip-cell-label">Dhuhr</div>
-        <div id="pipTimeDhuhr" class="pip-cell-time">--:--</div>
-      </div>
-      <div id="pipCellAsr" class="pip-cell">
-        <div class="pip-cell-label">Asr</div>
-        <div id="pipTimeAsr" class="pip-cell-time">--:--</div>
-      </div>
-      <div id="pipCellMaghrib" class="pip-cell">
-        <div class="pip-cell-label">Maghrib</div>
-        <div id="pipTimeMaghrib" class="pip-cell-time">--:--</div>
-      </div>
-      <div id="pipCellIsha" class="pip-cell">
-        <div class="pip-cell-label">Isha</div>
-        <div id="pipTimeIsha" class="pip-cell-time">--:--</div>
-      </div>
-    </div>
-
-    <div class="pip-fasting">
-      <div>Sehri Ends: <strong id="pipTimeSehri">--:--</strong></div>
-      <div>Iftar: <strong id="pipTimeIftar">--:--</strong></div>
-    </div>
+    <div id="pipWidgetSubtext" class="pip-footer">Ends at --:-- • Next: --</div>
   </div>
 </body>
 </html>`;
@@ -6096,8 +6315,8 @@
       if ('documentPictureInPicture' in window && typeof window.documentPictureInPicture.requestWindow === 'function') {
         try {
           const pipWindow = await window.documentPictureInPicture.requestWindow({
-            width: 340,
-            height: 480,
+            width: 290,
+            height: 175,
           });
           initStickyWindowDOM(pipWindow);
           activeStickyPipWindow = pipWindow;
@@ -6107,12 +6326,12 @@
         }
       }
 
-      const left = Math.max(20, (window.screen.availWidth || window.screen.width || 1200) - 370);
+      const left = Math.max(20, (window.screen.availWidth || window.screen.width || 1200) - 320);
       const top = 60;
       const popup = window.open(
         '',
         'namazStickyClock',
-        `width=340,height=480,left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
+        `width=290,height=175,left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
       );
       if (popup) {
         initStickyWindowDOM(popup);
@@ -6121,6 +6340,54 @@
         alert('Please allow popups for Namaz Times to display the floating Desktop Sticky Note Clock.');
       }
     }
+
+    function toggleMiniWidgetMode(enable) {
+      const willEnable = (typeof enable === 'boolean') ? enable : !document.body.classList.contains('widget-mode');
+      if (willEnable) {
+        document.body.classList.add('widget-mode');
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('mode', 'widget');
+          window.history.replaceState({}, '', url.toString());
+        } catch (_) {}
+      } else {
+        document.body.classList.remove('widget-mode');
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('mode');
+          window.history.replaceState({}, '', url.toString());
+        } catch (_) {}
+        if (typeof window.resizeTo === 'function') {
+          try {
+            window.resizeTo(Math.min(1020, window.screen.availWidth || 1020), Math.min(840, window.screen.availHeight || 840));
+          } catch (_) {}
+        }
+      }
+      updateLiveHero();
+    }
+
+    const btnToggleMiniWidget = document.getElementById('btnToggleMiniWidget');
+    if (btnToggleMiniWidget) {
+      btnToggleMiniWidget.addEventListener('click', () => toggleMiniWidgetMode(true));
+    }
+
+    const widgetBtnExpand = document.getElementById('widgetBtnExpand');
+    if (widgetBtnExpand) {
+      widgetBtnExpand.addEventListener('click', () => toggleMiniWidgetMode(false));
+    }
+
+    const widgetBtnPip = document.getElementById('widgetBtnPip');
+    if (widgetBtnPip) {
+      widgetBtnPip.addEventListener('click', () => openDesktopStickyNote());
+    }
+
+    // Auto-enable widget mode if URL contains ?mode=widget
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'widget') {
+        document.body.classList.add('widget-mode');
+      }
+    } catch (_) {}
 
     const btnPopoutStickyClock = document.getElementById('btnPopoutStickyClock');
     if (btnPopoutStickyClock) {
@@ -6200,7 +6467,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.6.5";
+    const CURRENT_APP_VERSION = "1.6.6";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');

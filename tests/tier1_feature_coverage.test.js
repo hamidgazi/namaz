@@ -458,6 +458,30 @@ function runTier1Tests() {
     assert.ok(app.document.querySelector('.desktop-left-column'), 'Desktop left column container must exist');
   });
 
+  test('F17-4: Ultra-compact widget container, big-font countdown elements, and mini widget toggle exist', () => {
+    const app = loadApp();
+    assert.ok(app.document.getElementById('stickyWidgetView'), 'stickyWidgetView container must exist');
+    assert.ok(app.document.getElementById('widgetPrayerName'), 'widgetPrayerName must exist');
+    assert.ok(app.document.getElementById('widgetCountdownGiant'), 'widgetCountdownGiant container must exist');
+    assert.ok(app.document.getElementById('widgetCountdownNum'), 'widgetCountdownNum must exist');
+    assert.ok(app.document.getElementById('widgetCountdownUnit'), 'widgetCountdownUnit must exist');
+    assert.ok(app.document.getElementById('widgetSubtext'), 'widgetSubtext must exist');
+    assert.ok(app.document.getElementById('btnToggleMiniWidget'), 'btnToggleMiniWidget button must exist');
+  });
+
+  test('F17-5: Compact big-font widget countdown correctly renders prayer name, remaining time, and dynamic urgency styling', () => {
+    const app = loadApp({ mockDate: '2026-09-09T14:30:00+05:30' });
+    const pName = app.document.getElementById('widgetPrayerName').innerText;
+    const num = app.document.getElementById('widgetCountdownNum').innerText;
+    const unit = app.document.getElementById('widgetCountdownUnit').innerText;
+    const giant = app.document.getElementById('widgetCountdownGiant');
+
+    assert.ok(pName.length > 0, 'Prayer name should be populated');
+    assert.ok(num.length > 0, 'Remaining time number should be populated');
+    assert.ok(unit.length > 0, 'Remaining time unit should be populated');
+    assert.ok(giant.className.includes('urgency-'), 'Giant countdown must have urgency class');
+  });
+
   // =========================================================================
   // Feature 18, 19, 20 & 21: Ephemeris, Offline, Version & Deployment (5+ tests)
   // =========================================================================

@@ -691,7 +691,9 @@ function loadApp(options = {}) {
     'modalAlmanac', 'almanacBodyContent', 'almanacLocationSubtitle',
     'tabAlmanacOverview', 'tabAlmanacTimetable', 'almanacPanelOverview', 'almanacPanelTimetable',
     'btnTimetablePrevYear', 'btnTimetableNextYear', 'txtTimetableYear',
-    'btnTimetableToday', 'btnTimetablePrint', 'almanacMonthRibbon', 'timetableMonthContainer'
+    'btnTimetableToday', 'btnTimetablePrint', 'almanacMonthRibbon', 'timetableMonthContainer',
+    'stickyWidgetView', 'widgetPrayerName', 'widgetCountdownGiant', 'widgetCountdownNum',
+    'widgetCountdownUnit', 'widgetSubtext', 'widgetBtnPip', 'widgetBtnExpand', 'btnToggleMiniWidget'
   ];
 
   knownIds.forEach(id => {
