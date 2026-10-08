@@ -1,6 +1,6 @@
 {
-  "version": "1.6.4",
+  "version": "1.6.5",
   "name": "Namaz Times",
-  "updated": "2026-09-30",
-  "changelog": "Single-page A4 print overhaul (0 blank pages, 0 scrollbars), compact 760px desktop modal with snug columns, and mobile full-screen edge-to-edge sheet."
+  "updated": "2026-10-08",
+  "changelog": "PC Sticky Note Clock suite: Pinned desktop sidebar running clock with real-time ticking seconds and always-on-top Picture-in-Picture floating window."
 }

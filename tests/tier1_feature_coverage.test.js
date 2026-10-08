@@ -443,6 +443,21 @@ function runTier1Tests() {
     assert.match(heroCountdown, /^\d{2}:\d{2}:\d{2}$/, 'Countdown must be HH:MM:SS format');
   });
 
+  test('F17-2: Hero digital running clock displays HH:MM:SS format and live AM/PM', () => {
+    const app = loadApp({ mockDate: '2026-09-09T14:25:30+05:30' });
+    const runningClock = app.document.getElementById('heroRunningClock').innerText;
+    const runningAmpm = app.document.getElementById('heroRunningClockAmpm').innerText;
+    assert.match(runningClock, /^\d{2}:\d{2}:\d{2}$/, 'Running clock must be HH:MM:SS format');
+    assert.ok(['AM', 'PM'].includes(runningAmpm), 'Running AM/PM must be AM or PM');
+  });
+
+  test('F17-3: Desktop Sticky Note pop-out buttons and left sticky container exist', () => {
+    const app = loadApp();
+    assert.ok(app.document.getElementById('btnPopoutStickyClock'), 'Card pop-out button must exist');
+    assert.ok(app.document.getElementById('btnStickyClockHeader'), 'Header sticky clock button must exist');
+    assert.ok(app.document.querySelector('.desktop-left-column'), 'Desktop left column container must exist');
+  });
+
   // =========================================================================
   // Feature 18, 19, 20 & 21: Ephemeris, Offline, Version & Deployment (5+ tests)
   // =========================================================================
