@@ -3037,6 +3037,10 @@
             <span class="sticky-pin-icon" aria-hidden="true">📌</span>
             <span class="btn-text">Always on Top</span>
           </button>
+          <button id="btnOpenPhoneQR" class="sticky-nav-pill-btn" title="Open on Mobile Phone (QR Code)" aria-label="Open on Phone QR Code">
+            <span class="sticky-pin-icon" aria-hidden="true">📱</span>
+            <span class="btn-text">Phone QR</span>
+          </button>
           <button id="btnShareImage" class="icon-btn" title="Share Timetable Card (WhatsApp)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -3704,7 +3708,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.6.6</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.6.7</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -3817,6 +3821,42 @@
             </button>
           </div>
 
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone QR Modal -->
+    <div id="modalPhoneQR" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="phoneQRTitle">
+      <div class="modal-card" style="max-width: 380px; text-align: center;">
+        <div class="modal-head" style="justify-content: space-between;">
+          <h3 id="phoneQRTitle" class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+            <span>📱</span> Open on Mobile Phone
+          </h3>
+          <button id="btnClosePhoneQR" class="modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div style="padding: 18px 12px 10px;">
+          <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">
+            Scan with your iPhone or Android camera to open instantly with 0 installation needed:
+          </p>
+          <div style="background: #ffffff; padding: 12px; border-radius: 12px; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.3); margin-bottom: 14px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" width="180" height="180" shape-rendering="crispEdges">
+              <path fill="#ffffff" d="M0 0h37v37H0z"/>
+              <path stroke="#000000" d="M4 4.5h7m1 0h3m4 0h3m4 0h7M4 5.5h1m5 0h1m2 0h1m2 0h3m1 0h1m1 0h1m3 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h4m1 0h2m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m2 0h1m1 0h5m1 0h2m3 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h3m2 0h1m1 0h1m4 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M13 11.5h2m1 0h1m1 0h3m3 0h1M4 12.5h1m1 0h1m3 0h2m1 0h1m2 0h3m1 0h1m1 0h2m3 0h1m2 0h1m1 0h1M4 13.5h1m1 0h3m2 0h2m1 0h5m2 0h1m1 0h2m1 0h2m3 0h2M4 14.5h5m1 0h3m2 0h1m3 0h1m3 0h1m2 0h1m1 0h3m1 0h1M4 15.5h1m1 0h2m3 0h1m4 0h2m1 0h2m7 0h2M6 16.5h2m2 0h8m2 0h1m3 0h1m1 0h2m4 0h1M4 17.5h5m3 0h3m4 0h1m1 0h1m1 0h2m1 0h2m3 0h2M5 18.5h2m3 0h14m2 0h1m1 0h1m3 0h1M4 19.5h2m2 0h2m3 0h3m2 0h2m2 0h7M4 20.5h3m1 0h1m1 0h1m2 0h2m2 0h2m4 0h2m1 0h2m4 0h1M5 21.5h2m2 0h1m1 0h2m1 0h1m1 0h6m1 0h2m1 0h2m2 0h3M4 22.5h2m3 0h2m1 0h1m1 0h3m2 0h1m3 0h4m1 0h2m2 0h1M6 23.5h3m2 0h2m3 0h2m4 0h4M4 24.5h3m3 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h6m1 0h1M12 25.5h1m1 0h2m3 0h3m2 0h1m3 0h3m1 0h1M4 26.5h7m1 0h1m2 0h1m1 0h3m4 0h1m1 0h1m1 0h1m3 0h1M4 27.5h1m5 0h1m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1m3 0h1M4 28.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h7m1 0h2M4 29.5h1m1 0h3m1 0h1m2 0h2m1 0h6m1 0h1m1 0h1m2 0h3m1 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1m4 0h1m2 0h2M4 31.5h1m5 0h1m3 0h1m9 0h1m1 0h1m2 0h1M4 32.5h7m1 0h1m1 0h2m1 0h1m1 0h2m3 0h2m1 0h1m1 0h1m2 0h1"/>
+            </svg>
+          </div>
+          <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 14px;">
+            <input type="text" readonly value="https://hamidgazi.github.io/namaz/" id="inputPhoneLink" style="font-size: 11px; padding: 7px 10px; border-radius: 6px; border: 1px solid var(--card-border); background: rgba(255,255,255,0.06); color: var(--text-main); width: 220px; text-align: center;">
+            <button id="btnCopyPhoneLink" class="btn-check-update" style="padding: 7px 14px; font-size: 11px;">Copy</button>
+          </div>
+          <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 10px 12px; text-align: left; font-size: 11px; color: var(--text-muted); line-height: 1.5;">
+            <div>🍎 <strong>iPhone</strong>: Open in Safari ➔ tap Share ➔ <em>"Add to Home Screen"</em></div>
+            <div style="margin-top: 5px;">🤖 <strong>Android</strong>: Open in Chrome ➔ tap ⋮ menu ➔ <em>"Install App"</em></div>
+          </div>
         </div>
       </div>
     </div>
@@ -5537,6 +5577,37 @@
     modalSettings.addEventListener('click', (e) => {
       if (e.target === modalSettings) closeModal(modalSettings);
     });
+
+    // --- PHONE QR MODAL CONTROLLER ---
+    const btnOpenPhoneQR = document.getElementById('btnOpenPhoneQR');
+    const modalPhoneQR = document.getElementById('modalPhoneQR');
+    const btnClosePhoneQR = document.getElementById('btnClosePhoneQR');
+    const btnCopyPhoneLink = document.getElementById('btnCopyPhoneLink');
+    const inputPhoneLink = document.getElementById('inputPhoneLink');
+
+    if (btnOpenPhoneQR && modalPhoneQR) {
+      btnOpenPhoneQR.addEventListener('click', () => openModal(modalPhoneQR));
+      if (btnClosePhoneQR) {
+        btnClosePhoneQR.addEventListener('click', () => closeModal(modalPhoneQR));
+      }
+      modalPhoneQR.addEventListener('click', (e) => {
+        if (e.target === modalPhoneQR) closeModal(modalPhoneQR);
+      });
+    }
+
+    if (btnCopyPhoneLink && inputPhoneLink) {
+      btnCopyPhoneLink.addEventListener('click', () => {
+        navigator.clipboard.writeText(inputPhoneLink.value).then(() => {
+          btnCopyPhoneLink.textContent = 'Copied!';
+          setTimeout(() => { btnCopyPhoneLink.textContent = 'Copy'; }, 2000);
+        }).catch(() => {
+          inputPhoneLink.select();
+          document.execCommand('copy');
+          btnCopyPhoneLink.textContent = 'Copied!';
+          setTimeout(() => { btnCopyPhoneLink.textContent = 'Copy'; }, 2000);
+        });
+      });
+    }
 
     // --- ANNUAL ALMANAC MODAL CONTROLLER ---
     function renderAnnualAlmanacView() {
