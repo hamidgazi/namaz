@@ -436,10 +436,29 @@
         unitStr = 'SEC LEFT';
       }
 
+      let redThresh = 10;
+      let orangeThresh = 20;
+      if (pName === 'ASR') {
+        redThresh = 10;
+        orangeThresh = 20;
+      } else if (pName === 'DHUHR' || pName === 'JUMMAH') {
+        redThresh = 12;
+        orangeThresh = 25;
+      } else if (pName === 'MAGHRIB') {
+        redThresh = 8;
+        orangeThresh = 15;
+      } else if (pName === 'FAJR') {
+        redThresh = 10;
+        orangeThresh = 18;
+      } else if (pName === 'ISHA') {
+        redThresh = 15;
+        orangeThresh = 30;
+      }
+
       let urgencyClass = 'urgency-normal';
-      if (totalMin <= 10) {
+      if (totalMin < redThresh) {
         urgencyClass = 'urgency-alert';
-      } else if (totalMin <= 20) {
+      } else if (totalMin <= orangeThresh) {
         urgencyClass = 'urgency-warning';
       }
 

@@ -87,9 +87,28 @@ namespace NamazNativeWidget
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
             this.Background = System.Windows.Media.Brushes.Transparent;
-            this.Topmost = true;
-            this.ShowInTaskbar = false; // Runs cleanly from desktop and system tray
+            this.Topmost = false;
+            this.ShowInTaskbar = true; // Stays open and accessible from desktop and taskbar
             this.ResizeMode = ResizeMode.NoResize;
+
+            string icoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "icons", "app.ico");
+            if (File.Exists(icoPath))
+            {
+                try
+                {
+                    this.Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri(icoPath, UriKind.Absolute));
+                }
+                catch { }
+            }
+
+            // Ensure widget stays displayed on the desktop and does not disappear when Win+D or other apps minimize
+            this.StateChanged += delegate
+            {
+                if (this.WindowState == WindowState.Minimized && !isExplicitExit && this.IsVisible)
+                {
+                    this.WindowState = WindowState.Normal;
+                }
+            };
 
             configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NamazTimes");
             configFile = Path.Combine(configDir, "widget_config.txt");
@@ -120,6 +139,7 @@ namespace NamazNativeWidget
                 if (!isExplicitExit)
                 {
                     e.Cancel = true;
+                    this.ShowInTaskbar = false;
                     this.Hide();
                     if (!hasShownTrayTip && notifyIcon != null)
                     {
@@ -508,12 +528,14 @@ namespace NamazNativeWidget
                     {
                         if (this.IsVisible)
                         {
+                            this.ShowInTaskbar = false;
                             this.Hide();
                         }
                         else
                         {
                             this.Show();
                             this.WindowState = WindowState.Normal;
+                            this.ShowInTaskbar = true;
                             this.Activate();
                         }
                     }
@@ -524,8 +546,18 @@ namespace NamazNativeWidget
 
                 trayMenu.MenuItems.Add("Show / Hide Widget", delegate
                 {
-                    if (this.IsVisible) this.Hide();
-                    else { this.Show(); this.Activate(); }
+                    if (this.IsVisible)
+                    {
+                        this.ShowInTaskbar = false;
+                        this.Hide();
+                    }
+                    else
+                    {
+                        this.Show();
+                        this.WindowState = WindowState.Normal;
+                        this.ShowInTaskbar = true;
+                        this.Activate();
+                    }
                 });
 
                 trayMenu.MenuItems.Add("-");
@@ -822,6 +854,12 @@ namespace NamazNativeWidget
                             {
                                 this.Topmost = bool.Parse(val);
                                 if (menuPin != null) menuPin.IsChecked = this.Topmost;
+                                if (btnPin != null)
+                                {
+                                    btnPin.Foreground = this.Topmost
+                                        ? new SolidColorBrush(System.Windows.Media.Color.FromRgb(16, 185, 129))
+                                        : new SolidColorBrush(System.Windows.Media.Color.FromRgb(148, 163, 184));
+                                }
                             }
                             if (key == "IsLargeMode")
                             {
@@ -1179,48 +1217,49 @@ namespace NamazNativeWidget
             // Per-Prayer Fiqh & Duration Thresholds
             int redThreshold = 10;
             int orangeThreshold = 20;
-            int amberThreshold = 40;
+            int amberThreshold = 35;
 
             if (pName == "ASR")
             {
                 // Asr: Last 20 minutes before Maghrib is Makruh Tahrimi (Isfirar ash-Shams)
                 redThreshold = 10;
                 orangeThreshold = 20;
-                amberThreshold = 40;
+                amberThreshold = 35;
             }
             else if (pName == "DHUHR" || pName == "JUMMAH")
             {
-                // Zuhr/Jummah: Long 4-hour window; at 25m left >85% is already expired
+                // Zuhr/Jummah: Long ~4-hour window; at 25m left >85% is already expired
                 redThreshold = 12;
                 orangeThreshold = 25;
-                amberThreshold = 50;
+                amberThreshold = 45;
             }
             else if (pName == "MAGHRIB")
             {
-                // Maghrib: Short ~75m window; Mustahabb to pray promptly
-                redThreshold = 10;
-                orangeThreshold = 25;
-                amberThreshold = 45;
+                // Maghrib: Short ~75m window; 44m left is >60% remaining -> Calm Emerald Green
+                // Enters Golden Amber only at <= 25m, Sunset Orange at <= 15m, and Red Alert at < 8m.
+                redThreshold = 8;
+                orangeThreshold = 15;
+                amberThreshold = 25;
             }
             else if (pName == "FAJR")
             {
                 // Fajr: Strict cutoff at Sunrise
                 redThreshold = 10;
-                orangeThreshold = 20;
-                amberThreshold = 40;
+                orangeThreshold = 18;
+                amberThreshold = 30;
             }
             else if (pName == "ISHA")
             {
                 // Isha: Long night window until Fajr
                 redThreshold = 15;
                 orangeThreshold = 30;
-                amberThreshold = 60;
+                amberThreshold = 50;
             }
             else if (pName == "ISHRAQ")
             {
                 redThreshold = 10;
                 orangeThreshold = 20;
-                amberThreshold = 45;
+                amberThreshold = 35;
             }
 
             // Display Format: Live ticking MM:SS only when within red threshold
@@ -1266,7 +1305,7 @@ namespace NamazNativeWidget
                 numGlow.Opacity = isPulseBright ? 0.85 : 0.45;
                 numGlow.BlurRadius = isPulseBright ? 26 : 14;
             }
-            else if (totalMin < orangeThreshold)
+            else if (totalMin <= orangeThreshold)
             {
                 // Tier 3: Sunset Orange / Coral
                 mainColor = System.Windows.Media.Color.FromRgb(249, 115, 22);
@@ -1275,12 +1314,12 @@ namespace NamazNativeWidget
                 numGlow.Opacity = 0.62;
                 numGlow.BlurRadius = 20;
             }
-            else if (totalMin < amberThreshold)
+            else if (totalMin <= amberThreshold)
             {
-                // Tier 2: Solar Amber
-                mainColor = System.Windows.Media.Color.FromRgb(245, 158, 11);
+                // Tier 2: Solar Gold / Honey (Distinct bright gold #FBBF24, never mistaken for Orange)
+                mainColor = System.Windows.Media.Color.FromRgb(251, 191, 36);
                 glowColor = System.Windows.Media.Color.FromRgb(217, 119, 6);
-                borderColor = System.Windows.Media.Color.FromArgb(95, 245, 158, 11);
+                borderColor = System.Windows.Media.Color.FromArgb(95, 251, 191, 36);
                 numGlow.Opacity = 0.55;
                 numGlow.BlurRadius = 18;
             }
@@ -1336,9 +1375,38 @@ namespace NamazNativeWidget
             }
         }
 
+        private static System.Threading.Mutex singleInstanceMutex;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         [STAThread]
         public static void Main()
         {
+            bool isNewInstance;
+            singleInstanceMutex = new System.Threading.Mutex(true, "NamazNativeWidget_SingleInstanceMutex", out isNewInstance);
+            if (!isNewInstance)
+            {
+                try
+                {
+                    Process current = Process.GetCurrentProcess();
+                    foreach (Process proc in Process.GetProcessesByName(current.ProcessName))
+                    {
+                        if (proc.Id != current.Id && proc.MainWindowHandle != IntPtr.Zero)
+                        {
+                            ShowWindow(proc.MainWindowHandle, 9); // SW_RESTORE
+                            SetForegroundWindow(proc.MainWindowHandle);
+                            break;
+                        }
+                    }
+                }
+                catch { }
+                return;
+            }
+
             try
             {
                 Application app = new Application();

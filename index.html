@@ -6096,16 +6096,34 @@
         unitStr = 'SEC LEFT';
       }
 
-      // Dynamic Urgency Colors:
-      // Emerald/Cyan (> 20m), Amber/Gold (10-20m), Warm Rose/Red (< 10m alert)
-      let urgencyClass = 'urgency-normal';
-      if (totalMin <= 10) {
-        urgencyClass = 'urgency-alert';
-      } else if (totalMin <= 20) {
-        urgencyClass = 'urgency-warning';
+      const rawPrayerName = (state.title || 'SALAH').toUpperCase();
+
+      // Dynamic Urgency Colors: Prayer-Aware Fiqh & Duration Thresholds
+      let redThresh = 10;
+      let orangeThresh = 20;
+      if (rawPrayerName.includes('ASR')) {
+        redThresh = 10;
+        orangeThresh = 20;
+      } else if (rawPrayerName.includes('DHUHR') || rawPrayerName.includes('JUMMAH')) {
+        redThresh = 12;
+        orangeThresh = 25;
+      } else if (rawPrayerName.includes('MAGHRIB')) {
+        redThresh = 8;
+        orangeThresh = 15;
+      } else if (rawPrayerName.includes('FAJR')) {
+        redThresh = 10;
+        orangeThresh = 18;
+      } else if (rawPrayerName.includes('ISHA')) {
+        redThresh = 15;
+        orangeThresh = 30;
       }
 
-      const rawPrayerName = (state.title || 'SALAH').toUpperCase();
+      let urgencyClass = 'urgency-normal';
+      if (totalMin < redThresh) {
+        urgencyClass = 'urgency-alert';
+      } else if (totalMin <= orangeThresh) {
+        urgencyClass = 'urgency-warning';
+      }
 
       let endTimeStr = '';
       if (state.targetDate instanceof Date) {
