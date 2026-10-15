@@ -12,6 +12,7 @@ const { runAnnualPhase1Tests } = require('./annual_analysis_phase1.test.js');
 const { runAnnualPhase2UITests } = require('./annual_analysis_phase2_ui.test.js');
 const { runTimetablePhase1Tests } = require('./annual_timetable_phase1.test.js');
 const { runTimetablePhase2UITests } = require('./annual_timetable_phase2_ui.test.js');
+const { runBaharTimingGuideTests } = require('./bahar_timing_guide.test.js');
 
 const THRESHOLDS = {
   tier1Min: 50,
@@ -105,6 +106,15 @@ async function main() {
   console.log(`   [PASS] ${tt2Passed}/${tt2Results.length} tests passed in ${tt2Duration} ms\n`);
   allResults = allResults.concat(tt2Results.map(r => ({ ...r, tier: 'Timetable Phase 2 & 3 UI' })));
 
+  // --- BAHAR-E-SHARIAT TIMING GUIDE & COLOR LOGIC ---
+  console.log('>> [BAHAR-E-SHARIAT] Running Timing Guide & Color Logic Suite...');
+  const bgStart = performance.now();
+  const bgResults = runBaharTimingGuideTests();
+  const bgDuration = (performance.now() - bgStart).toFixed(2);
+  const bgPassed = bgResults.filter(r => r.passed).length;
+  console.log(`   [PASS] ${bgPassed}/${bgResults.length} tests passed in ${bgDuration} ms\n`);
+  allResults = allResults.concat(bgResults.map(r => ({ ...r, tier: 'Bahar Guide' })));
+
   // --- TIER 5 (Adversarial Ephemeris & Stress Suite) ---
   const includeTier5 = process.argv.includes('--tier5') || process.argv.includes('--include-tier5') || process.argv.includes('--all');
   let t5Results = [];
@@ -133,6 +143,7 @@ async function main() {
   console.log(` Phase 2 & 3 (Almanac UI/Modal)  :  ${p2Passed.toString().padStart(3)} / ${p2Results.length.toString().padEnd(3)} passed  (Min req: 8)`);
   console.log(` Timetable Phase 1 (Engine)      :  ${tt1Passed.toString().padStart(3)} / ${tt1Results.length.toString().padEnd(3)} passed  (Min req: 10)`);
   console.log(` Timetable Phase 2 & 3 (UI)      :  ${tt2Passed.toString().padStart(3)} / ${tt2Results.length.toString().padEnd(3)} passed  (Min req: 8)`);
+  console.log(` Bahar-e-Shariat Fiqh Engine     :  ${bgPassed.toString().padStart(3)} / ${bgResults.length.toString().padEnd(3)} passed  (Min req: 4)`);
   if (includeTier5) {
     console.log(` Tier 5 (Adversarial Ephemeris)  :  ${t5Passed.toString().padStart(3)} / ${t5Results.length.toString().padEnd(3)} passed  (Min req: ${THRESHOLDS.tier5Min})`);
   }

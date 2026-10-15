@@ -154,15 +154,20 @@
       opacity: 0.85;
     }
 
-    /* Dynamic Urgency Colors */
+    /* Dynamic Urgency Colors (4-Tier Bahar-e-Shariat Chromatic Spectrum) */
     .urgency-normal {
       color: #34d399;
       text-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
     }
 
-    .urgency-warning {
+    .urgency-amber {
       color: #fbbf24;
-      text-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+      text-shadow: 0 0 20px rgba(251, 191, 36, 0.45);
+    }
+
+    .urgency-warning {
+      color: #f97316;
+      text-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
     }
 
     .urgency-alert {
@@ -204,6 +209,7 @@
       </div>
       <div id="txtCityName" class="widget-city-tag">Surat</div>
       <div class="widget-actions">
+        <button id="btnGuide" class="widget-btn" title="Bahar-e-Shariat Timing Guide" aria-label="Timing Guide">📖</button>
         <button id="btnPip" class="widget-btn" title="Always on Top (Floating Stick Note)" aria-label="Always on Top">📌</button>
         <button id="btnExpand" class="widget-btn" title="Open Full App" aria-label="Open Full App">⤢</button>
       </div>
@@ -438,21 +444,27 @@
 
       let redThresh = 10;
       let orangeThresh = 20;
+      let amberThresh = 35;
       if (pName === 'ASR') {
         redThresh = 10;
         orangeThresh = 20;
+        amberThresh = 35;
       } else if (pName === 'DHUHR' || pName === 'JUMMAH') {
         redThresh = 12;
         orangeThresh = 25;
+        amberThresh = 45;
       } else if (pName === 'MAGHRIB') {
         redThresh = 8;
         orangeThresh = 15;
+        amberThresh = 25;
       } else if (pName === 'FAJR') {
         redThresh = 10;
         orangeThresh = 18;
+        amberThresh = 30;
       } else if (pName === 'ISHA') {
         redThresh = 15;
         orangeThresh = 30;
+        amberThresh = 50;
       }
 
       let urgencyClass = 'urgency-normal';
@@ -460,6 +472,8 @@
         urgencyClass = 'urgency-alert';
       } else if (totalMin <= orangeThresh) {
         urgencyClass = 'urgency-warning';
+      } else if (totalMin <= amberThresh) {
+        urgencyClass = 'urgency-amber';
       }
 
       document.getElementById('txtPrayerName').innerText = pName;
@@ -470,6 +484,20 @@
       if (pName === 'ASR') {
         if (totalMin <= 20) subtext = `Iftar at ${formatTime12(targetDate)} • ⚠️ Makruh Time`;
         else subtext = `Iftar at ${formatTime12(targetDate)} (Maghrib) • Next: Maghrib`;
+      } else if (pName === 'MAGHRIB') {
+        if (totalMin <= 15) subtext = `Ends at ${formatTime12(targetDate)} • ⚠️ Makruh Time (Stars clustered)`;
+        else subtext = `Ends at ${formatTime12(targetDate)} • Next: Isha`;
+      } else if (pName === 'ISHA') {
+        const isPastMidnight = (now.getHours() >= 0 && now.getHours() < 5);
+        if (isPastMidnight) {
+          subtext = `Past Midnight (Makruh delay) • Sehri ends at ${formatTime12(targetDate)}`;
+        } else {
+          subtext = `Ends at ${formatTime12(targetDate)} • Next: Fajr`;
+        }
+      } else if (now >= tSunrise && now < tDhuhr) {
+        if (now < new Date(tSunrise.getTime() + 20 * 60000)) {
+          subtext = `Wait 20m for Ishraq • ${dhuhrTitle} at ${formatTime12(tDhuhr)}`;
+        }
       } else if (now < tFajr) {
         subtext = `Sehri ends at ${formatTime12(tFajr)} • Tahajjud window`;
       }
@@ -480,6 +508,14 @@
 
     updateWidget();
     setInterval(updateWidget, 1000);
+
+    // Timing guide
+    const btnGuide = document.getElementById('btnGuide');
+    if (btnGuide) {
+      btnGuide.addEventListener('click', () => {
+        window.location.href = 'index.html#timing-guide';
+      });
+    }
 
     // Expand to full app
     document.getElementById('btnExpand').addEventListener('click', () => {
