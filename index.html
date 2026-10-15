@@ -6135,7 +6135,10 @@
       }
       let nextStr = state.nextLabel ? state.nextLabel.replace(/<[^>]+>/g, '').split(' ')[0] : '';
       let subtext = endTimeStr ? `Ends at ${endTimeStr}` : '';
-      if (nextStr) {
+      if (rawPrayerName.includes('ASR')) {
+        if (totalMin <= 20) subtext = `Iftar at ${endTimeStr} • ⚠️ Makruh Time`;
+        else subtext = `Iftar at ${endTimeStr} (Maghrib) • Next: Maghrib`;
+      } else if (nextStr) {
         subtext += ` • Next: ${nextStr}`;
       }
 

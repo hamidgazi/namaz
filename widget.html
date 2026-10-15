@@ -466,7 +466,14 @@
       document.getElementById('countdownNumber').innerText = numStr;
       document.getElementById('countdownUnit').innerText = unitStr;
       document.getElementById('countdownGiant').className = `widget-countdown-giant ${urgencyClass}`;
-      document.getElementById('txtSubtext').innerText = `Ends at ${formatTime12(targetDate)} • Next: ${nextName}`;
+      let subtext = `Ends at ${formatTime12(targetDate)} • Next: ${nextName}`;
+      if (pName === 'ASR') {
+        if (totalMin <= 20) subtext = `Iftar at ${formatTime12(targetDate)} • ⚠️ Makruh Time`;
+        else subtext = `Iftar at ${formatTime12(targetDate)} (Maghrib) • Next: Maghrib`;
+      } else if (now < tFajr) {
+        subtext = `Sehri ends at ${formatTime12(tFajr)} • Tahajjud window`;
+      }
+      document.getElementById('txtSubtext').innerText = subtext;
 
       document.title = `📌 ${pName} • ${numStr} ${unitStr}`;
     }

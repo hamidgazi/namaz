@@ -1077,6 +1077,7 @@ namespace NamazNativeWidget
 
             bool isFriday = now.DayOfWeek == DayOfWeek.Friday;
             string dhuhrName = isFriday ? "JUMMAH" : "DHUHR";
+            peekNames[2].Text = dhuhrName;
 
             // Determine Active Prayer Window
             int activePeekIndex = 2; // Default Dhuhr
@@ -1091,7 +1092,7 @@ namespace NamazNativeWidget
             }
             else if (now >= tSunrise && now < tDhuhr)
             {
-                pName = "ISHRAQ";
+                pName = "NEXT: " + dhuhrName;
                 windowStart = tSunrise;
                 windowEnd = tDhuhr;
                 nextName = dhuhrName;
@@ -1226,7 +1227,7 @@ namespace NamazNativeWidget
                 orangeThreshold = 20;
                 amberThreshold = 35;
             }
-            else if (pName == "DHUHR" || pName == "JUMMAH")
+            else if (pName.Contains("DHUHR") || pName.Contains("JUMMAH"))
             {
                 // Zuhr/Jummah: Long ~4-hour window; at 25m left >85% is already expired
                 redThreshold = 12;
@@ -1254,12 +1255,6 @@ namespace NamazNativeWidget
                 redThreshold = 15;
                 orangeThreshold = 30;
                 amberThreshold = 50;
-            }
-            else if (pName == "ISHRAQ")
-            {
-                redThreshold = 10;
-                orangeThreshold = 20;
-                amberThreshold = 35;
             }
 
             // Display Format: Live ticking MM:SS only when within red threshold
@@ -1349,17 +1344,39 @@ namespace NamazNativeWidget
             txtCountdownUnit.Text = unitStr;
 
             // Footer intelligence & Fasting detection
-            if (pName == "ASR" && totalMin <= 20)
+            if (pName == "ASR")
             {
-                txtSubtext.Text = string.Format("Ends at {0}  •  ⚠️ Makruh Time  (Click for peek)", FormatTime12(windowEnd));
+                if (totalMin <= 20)
+                {
+                    txtSubtext.Text = string.Format("Iftar at {0}  •  ⚠️ Makruh Time  (Click for peek)", FormatTime12(windowEnd));
+                }
+                else
+                {
+                    txtSubtext.Text = string.Format("Iftar at {0} (Maghrib)  •  Next: Maghrib  (Click for peek)", FormatTime12(windowEnd));
+                }
             }
             else if (now < tFajr)
             {
-                txtSubtext.Text = string.Format("Sehri ends at {0} (Fajr)  •  Ends at {0}", FormatTime12(tFajr));
+                txtSubtext.Text = string.Format("Sehri ends at {0}  •  Tahajjud window  (Click for peek)", FormatTime12(tFajr));
             }
-            else if (now >= tAsr && now < tMaghrib)
+            else if (now >= tSunrise && now < tDhuhr)
             {
-                txtSubtext.Text = string.Format("Iftar at {0} (Maghrib)  •  Ends at {0}", FormatTime12(windowEnd));
+                if (now < tSunrise.AddMinutes(15))
+                {
+                    txtSubtext.Text = string.Format("Wait 15m for Ishraq  •  {0} at {1}", dhuhrName, FormatTime12(tDhuhr));
+                }
+                else if (now < tSunrise.AddMinutes(50))
+                {
+                    txtSubtext.Text = string.Format("Ishraq Sunnah active  •  {0} at {1}", dhuhrName, FormatTime12(tDhuhr));
+                }
+                else if (now >= tDhuhr.AddMinutes(-10))
+                {
+                    txtSubtext.Text = string.Format("Zawal Zenith  •  {0} starts at {1}", dhuhrName, FormatTime12(tDhuhr));
+                }
+                else
+                {
+                    txtSubtext.Text = string.Format("Chasht (Duha) time  •  {0} at {1}", dhuhrName, FormatTime12(tDhuhr));
+                }
             }
             else
             {
