@@ -33,11 +33,14 @@ function runBaharTimingGuideTests() {
   });
 
   // Test 2: index.html integration
-  test('BG-02: index.html contains modalTimingGuide and btnOpenTimingGuide', () => {
+  test('BG-02: index.html contains modalTimingGuide, 4 segmented tabs, search box, and color simulator', () => {
     const html = fs.readFileSync(indexHtmlPath, 'utf8');
     assert.ok(html.includes('id="btnOpenTimingGuide"'), 'Must contain btnOpenTimingGuide in header');
     assert.ok(html.includes('id="modalTimingGuide"'), 'Must contain modalTimingGuide backdrop');
     assert.ok(html.includes('id="btnCloseTimingGuide"'), 'Must contain close button');
+    assert.ok(html.includes('id="inputSearchGuide"'), 'Must contain live search box in guide');
+    assert.ok(html.includes('guide-tab-bar') && html.includes('guide-tab-btn'), 'Must contain 4-tab segmented control');
+    assert.ok(html.includes('id="sliderColorSim"'), 'Must contain interactive color simulator slider');
     assert.ok(html.includes('urgency-amber'), 'Must contain .urgency-amber class in CSS');
     assert.ok(html.includes('tSunrise.getTime() + 20 * 60 * 1000'), 'Must use 20 minutes for sunrise prohibition');
   });
@@ -52,13 +55,16 @@ function runBaharTimingGuideTests() {
   });
 
   // Test 4: NamazWidget.cs WPF Desktop implementation
-  test('BG-04: NamazWidget.cs contains 20m sunrise prohibition and ShowTimingGuideWindow', () => {
+  test('BG-04: NamazWidget.cs contains minimal 2-button header, 4 tabs, and clean footer', () => {
     const cs = fs.readFileSync(namazWidgetCsPath, 'utf8');
+    assert.ok(cs.includes('btnMenu = CreateSmallButton("⋯"'), 'Must have minimal 2-button header with btnMenu');
     assert.ok(cs.includes('tSunrise.AddMinutes(20)'), 'Sunrise prohibition must be exactly 20 minutes');
     assert.ok(cs.includes('ShowTimingGuideWindow'), 'Must implement ShowTimingGuideWindow()');
+    assert.ok(cs.includes('CreateGuideTabButton'), 'Must implement tabbed guide navigation in WPF');
     assert.ok(cs.includes('Bahar-e-Shariat Timing Guide'), 'Menu and buttons must link to Bahar-e-Shariat Timing Guide');
     assert.ok(cs.includes('Stars clustered'), 'Must include Maghrib stars clustered Makruh subtext');
     assert.ok(cs.includes('Past Midnight (Makruh delay)'), 'Must include Isha past midnight Makruh delay subtext');
+    assert.ok(!cs.includes('(Click for peek)'), 'Footer subtext must not contain truncated (Click for peek)');
   });
 
   return results;

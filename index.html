@@ -2196,6 +2196,74 @@
       box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
     }
 
+    /* Segmented Tab Control in Timing Guide Modal */
+    .guide-tab-bar {
+      display: flex;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin: 10px 0 12px;
+      flex-shrink: 0;
+    }
+
+    .guide-tab-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 7px 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .guide-tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .guide-tab-btn.active {
+      background: var(--emerald-accent);
+      color: #022c22;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+    }
+
+    .guide-search-box {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 11.5px;
+      color: #f8fafc;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .guide-search-box:focus {
+      border-color: var(--emerald-accent);
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+
+    .guide-urdu-text {
+      font-family: "Jameel Noori Nastaleeq", "Urdu Typesetting", "Noto Nastaliq Urdu", Tahoma, Arial, sans-serif;
+      direction: rtl;
+      text-align: right;
+      font-size: 13.5px;
+      line-height: 22px;
+      color: #fef08a;
+    }
+
     /* Timetable Toolbar & Controls */
     .timetable-toolbar {
       display: flex;
@@ -3872,7 +3940,7 @@
 
     <!-- Bahar-e-Shariat Prayer Timing & Color Psychology Guide Modal -->
     <div id="modalTimingGuide" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="timingGuideModalTitle">
-      <div class="modal-card" style="max-width: 520px; max-height: 88vh; display: flex; flex-direction: column;">
+      <div class="modal-card" style="max-width: 580px; width: 95%; max-height: 90vh; display: flex; flex-direction: column;">
         <div class="modal-head">
           <div>
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -3880,7 +3948,7 @@
               <span class="version-badge" style="font-size: 9.5px; padding: 2px 6px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px;">Hanafi Fiqh</span>
             </div>
             <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
-              Rulings from Sadrush Shariah Allama Amjad Ali Azmi &amp; 4-Tier Color Psychology
+              Authentic Rulings from Allama Amjad Ali Azmi &amp; 4-Tier Cognitive Color Psychology
             </p>
           </div>
           <button id="btnCloseTimingGuide" class="modal-close" aria-label="Close Timing Guide">
@@ -3891,121 +3959,273 @@
           </button>
         </div>
 
-        <div style="overflow-y: auto; padding: 14px 4px 10px; display: flex; flex-direction: column; gap: 14px;">
-          <!-- Section 1: Color Psychology -->
-          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 14px;">
-            <h4 style="font-size: 13px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-              <span>🎨</span> 4-Tier Cognitive Color Psychology Engine
-            </h4>
-            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
-              The human eye processes color wavelength before conscious text reading. Our chromatic scale provides calm ambient awareness without inducing anxiety:
-            </p>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #34d399;">🟢 Emerald Green (#10B981) — Peace &amp; Khushu' (Itmi'nan)</div>
-                <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
-                  Lowest cortisol wavelength (~555nm). Tells the brain: <em>"You have ample safe time. Pray with full composure and tranquility."</em> Active across the majority of each prayer window.
-                </div>
-              </div>
+        <!-- Search Bar -->
+        <div style="padding: 10px 4px 0;">
+          <input type="text" id="inputSearchGuide" class="guide-search-box" placeholder="🔍 Search prayer, ruling, or keyword (e.g. Asr, Makruh, 20m, زوال)...">
+        </div>
 
-              <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">🟡 Solar Gold (#FBBF24) — Gentle Focus &amp; Transition (Intibah)</div>
-                <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
-                  High luminance without aggression. Signals that time has advanced midway. Finish your current task and prepare for wudhu and prayer.
-                </div>
-              </div>
+        <!-- Segmented 4-Tab Navigation Bar -->
+        <div class="guide-tab-bar" role="tablist">
+          <button class="guide-tab-btn active" data-tab="colors" role="tab" aria-selected="true">🎨 Colors</button>
+          <button class="guide-tab-btn" data-tab="prayers" role="tab" aria-selected="false">📜 Prayers</button>
+          <button class="guide-tab-btn" data-tab="prohibited" role="tab" aria-selected="false">🚫 Prohibited</button>
+          <button class="guide-tab-btn" data-tab="urdu" role="tab" aria-selected="false">📚 Urdu Masail</button>
+        </div>
 
-              <div style="background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f97316;">🟠 Sunset Orange (#F97316) — Urgent Warning &amp; Makruh Horizon (Inzar)</div>
-                <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
-                  High urgency. Marks entering disliked (Makruh) periods: Asr last 20m (Isfirar), Maghrib last 15m (stars clustered), or Zuhr last 25m (&gt;90% elapsed). Stop working and pray now.
-                </div>
-              </div>
+        <div style="overflow-y: auto; padding: 6px 4px 10px; display: flex; flex-direction: column; gap: 12px;">
 
-              <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f87171;">🔴 Crimson Red Alert (#EF4444) — Critical Emergency / Prohibition (Tahrim / Khatar)</div>
-                <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
-                  Highest visual priority with breathing pulse and live ticking MM:SS. Active during strictly prohibited times (Sunrise, Zawal) and the final critical minutes before Qadha.
+          <!-- TAB 1: COLOR PSYCHOLOGY & INTERACTIVE SIMULATOR -->
+          <div id="guidePanelColors" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px;">
+              <h4 style="font-size: 12.5px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                <span>🎨</span> 4-Tier Cognitive Color Psychology Engine
+              </h4>
+              <p style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">
+                The human eye processes color wavelength before conscious text reading. Our chromatic scale provides calm ambient awareness without inducing anxiety:
+              </p>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 9px 12px;">
+              <div style="font-size: 11.5px; font-weight: 800; color: #34d399;">🟢 Emerald Green (#10B981) — Peace &amp; Khushu' (Itmi'nan)</div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
+                Lowest cortisol wavelength (~555nm). Tells the brain: <em>"You have ample safe time. Pray with full composure and tranquility."</em> Active across the majority of each prayer window.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 10px; padding: 9px 12px;">
+              <div style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">🟡 Solar Gold (#FBBF24) — Gentle Focus &amp; Transition (Intibah)</div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
+                High luminance without aggression. Signals that time has advanced midway. Finish your current task and prepare for wudhu and prayer.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 10px; padding: 9px 12px;">
+              <div style="font-size: 11.5px; font-weight: 800; color: #f97316;">🟠 Sunset Orange (#F97316) — Urgent Warning &amp; Makruh Horizon (Inzar)</div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
+                High urgency. Marks entering disliked (Makruh) periods: Asr last 20m (Isfirar), Maghrib last 15m (stars clustered), or Zuhr last 25m (&gt;90% elapsed). Stop working and pray now.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 9px 12px;">
+              <div style="font-size: 11.5px; font-weight: 800; color: #f87171;">🔴 Crimson Red Alert (#EF4444) — Critical Emergency / Prohibition (Tahrim / Khatar)</div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px; line-height: 1.4;">
+                Highest visual priority with breathing pulse and live ticking MM:SS. Active during strictly prohibited times (Sunrise, Zawal) and the final critical minutes before Qadha.
+              </div>
+            </div>
+
+            <!-- Interactive Color Test Simulator -->
+            <div class="guide-card-item" style="background: rgba(2, 6, 23, 0.65); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 12px; margin-top: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🧪 Live Color Test Simulator</span>
+                <span id="simMinLabel" style="font-size: 11px; font-weight: 800; color: #34d399; background: rgba(16, 185, 129, 0.15); padding: 2px 7px; border-radius: 6px;">44 min</span>
+              </div>
+              <p style="font-size: 10.5px; color: var(--text-muted); margin-bottom: 8px;">
+                Drag the slider to test any remaining minutes and watch the cognitive color shift live:
+              </p>
+              <input type="range" id="sliderColorSim" min="1" max="65" value="44" style="width: 100%; accent-color: #10B981; cursor: pointer; margin-bottom: 10px;">
+              <div id="simColorPreview" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 10px; color: #10b981; font-size: 11px;">
+                <strong>🟢 EMERALD GREEN — Peace &amp; Khushu' (Itmi'nan)</strong>
+                <div style="font-size: 10.5px; color: #cbd5e1; margin-top: 3px;">
+                  Lowest cortisol wavelength (~555nm). Ample, comfortable time remaining. (At 44m in Maghrib, &gt;60% of window remains).
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Section 2: Bahar-e-Shariat Rulings -->
-          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 14px;">
-            <h4 style="font-size: 13px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-              <span>📜</span> Prayer Rulings from Bahar-e-Shariat (Vol 1, Part 3)
-            </h4>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f8fafc;">🌅 FAJR (صبح صادق تا طلوع)</div>
-                <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
-                  Begins at True Dawn (Subh Sadiq) and ends at Sunrise rim. Men: <em>Isfar</em> (broad daylight) is Mustahabb (allowing 40–60 verses with Tartil). Women: <em>Ghalas</em> (early darkness).<br>
-                  <span style="color: #34d399; font-weight: 600;">🟢 &gt;30m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 18–30m</span> | <span style="color: #f97316; font-weight: 600;">🟠 10–18m</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;10m</span>
-                </div>
+          <!-- TAB 2: PRAYER RULINGS -->
+          <div id="guidePanelPrayers" style="display: none; flex-direction: column; gap: 8px;">
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 800; color: #f8fafc;">🌅 FAJR (صبح صادق تا طلوع)</span>
+                <span style="font-size: 9.5px; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 1px 6px; border-radius: 4px;">Subh Sadiq</span>
               </div>
-
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f8fafc;">☀️ SUNRISE, ISHRAQ &amp; CHASHT (طلوع تا زوال)</div>
-                <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
-                  • <strong>Sunrise Prohibition</strong>: Exactly <strong>20 MINUTES</strong> after sunrise, all prayers (Fard, Qadha, Nafl) are strictly Haram (Vol 1, P 458 Masla 21).<br>
-                  • <strong>Ishraq Sunnah</strong>: Starts at Sunrise + 20 min until ~50 min.<br>
-                  • <strong>Zawal Prohibition</strong>: 10–12 min immediately preceding Dhuhr zenith is strictly forbidden for all prayer.
-                </div>
+              <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                Begins at True Dawn (Subh Sadiq) and ends at Sunrise rim. Men: <em>Isfar</em> (broad daylight) is Mustahabb (allowing 40–60 verses with Tartil). Women: <em>Ghalas</em> (early darkness).<br>
+                <span style="color: #34d399; font-weight: 600;">🟢 &gt;30m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 18–30m</span> | <span style="color: #f97316; font-weight: 600;">🟠 10–18m</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;10m</span>
               </div>
+            </div>
 
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f8fafc;">🌤️ DHUHR / JUMMAH (زوال تا مثلِ ثانی)</div>
-                <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
-                  Begins after Zawal and ends at Misl-e-Sani (2x shadow + noon shadow). Permissible across the entire window without inherent Karahat (P 461 Masla 35).<br>
-                  <span style="color: #34d399; font-weight: 600;">🟢 &gt;45m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 25–45m</span> | <span style="color: #f97316; font-weight: 600;">🟠 12–25m</span> (&gt;90% elapsed) | <span style="color: #f87171; font-weight: 600;">🔴 &lt;12m</span>
-                </div>
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 800; color: #f8fafc;">☀️ SUNRISE, ISHRAQ &amp; CHASHT (طلوع تا زوال)</span>
+                <span style="font-size: 9.5px; color: #f87171; background: rgba(239, 68, 68, 0.1); padding: 1px 6px; border-radius: 4px;">20m Prohibition</span>
               </div>
-
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f8fafc;">🌇 ASR (مثلِ ثانی تا غروب)</div>
-                <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
-                  Begins at Misl-e-Sani (2x) and ends at complete sunset. Mustahabb to delay into 2nd half for congregation.<br>
-                  • ⚠️ <strong>20-Min Makruh Tahrimi</strong>: The final 20 min before Maghrib when the sun pales (Isfirar). Delaying Fard here without excuse is a grave sin (P 456 Masla 12). Only today's delayed Fard may be performed.<br>
-                  <span style="color: #34d399; font-weight: 600;">🟢 &gt;35m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 20–35m</span> | <span style="color: #f97316; font-weight: 600;">🟠 &le;20m (Makruh Time)</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;10m</span>
-                </div>
+              <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                • <strong>Sunrise Prohibition</strong>: Exactly <strong>20 MINUTES</strong> after sunrise, all prayers (Fard, Qadha, Nafl) are strictly Haram (Vol 1, P 458 Masla 21).<br>
+                • <strong>Ishraq Sunnah</strong>: Starts at Sunrise + 20 min until ~50 min.<br>
+                • <strong>Zawal Prohibition</strong>: 10–12 min immediately preceding Dhuhr zenith is strictly forbidden for all prayer.
               </div>
+            </div>
 
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f8fafc;">🌆 MAGHRIB (غروب تا شفقِ ابیض)</div>
-                <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
-                  Begins at sunset and ends when white twilight vanishes (~75m in Surat). <strong>Ta'jeel (prompt prayer) is universally Mustahabb</strong> (P 457 Masla 15).<br>
-                  • ⚠️ <strong>Stars Clustered Makruh</strong>: Delaying without excuse until stars cluster densely (final 15m) is Makruh Tahrimi!<br>
-                  • At 44m remaining, &gt;60% of time remains &rarr; 100% Emerald Green.<br>
-                  <span style="color: #34d399; font-weight: 600;">🟢 &gt;25m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 15–25m</span> | <span style="color: #f97316; font-weight: 600;">🟠 &le;15m (Makruh Time)</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;8m</span>
-                </div>
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 800; color: #f8fafc;">🌤️ DHUHR / JUMMAH (زوال تا مثلِ ثانی)</span>
+                <span style="font-size: 9.5px; color: #34d399; background: rgba(16, 185, 129, 0.1); padding: 1px 6px; border-radius: 4px;">Misl-e-Sani</span>
               </div>
+              <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                Begins after Zawal and ends at Misl-e-Sani (2x shadow + noon shadow). Permissible across the entire window without inherent Karahat (P 461 Masla 35).<br>
+                <span style="color: #34d399; font-weight: 600;">🟢 &gt;45m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 25–45m</span> | <span style="color: #f97316; font-weight: 600;">🟠 12–25m</span> (&gt;90% elapsed) | <span style="color: #f87171; font-weight: 600;">🔴 &lt;12m</span>
+              </div>
+            </div>
 
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 8px 12px;">
-                <div style="font-size: 11.5px; font-weight: 800; color: #f8fafc;">🌌 ISHA &amp; WITR (شفقِ ابیض تا صبح صادق)</div>
-                <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
-                  Begins at Shafaq Abyad and ends at Fajr. First 1/3 of the night is Mustahabb; up to Islamic Midnight (Nisf-ul-Layl) is Mubah.<br>
-                  • ⚠️ <strong>Past Islamic Midnight</strong>: Delaying past midnight without valid excuse is Makruh Tanzihi (P 457 Masla 16). App alerts: <em>"Past Midnight (Makruh delay)"</em>.<br>
-                  <span style="color: #34d399; font-weight: 600;">🟢 Safe early night</span> | <span style="color: #f97316; font-weight: 600;">🟠 &le;30m before Fajr</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;15m</span>
-                </div>
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 800; color: #f8fafc;">🌇 ASR (مثلِ ثانی تا غروب)</span>
+                <span style="font-size: 9.5px; color: #f97316; background: rgba(249, 115, 22, 0.1); padding: 1px 6px; border-radius: 4px;">20m Isfirar</span>
+              </div>
+              <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                Begins at Misl-e-Sani (2x) and ends at complete sunset. Mustahabb to delay into 2nd half for congregation.<br>
+                • ⚠️ <strong>20-Min Makruh Tahrimi</strong>: The final 20 min before Maghrib when the sun pales (Isfirar). Delaying Fard here without excuse is a grave sin (P 456 Masla 12). Only today's delayed Fard may be performed.<br>
+                <span style="color: #34d399; font-weight: 600;">🟢 &gt;35m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 20–35m</span> | <span style="color: #f97316; font-weight: 600;">🟠 &le;20m (Makruh Time)</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;10m</span>
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 800; color: #f8fafc;">🌆 MAGHRIB (غروب تا شفقِ ابیض)</span>
+                <span style="font-size: 9.5px; color: #34d399; background: rgba(16, 185, 129, 0.1); padding: 1px 6px; border-radius: 4px;">Ta'jeel Mustahabb</span>
+              </div>
+              <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                Begins at sunset and ends when white twilight vanishes (~75m in Surat). <strong>Ta'jeel (prompt prayer) is universally Mustahabb</strong> (P 457 Masla 15).<br>
+                • ⚠️ <strong>Stars Clustered Makruh</strong>: Delaying without excuse until stars cluster densely (final 15m) is Makruh Tahrimi!<br>
+                • At 44m remaining, &gt;60% of time remains &rarr; 100% Emerald Green.<br>
+                <span style="color: #34d399; font-weight: 600;">🟢 &gt;25m</span> | <span style="color: #fbbf24; font-weight: 600;">🟡 15–25m</span> | <span style="color: #f97316; font-weight: 600;">🟠 &le;15m (Makruh Time)</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;8m</span>
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 800; color: #f8fafc;">🌌 ISHA &amp; WITR (شفقِ ابیض تا صبح صادق)</span>
+                <span style="font-size: 9.5px; color: #a855f7; background: rgba(168, 85, 247, 0.1); padding: 1px 6px; border-radius: 4px;">Nisf-ul-Layl</span>
+              </div>
+              <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.45;">
+                Begins at Shafaq Abyad and ends at Fajr. First 1/3 of the night is Mustahabb; up to Islamic Midnight (Nisf-ul-Layl) is Mubah.<br>
+                • ⚠️ <strong>Past Islamic Midnight</strong>: Delaying past midnight without valid excuse is Makruh Tanzihi (P 457 Masla 16). App alerts: <em>"Past Midnight (Makruh delay)"</em>.<br>
+                <span style="color: #34d399; font-weight: 600;">🟢 Safe early night</span> | <span style="color: #f97316; font-weight: 600;">🟠 &le;30m before Fajr</span> | <span style="color: #f87171; font-weight: 600;">🔴 &lt;15m</span>
               </div>
             </div>
           </div>
 
-          <!-- Section 3: Prohibited Times -->
-          <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 14px; padding: 14px;">
-            <h4 style="font-size: 13px; font-weight: 800; color: #f87171; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-              <span>🚫</span> The 3 Strictly Prohibited Times (Awqat-e-Mamnoo'ah)
-            </h4>
-            <div style="font-size: 11px; color: #e2e8f0; line-height: 1.5;">
-              In these 3 specific times, <strong>NO PRAYER</strong> is permissible (neither Fard, Qadha, Nafl, nor Janazah, nor Sajdah Tilawat &mdash; Page 458 Masla 21):
-              <ul style="margin: 6px 0 0 16px; display: flex; flex-direction: column; gap: 4px;">
-                <li><strong>1. Sunrise (Tulu)</strong>: Exactly 20 minutes from sunrise until sun rises 1 spear high.</li>
-                <li><strong>2. Midday Zenith (Zawal / Istiwa)</strong>: 10–12 minutes immediately before Dhuhr.</li>
-                <li><strong>3. Sunset (Isfirar ash-Shams)</strong>: The final 20 minutes before Maghrib (only today's delayed Asr Fard may be performed).</li>
-              </ul>
+          <!-- TAB 3: PROHIBITED TIMES (AWQAT-E-MAMNOO'AH) -->
+          <div id="guidePanelProhibited" style="display: none; flex-direction: column; gap: 10px;">
+            <div class="guide-card-item" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 12px;">
+              <h4 style="font-size: 12.5px; font-weight: 800; color: #f87171; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <span>🚫</span> The 3 Strictly Prohibited Times (Awqat-e-Mamnoo'ah)
+              </h4>
+              <p style="font-size: 10.5px; color: #fecaca; line-height: 1.45;">
+                In these 3 specific times, <strong>NO PRAYER WHATSOEVER</strong> is permissible (neither Fard, Qadha, Nafl, Janazah, nor Sajdah Tilawat &mdash; <em>Bahar-e-Shariat, Vol 1, Page 458, Masla 21</em>):
+              </p>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fca5a5;">🌅 1. Sunrise (Tulu-e-Aftab) &mdash; Exactly 20 Minutes</span>
+                <span style="font-size: 9.5px; color: #f87171; background: rgba(239, 68, 68, 0.15); padding: 1px 6px; border-radius: 4px;">Vol 1, P 458</span>
+              </div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 4px; line-height: 1.45;">
+                From the moment the sun's upper rim appears until it rises one spear high (approx. 20 minutes). All prayers are strictly Haram.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fca5a5;">☀️ 2. Midday Zenith (Zawal / Istiwa) &mdash; 10 to 12 Minutes</span>
+                <span style="font-size: 9.5px; color: #f87171; background: rgba(239, 68, 68, 0.15); padding: 1px 6px; border-radius: 4px;">Masla 21</span>
+              </div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 4px; line-height: 1.45;">
+                The 10–12 minutes immediately preceding Dhuhr when the sun is at the celestial meridian. All prayers are strictly forbidden.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fca5a5;">🌇 3. Sunset (Isfirar ash-Shams) &mdash; Final 20 Minutes of Asr</span>
+                <span style="font-size: 9.5px; color: #f87171; background: rgba(239, 68, 68, 0.15); padding: 1px 6px; border-radius: 4px;">Vol 1, P 456</span>
+              </div>
+              <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 4px; line-height: 1.45;">
+                The final 20 minutes before Maghrib when the sun disc loses radiance. Delaying today's Asr here is a sin, but it must still be prayed before sunset.
+              </div>
             </div>
           </div>
+
+          <!-- TAB 4: AUTHENTIC URDU MASAIL & CITATIONS -->
+          <div id="guidePanelUrdu" style="display: none; flex-direction: column; gap: 10px;">
+            <div class="guide-card-item" style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">عصر کی تاخیر اور اصفرارِ شمس (۲۰ منٹ)</span>
+                <span style="font-size: 9px; color: #fef08a; background: rgba(234, 179, 8, 0.2); padding: 1px 6px; border-radius: 4px;">بہارِ شریعت، جلد ۱، ص ۴۵۶، مسئلہ ۱۲</span>
+              </div>
+              <div class="guide-urdu-text" style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;">
+                البتہ اس روز اگر عصر کی نماز نہیں پڑھی تو اگرچہ آفتاب ڈوبتا ہو پڑھ لے مگر اتنی تاخیر کرنا حرام ہے ۔ حدیث میں اس کو منافق کی نماز فرمایا... اور اس وقت سے کہ آفتاب پر نگاہ ٹھہرنے لگے ڈوبنے تک غروب ہے یہ وقت بھی ۲۰ منٹ ہے ۔
+              </div>
+              <div style="font-size: 10px; color: #cbd5e1; line-height: 1.4;">
+                <strong>English:</strong> Delaying Asr until the sun pales (final 20m) without excuse is Haram. Only today's delayed Fard may be performed before sunset.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">اوقاتِ ممنوعہ میں نماز کی حرمت اور ۲۰ منٹ کی حد</span>
+                <span style="font-size: 9px; color: #fef08a; background: rgba(234, 179, 8, 0.2); padding: 1px 6px; border-radius: 4px;">بہارِ شریعت، جلد ۱، ص ۴۵۸، مسئلہ ۲۱</span>
+              </div>
+              <div class="guide-urdu-text" style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;">
+                تجربہ سے ثابت ہوا کہ قرصِ آفتاب میں یہ زردی اس وقت آ جاتی ہے جب غروب میں بیس منٹ باقی رہتے ہیں... یوں ہی بعدِ طلوع بیس منٹ کے بعد جوازِ نماز کا وقت ہو جاتا ہے ۔
+              </div>
+              <div style="font-size: 10px; color: #cbd5e1; line-height: 1.4;">
+                <strong>English:</strong> Empirical observation confirms solar paleness begins 20 minutes before sunset. Likewise, exactly 20 minutes after sunrise, the prohibited window ends.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">ظہر کے پورے وقت کا بلا کراہت ہونا</span>
+                <span style="font-size: 9px; color: #fef08a; background: rgba(234, 179, 8, 0.2); padding: 1px 6px; border-radius: 4px;">بہارِ شریعت، جلد ۱، ص ۴۶۱، مسئلہ ۳۵</span>
+              </div>
+              <div class="guide-urdu-text" style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;">
+                فجر اور ظہر کے پورے وقت اول سے آخر تک بلا کراہت ہیں ۔ یعنی یہ نمازیں اپنے وقت کے جس حصے میں پڑھی جائیں اصلاً مکروہ نہیں ۔
+              </div>
+              <div style="font-size: 10px; color: #cbd5e1; line-height: 1.4;">
+                <strong>English:</strong> Unlike Asr or Maghrib, the entire window of Zuhr from Zawal until Misl-e-Sani is free of inherent Karahat.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">مغرب میں تعجیل اور ستارے گتھنے کی کراہت</span>
+                <span style="font-size: 9px; color: #fef08a; background: rgba(234, 179, 8, 0.2); padding: 1px 6px; border-radius: 4px;">بہارِ شریعت، جلد ۱، ص ۴۵۷، مسئلہ ۱۵</span>
+              </div>
+              <div class="guide-urdu-text" style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;">
+                روزِ ابر کے سوا مغرب میں ہمیشہ تعجیل مستحب ہے اور دو رکعت سے زائد کی تاخیر مکروہِ تنزیہی اور اگر بغیر عذرِ سفر و مرض وغیرہ اتنی تاخیر کی کہ ستارے گتھ گئے تو مکروہِ تحریمی ۔
+              </div>
+              <div style="font-size: 10px; color: #cbd5e1; line-height: 1.4;">
+                <strong>English:</strong> Prompt prayer in Maghrib is universally Mustahabb. Delaying until stars cluster densely without valid excuse is Makruh Tahrimi.
+              </div>
+            </div>
+
+            <div class="guide-card-item" style="background: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 11.5px; font-weight: 800; color: #fbbf24;">عشا آدھی رات کے بعد مؤخر کرنے کی کراہت</span>
+                <span style="font-size: 9px; color: #fef08a; background: rgba(234, 179, 8, 0.2); padding: 1px 6px; border-radius: 4px;">بہارِ شریعت، جلد ۱، ص ۴۵۷، مسئلہ ۱۶</span>
+              </div>
+              <div class="guide-urdu-text" style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; margin-bottom: 6px;">
+                عشا میں تہائی رات تک تاخیر مستحب ہے اور آدھی رات تک تاخیر مباح یعنی جب کہ آدھی رات ہونے سے پہلے فرض پڑھ چکے اور اتنی تاخیر کہ رات ڈھل گئی مکروہ ہے کہ باعثِ تقلیلِ جماعت ہے ۔
+              </div>
+              <div style="font-size: 10px; color: #cbd5e1; line-height: 1.4;">
+                <strong>English:</strong> First 1/3 of the night is Mustahabb; up to Islamic midnight is Mubah; delaying past midnight without valid necessity is Makruh Tanzihi.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div style="padding: 10px 4px 4px; border-top: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center;">
+          <a href="PRAYER_TIMING_GUIDE.md" target="_blank" style="font-size: 11px; color: #38bdf8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+            <span>📄</span> Open Full Reference Doc
+          </a>
+          <button class="setting-btn" onclick="closeModal(document.getElementById('modalTimingGuide'))" style="font-size: 11px; padding: 5px 14px;">
+            Close Guide
+          </button>
         </div>
       </div>
     </div>
@@ -5793,6 +6013,99 @@
     // Hash navigation support: #timing-guide opens modal directly
     if (window.location.hash === '#timing-guide' && modalTimingGuide) {
       setTimeout(() => openModal(modalTimingGuide), 200);
+    }
+
+    // Segmented Tab Switching Controller
+    const guideTabBtns = document.querySelectorAll('.guide-tab-btn');
+    const guidePanels = {
+      colors: document.getElementById('guidePanelColors'),
+      prayers: document.getElementById('guidePanelPrayers'),
+      prohibited: document.getElementById('guidePanelProhibited'),
+      urdu: document.getElementById('guidePanelUrdu')
+    };
+    let currentGuideTab = 'colors';
+
+    function switchGuideTab(tabKey) {
+      currentGuideTab = tabKey;
+      guideTabBtns.forEach(btn => {
+        const isTarget = btn.getAttribute('data-tab') === tabKey;
+        btn.classList.toggle('active', isTarget);
+        btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+      });
+      Object.entries(guidePanels).forEach(([key, panel]) => {
+        if (panel) panel.style.display = (key === tabKey) ? 'flex' : 'none';
+      });
+    }
+
+    guideTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const searchInput = document.getElementById('inputSearchGuide');
+        if (searchInput) searchInput.value = '';
+        const allCards = document.querySelectorAll('.guide-card-item');
+        allCards.forEach(c => c.style.display = 'block');
+        switchGuideTab(btn.getAttribute('data-tab'));
+      });
+    });
+
+    // Live Search Filter across all cards
+    const inputSearchGuide = document.getElementById('inputSearchGuide');
+    if (inputSearchGuide) {
+      inputSearchGuide.addEventListener('input', (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        const allCards = document.querySelectorAll('.guide-card-item');
+        if (!q) {
+          allCards.forEach(c => c.style.display = 'block');
+          switchGuideTab(currentGuideTab);
+          return;
+        }
+        // In search mode, reveal all panels and filter cards
+        Object.values(guidePanels).forEach(p => { if (p) p.style.display = 'flex'; });
+        allCards.forEach(card => {
+          const text = (card.textContent || '').toLowerCase();
+          card.style.display = text.includes(q) ? 'block' : 'none';
+        });
+      });
+    }
+
+    // Interactive Color Simulator Slider
+    const sliderColorSim = document.getElementById('sliderColorSim');
+    const simColorPreview = document.getElementById('simColorPreview');
+    const simMinLabel = document.getElementById('simMinLabel');
+    if (sliderColorSim && simColorPreview) {
+      sliderColorSim.addEventListener('input', (e) => {
+        const mins = parseInt(e.target.value, 10);
+        if (simMinLabel) simMinLabel.textContent = `${mins} min`;
+        let hex = '#10b981';
+        let bg = 'rgba(16, 185, 129, 0.15)';
+        let border = 'rgba(16, 185, 129, 0.4)';
+        let title = '🟢 EMERALD GREEN — Peace & Khushu\' (Itmi\'nan)';
+        let desc = 'Lowest cortisol wavelength (~555nm). Ample, comfortable time remaining. (At 44m in Maghrib, >60% of window remains).';
+
+        if (mins <= 8) {
+          hex = '#ef4444';
+          bg = 'rgba(239, 68, 68, 0.2)';
+          border = 'rgba(239, 68, 68, 0.5)';
+          title = '🔴 CRIMSON RED ALERT — Critical Urgency & Tahrim';
+          desc = 'Highest priority fight-or-flight signaling with breathing pulse. Imminent Qadha boundary!';
+        } else if (mins <= 15) {
+          hex = '#f97316';
+          bg = 'rgba(249, 115, 22, 0.18)';
+          border = 'rgba(249, 115, 22, 0.45)';
+          title = '🟠 SUNSET ORANGE — Urgent Warning (Makruh Horizon)';
+          desc = 'High urgency warning. Makruh period entered (Isfirar ash-Shams / Stars clustered). Pray now.';
+        } else if (mins <= 24) {
+          hex = '#fbbf24';
+          bg = 'rgba(251, 191, 36, 0.15)';
+          border = 'rgba(251, 191, 36, 0.4)';
+          title = '🟡 SOLAR GOLD — Gentle Focus & Transition';
+          desc = 'Warm luminance transition. Time has advanced past midway. Wrap up tasks and perform wudhu.';
+        }
+
+        simColorPreview.style.background = bg;
+        simColorPreview.style.borderColor = border;
+        simColorPreview.style.color = hex;
+        simColorPreview.innerHTML = `<strong>${title}</strong><div style="font-size: 10.5px; color: #cbd5e1; margin-top: 3px;">${desc}</div>`;
+      });
     }
 
     // --- ANNUAL ALMANAC MODAL CONTROLLER ---

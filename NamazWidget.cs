@@ -1,8 +1,10 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -22,9 +24,12 @@ namespace NamazNativeWidget
         private Border prayerBadge;
         private TextBlock txtPrayerName;
         private TextBlock txtCityName;
+#pragma warning disable 0649
         private Button btnPeek;
         private Button btnScale;
         private Button btnPin;
+#pragma warning restore 0649
+        private Button btnMenu;
         private MenuItem menuPin;
         private MenuItem menuScale;
         private MenuItem menuSound;
@@ -254,28 +259,20 @@ namespace NamazNativeWidget
             Grid.SetColumn(txtCityName, 1);
             headerGrid.Children.Add(txtCityName);
 
-            // Right: Interactive Buttons (Peek, Scale, Pin, Full App, Close)
+            // Right: Interactive Buttons (Minimal 2-Button Header: Options Menu & Close)
             StackPanel actionGroup = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
 
-            btnPeek = CreateSmallButton("📋", "Today's Schedule Peek (Toggle)");
-            btnPeek.Click += delegate { TogglePeekMode(); };
-            actionGroup.Children.Add(btnPeek);
-
-            Button btnGuide = CreateSmallButton("📖", "Bahar-e-Shariat Timing Guide");
-            btnGuide.Click += delegate { ShowTimingGuideWindow(); };
-            actionGroup.Children.Add(btnGuide);
-
-            btnScale = CreateSmallButton("🗖", "Large Room Mode (Toggle)");
-            btnScale.Click += delegate { ToggleSizeMode(); };
-            actionGroup.Children.Add(btnScale);
-
-            btnPin = CreateSmallButton("📌", "Always on Top (Toggle)");
-            btnPin.Click += delegate { ToggleTopmost(); };
-            actionGroup.Children.Add(btnPin);
-
-            Button btnExpand = CreateSmallButton("⤢", "Open Full Timetable");
-            btnExpand.Click += delegate { OpenFullApp(); };
-            actionGroup.Children.Add(btnExpand);
+            btnMenu = CreateSmallButton("⋯", "Options & Quick Tools (Click for menu)");
+            btnMenu.Click += delegate
+            {
+                if (this.ContextMenu != null)
+                {
+                    this.ContextMenu.PlacementTarget = btnMenu;
+                    this.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                    this.ContextMenu.IsOpen = true;
+                }
+            };
+            actionGroup.Children.Add(btnMenu);
 
             Button btnClose = CreateSmallButton("✕", "Minimize to System Tray");
             btnClose.Click += delegate { this.Close(); };
@@ -318,7 +315,14 @@ namespace NamazNativeWidget
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                Cursor = Cursors.Hand,
+                ToolTip = "Click to toggle Today's Schedule Peek"
+            };
+            heroPanel.MouseLeftButtonDown += delegate(object s, MouseButtonEventArgs e)
+            {
+                e.Handled = true;
+                TogglePeekMode();
             };
 
             numGlow = new DropShadowEffect
@@ -468,7 +472,8 @@ namespace NamazNativeWidget
                 BorderThickness = new Thickness(0, 1, 0, 0),
                 BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(18, 255, 255, 255)),
                 Padding = new Thickness(0, 5, 0, 0),
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                ToolTip = "Click to toggle Today's Schedule Peek"
             };
 
             txtSubtext = new TextBlock
@@ -680,13 +685,13 @@ namespace NamazNativeWidget
             {
                 heroPanel.Visibility = Visibility.Collapsed;
                 peekPanel.Visibility = Visibility.Visible;
-                btnPeek.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(16, 185, 129));
+                if (btnPeek != null) btnPeek.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(16, 185, 129));
             }
             else
             {
                 heroPanel.Visibility = Visibility.Visible;
                 peekPanel.Visibility = Visibility.Collapsed;
-                btnPeek.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(148, 163, 184));
+                if (btnPeek != null) btnPeek.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(148, 163, 184));
             }
         }
 
@@ -771,8 +776,11 @@ namespace NamazNativeWidget
                 progressBarFill.Height = 7.5;
                 progressBarFill.CornerRadius = new CornerRadius(3.75);
                 txtSubtext.FontSize = 13.5;
-                btnScale.Content = "🗗";
-                btnScale.ToolTip = "Switch to Compact Mode";
+                if (btnScale != null)
+                {
+                    btnScale.Content = "🗗";
+                    btnScale.ToolTip = "Switch to Compact Mode";
+                }
                 if (menuScale != null) menuScale.Header = "🗗 Switch to Compact Mode";
 
                 for (int i = 0; i < 6; i++)
@@ -796,8 +804,11 @@ namespace NamazNativeWidget
                 progressBarFill.Height = 5;
                 progressBarFill.CornerRadius = new CornerRadius(2.5);
                 txtSubtext.FontSize = 11;
-                btnScale.Content = "🗖";
-                btnScale.ToolTip = "Switch to Large Room Mode";
+                if (btnScale != null)
+                {
+                    btnScale.Content = "🗖";
+                    btnScale.ToolTip = "Switch to Large Room Mode";
+                }
                 if (menuScale != null) menuScale.Header = "🗖 Switch to Large Room Mode";
 
                 for (int i = 0; i < 6; i++)
@@ -864,8 +875,8 @@ namespace NamazNativeWidget
                 guideWindow = new Window
                 {
                     Title = "📖 Bahar-e-Shariat Timing Guide & Color Logic",
-                    Width = 550,
-                    Height = 680,
+                    Width = 560,
+                    Height = 700,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen,
                     Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(15, 23, 42)), // Slate 900
                     Foreground = System.Windows.Media.Brushes.White,
@@ -885,11 +896,12 @@ namespace NamazNativeWidget
                 };
 
                 Grid rootGrid = new Grid();
-                rootGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Header
-                rootGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }); // Scrollable Body
-                rootGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // Footer buttons
+                rootGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // 0: Header
+                rootGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // 1: Search & Tabs Bar
+                rootGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }); // 2: Scrollable Content
+                rootGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // 3: Footer
 
-                // Header with drag capability
+                // ==================== ROW 0: HEADER ====================
                 Border headerBorder = new Border
                 {
                     Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(140, 30, 41, 59)),
@@ -949,7 +961,70 @@ namespace NamazNativeWidget
                 Grid.SetRow(headerBorder, 0);
                 rootGrid.Children.Add(headerBorder);
 
-                // Scrollable Content
+                // ==================== ROW 1: SEARCH & SEGMENTED TABS ====================
+                Border navBorder = new Border
+                {
+                    Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(90, 15, 23, 42)),
+                    Padding = new Thickness(14, 10, 14, 10),
+                    BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(45, 51, 65, 85)),
+                    BorderThickness = new Thickness(0, 0, 0, 1)
+                };
+                StackPanel navStack = new StackPanel();
+
+                // Live search box
+                Border searchBorder = new Border
+                {
+                    Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(120, 30, 41, 59)),
+                    BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(80, 71, 85, 105)),
+                    BorderThickness = new Thickness(1),
+                    CornerRadius = new CornerRadius(6),
+                    Padding = new Thickness(8, 4, 8, 4),
+                    Margin = new Thickness(0, 0, 0, 8)
+                };
+                Grid searchGrid = new Grid();
+                searchGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                searchGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                TextBlock lblSearchIcon = new TextBlock
+                {
+                    Text = "🔍",
+                    FontSize = 11,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 0, 6, 0)
+                };
+                Grid.SetColumn(lblSearchIcon, 0);
+                searchGrid.Children.Add(lblSearchIcon);
+
+                TextBox txtSearch = new TextBox
+                {
+                    Background = System.Windows.Media.Brushes.Transparent,
+                    BorderThickness = new Thickness(0),
+                    Foreground = System.Windows.Media.Brushes.White,
+                    FontSize = 11,
+                    FontFamily = new System.Windows.Media.FontFamily("Segoe UI, Arial"),
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Grid.SetColumn(txtSearch, 1);
+                searchGrid.Children.Add(txtSearch);
+                searchBorder.Child = searchGrid;
+                navStack.Children.Add(searchBorder);
+
+                // Segmented tab bar (4 tabs)
+                UniformGrid tabGrid = new UniformGrid { Rows = 1, Columns = 4 };
+                Button[] tabButtons = new Button[4];
+                tabButtons[0] = CreateGuideTabButton("🎨 Colors", true);
+                tabButtons[1] = CreateGuideTabButton("📜 Prayers", false);
+                tabButtons[2] = CreateGuideTabButton("🚫 Prohibited", false);
+                tabButtons[3] = CreateGuideTabButton("📚 Urdu Masail", false);
+
+                for (int t = 0; t < 4; t++) tabGrid.Children.Add(tabButtons[t]);
+                navStack.Children.Add(tabGrid);
+
+                navBorder.Child = navStack;
+                Grid.SetRow(navBorder, 1);
+                rootGrid.Children.Add(navBorder);
+
+                // ==================== ROW 2: SCROLLABLE BODY ====================
                 ScrollViewer scroll = new ScrollViewer
                 {
                     VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
@@ -958,9 +1033,11 @@ namespace NamazNativeWidget
                 };
 
                 StackPanel contentStack = new StackPanel();
+                List<Border> allCards = new List<Border>();
 
-                // Section 1: Color Psychology
-                contentStack.Children.Add(CreateGuideSectionHeader("🎨 4-Tier Cognitive Color Psychology Engine"));
+                // --- TAB 1: COLOR PSYCHOLOGY ---
+                StackPanel panelColors = new StackPanel();
+                panelColors.Children.Add(CreateGuideSectionHeader("🎨 4-Tier Cognitive Color Psychology Engine"));
                 TextBlock txtColorIntro = new TextBlock
                 {
                     Text = "Color is processed by human neurology faster than text. Our engine uses scientifically tested color psychology paired with Hanafi rulings to keep you calmly aware without screen anxiety:",
@@ -969,69 +1046,185 @@ namespace NamazNativeWidget
                     Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(203, 213, 225)),
                     Margin = new Thickness(0, 0, 0, 8)
                 };
-                contentStack.Children.Add(txtColorIntro);
+                panelColors.Children.Add(txtColorIntro);
 
-                contentStack.Children.Add(CreateColorCard(
+                Border c1 = CreateColorCard(
                     "🟢 Emerald Green (#10B981) — Peace, Tranquility & Khushu' (Itmi'nan)",
                     "Lowest cortisol wavelength (~555nm). Tells the brain: 'You have ample, safe time. Pray with full composure and focus.' Active during the vast majority of each prayer window.",
-                    System.Windows.Media.Color.FromRgb(16, 185, 129)));
-
-                contentStack.Children.Add(CreateColorCard(
+                    System.Windows.Media.Color.FromRgb(16, 185, 129));
+                Border c2 = CreateColorCard(
                     "🟡 Solar Gold (#FBBF24) — Gentle Focus & Transition (Intibah)",
                     "High luminance without aggression. Signals that time has advanced midway. Finish your current task and prepare for wudhu/prayer peacefully.",
-                    System.Windows.Media.Color.FromRgb(251, 191, 36)));
-
-                contentStack.Children.Add(CreateColorCard(
+                    System.Windows.Media.Color.FromRgb(251, 191, 36));
+                Border c3 = CreateColorCard(
                     "🟠 Sunset Orange (#F97316) — Urgent Warning & Makruh Horizon (Inzar)",
                     "High urgency. Marks entering disliked (Makruh) periods: Asr last 20m (Isfirar), Maghrib last 15m (stars clustered), or Zuhr last 25m (>90% elapsed). Stop working and pray immediately.",
-                    System.Windows.Media.Color.FromRgb(249, 115, 22)));
-
-                contentStack.Children.Add(CreateColorCard(
+                    System.Windows.Media.Color.FromRgb(249, 115, 22));
+                Border c4 = CreateColorCard(
                     "🔴 Crimson Red Alert (#EF4444) — Critical Alert & Prohibition (Tahrim / Khatar)",
                     "Highest priority fight-or-flight signaling with breathing pulse and live seconds MM:SS. Active during prohibited zenith (Zawal), sunrise, and final minutes before prayer becomes Qadha.",
-                    System.Windows.Media.Color.FromRgb(239, 68, 68)));
+                    System.Windows.Media.Color.FromRgb(239, 68, 68));
 
-                // Section 2: Bahar-e-Shariat Rulings
-                contentStack.Children.Add(CreateGuideSectionHeader("📜 Fiqh Rulings from Bahar-e-Shariat (Jild 1, Hissa 3)"));
+                panelColors.Children.Add(c1); allCards.Add(c1);
+                panelColors.Children.Add(c2); allCards.Add(c2);
+                panelColors.Children.Add(c3); allCards.Add(c3);
+                panelColors.Children.Add(c4); allCards.Add(c4);
+                contentStack.Children.Add(panelColors);
 
-                contentStack.Children.Add(CreatePrayerCard("🌅 FAJR (صبح صادق تا طلوع)",
-                    "• Begins at Subh Sadiq (True Dawn) and ends at the exact moment of Sunrise.\n• Mustahabb for men is Isfar (broad daylight illumination), allowing 40-60 verses with calm Tartil.\n• Mustahabb for women is Ghalas (early darkness).\n• Color: 🟢 >30m  |  🟡 18–30m  |  🟠 10–18m  |  🔴 <10m (Sunrise alert)"));
+                // --- TAB 2: PRAYER RULINGS ---
+                StackPanel panelPrayers = new StackPanel { Visibility = Visibility.Collapsed };
+                panelPrayers.Children.Add(CreateGuideSectionHeader("📜 Fiqh Rulings from Bahar-e-Shariat (Jild 1, Hissa 3)"));
 
-                contentStack.Children.Add(CreatePrayerCard("☀️ SUNRISE, ISHRAQ & CHASHT (طلوع تا زوال)",
-                    "• Sunrise Prohibition: Exactly 20 MINUTES after sunrise, all prayers (Fard, Qadha, Nafl) are strictly Haram (Vol 1, P 458 Masla 21).\n• Ishraq Sunnah: Starts at Sunrise + 20 min until ~50 min.\n• Chasht (Duha): Virtuous until midday.\n• Zawal Prohibition: The 10–12 min before Dhuhr zenith is strictly prohibited. App triggers 🚫 ZAWAL PROHIBITION."));
+                Border pFajr = CreatePrayerCard("🌅 FAJR (صبح صادق تا طلوع)",
+                    "• Begins at Subh Sadiq (True Dawn) and ends at the exact moment of Sunrise.\n• Mustahabb for men is Isfar (broad daylight illumination), allowing 40-60 verses with calm Tartil.\n• Mustahabb for women is Ghalas (early darkness).\n• Color: 🟢 >30m  |  🟡 18–30m  |  🟠 10–18m  |  🔴 <10m (Sunrise alert)");
+                Border pSun = CreatePrayerCard("☀️ SUNRISE, ISHRAQ & CHASHT (طلوع تا زوال)",
+                    "• Sunrise Prohibition: Exactly 20 MINUTES after sunrise, all prayers (Fard, Qadha, Nafl) are strictly Haram (Vol 1, P 458 Masla 21).\n• Ishraq Sunnah: Starts at Sunrise + 20 min until ~50 min.\n• Chasht (Duha): Virtuous until midday.\n• Zawal Prohibition: The 10–12 min before Dhuhr zenith is strictly prohibited. App triggers 🚫 ZAWAL PROHIBITION.");
+                Border pDhuhr = CreatePrayerCard("🌤️ DHUHR / JUMMAH (زوال تا مثلِ ثانی)",
+                    "• Begins at Zawal and ends at Misl-e-Sani (2x shadow + noon shadow).\n• Mustahabb to delay in extreme summer heat (Ibrad) and pray early in winter.\n• Permissible across the entire window without inherent Karahat (P 461 Masla 35).\n• Color: 🟢 >45m  |  🟡 25–45m  |  🟠 12–25m (>90% elapsed)  |  🔴 <12m");
+                Border pAsr = CreatePrayerCard("🌇 ASR (مثلِ ثانی تا غروب)",
+                    "• Begins at Misl-e-Sani (2x) and ends at complete sunset.\n• Mustahabb to delay into second half of time for congregation.\n• ⚠️ 20-Min Makruh Tahrimi: The final 20 min before Maghrib when the sun pales (Isfirar). Delaying Fard here without excuse is a grave sin (Hadith calls it hypocrite's prayer, P 456 Masla 12).\n• Color: 🟢 >35m  |  🟡 20–35m  |  🟠 ≤20m (Makruh Time)  |  🔴 <10m");
+                Border pMaghrib = CreatePrayerCard("🌆 MAGHRIB (غروب تا شفقِ ابیض)",
+                    "• Begins at sunset and ends when white twilight vanishes (Shafaq Abyad, ~75m in Surat).\n• Ta'jeel (prompt prayer) is universally Mustahabb (P 457 Masla 15).\n• ⚠️ Stars Clustered Makruh: Delaying until stars cluster densely (final 15m) is Makruh Tahrimi!\n• At 44m left, >60% of time remains -> 100% Emerald Green.\n• Color: 🟢 >25m (Calm safe window)  |  🟡 15–25m  |  🟠 ≤15m (Makruh)  |  🔴 <8m");
+                Border pIsha = CreatePrayerCard("🌌 ISHA & WITR (شفقِ ابیض تا صبح صادق)",
+                    "• Begins at Shafaq Abyad and ends at Fajr (9–10 hours span).\n• First 1/3 of the night is Mustahabb; up to Islamic Midnight (Nisf-ul-Layl) is Mubah.\n• ⚠️ Past Islamic Midnight: Delaying past midnight without valid excuse is Makruh Tanzihi (P 457 Masla 16). App alerts: 'Past Midnight (Makruh delay)'.\n• Color: 🟢 Safe early hours  |  🟠 ≤30m before Fajr  |  🔴 <15m");
 
-                contentStack.Children.Add(CreatePrayerCard("🌤️ DHUHR / JUMMAH (زوال تا مثلِ ثانی)",
-                    "• Begins at Zawal and ends at Misl-e-Sani (2x shadow + noon shadow).\n• Mustahabb to delay in extreme summer heat (Ibrad) and pray early in winter.\n• Permissible across the entire window without inherent Karahat (P 461 Masla 35).\n• Color: 🟢 >45m  |  🟡 25–45m  |  🟠 12–25m (>90% elapsed)  |  🔴 <12m"));
+                panelPrayers.Children.Add(pFajr); allCards.Add(pFajr);
+                panelPrayers.Children.Add(pSun); allCards.Add(pSun);
+                panelPrayers.Children.Add(pDhuhr); allCards.Add(pDhuhr);
+                panelPrayers.Children.Add(pAsr); allCards.Add(pAsr);
+                panelPrayers.Children.Add(pMaghrib); allCards.Add(pMaghrib);
+                panelPrayers.Children.Add(pIsha); allCards.Add(pIsha);
+                contentStack.Children.Add(panelPrayers);
 
-                contentStack.Children.Add(CreatePrayerCard("🌇 ASR (مثلِ ثانی تا غروب)",
-                    "• Begins at Misl-e-Sani (2x) and ends at complete sunset.\n• Mustahabb to delay into second half of time for congregation.\n• ⚠️ 20-Min Makruh Tahrimi: The final 20 min before Maghrib when the sun pales (Isfirar). Delaying Fard here without excuse is a grave sin (Hadith calls it hypocrite's prayer, P 456 Masla 12).\n• Color: 🟢 >35m  |  🟡 20–35m  |  🟠 ≤20m (Makruh Time)  |  🔴 <10m"));
-
-                contentStack.Children.Add(CreatePrayerCard("🌆 MAGHRIB (غروب تا شفقِ ابیض)",
-                    "• Begins at sunset and ends when white twilight vanishes (Shafaq Abyad, ~75m in Surat).\n• Ta'jeel (prompt prayer) is universally Mustahabb (P 457 Masla 15).\n• ⚠️ Stars Clustered Makruh: Delaying until stars cluster densely (final 15m) is Makruh Tahrimi!\n• At 44m left, >60% of time remains -> 100% Emerald Green.\n• Color: 🟢 >25m (Calm safe window)  |  🟡 15–25m  |  🟠 ≤15m (Makruh)  |  🔴 <8m"));
-
-                contentStack.Children.Add(CreatePrayerCard("🌌 ISHA & WITR (شفقِ ابیض تا صبح صادق)",
-                    "• Begins at Shafaq Abyad and ends at Fajr (9–10 hours span).\n• First 1/3 of the night is Mustahabb; up to Islamic Midnight (Nisf-ul-Layl) is Mubah.\n• ⚠️ Past Islamic Midnight: Delaying past midnight without valid excuse is Makruh Tanzihi (P 457 Masla 16). App alerts: 'Past Midnight (Makruh delay)'.\n• Color: 🟢 Safe early hours  |  🟠 ≤30m before Fajr  |  🔴 <15m"));
-
-                // Section 3: Prohibited times
-                contentStack.Children.Add(CreateGuideSectionHeader("🚫 The 3 Strictly Prohibited Times (Awqat-e-Mamnoo'ah)"));
+                // --- TAB 3: PROHIBITED TIMES ---
+                StackPanel panelProhibited = new StackPanel { Visibility = Visibility.Collapsed };
+                panelProhibited.Children.Add(CreateGuideSectionHeader("🚫 The 3 Strictly Prohibited Times (Awqat-e-Mamnoo'ah)"));
                 TextBlock txtProh = new TextBlock
                 {
-                    Text = "In these 3 specific times, NO prayer is permissible (neither Fard, Qadha, Nafl, nor Janazah, nor Sajdah Tilawat — Page 458 Masla 21):\n" +
-                           "1. Sunrise (Tulu): Exactly 20 minutes from sunrise until sun rises 1 spear high.\n" +
-                           "2. Midday Zenith (Zawal / Istiwa): 10–12 minutes immediately before Dhuhr.\n" +
-                           "3. Sunset (Isfirar ash-Shams): The final 20 minutes before Maghrib (only today's delayed Asr Fard may be performed).",
+                    Text = "In these 3 specific times, NO prayer is permissible (neither Fard, Qadha, Nafl, nor Janazah, nor Sajdah Tilawat — Page 458 Masla 21):",
                     FontSize = 11,
                     TextWrapping = TextWrapping.Wrap,
                     Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(248, 113, 113)),
-                    Margin = new Thickness(0, 0, 0, 12)
+                    Margin = new Thickness(0, 0, 0, 8)
                 };
-                contentStack.Children.Add(txtProh);
+                panelProhibited.Children.Add(txtProh);
+
+                Border pr1 = CreateProhibitedCard(
+                    "🌅 1. Sunrise (Tulu-e-Aftab) — Exactly 20 Minutes",
+                    "From the exact moment the sun's upper rim appears until it rises one spear high (approx. 20 minutes). All prayers are strictly Haram.",
+                    "Bahar-e-Shariat, Vol 1, Page 458, Masla 21");
+                Border pr2 = CreateProhibitedCard(
+                    "☀️ 2. Midday Zenith (Nisf-un-Nahar / Zawal) — 10 to 12 Minutes",
+                    "The 10–12 minutes immediately preceding Dhuhr when the sun is at exact celestial meridian. All prayers are strictly forbidden.",
+                    "Bahar-e-Shariat, Vol 1, Page 458, Masla 21");
+                Border pr3 = CreateProhibitedCard(
+                    "🌇 3. Sunset (Isfirar ash-Shams) — Final 20 Minutes of Asr",
+                    "The final 20 minutes before Maghrib when the sun disc loses glare. Delaying today's Asr here is a sin, but it must still be prayed before sunset.",
+                    "Bahar-e-Shariat, Vol 1, Page 456, Masla 12");
+
+                panelProhibited.Children.Add(pr1); allCards.Add(pr1);
+                panelProhibited.Children.Add(pr2); allCards.Add(pr2);
+                panelProhibited.Children.Add(pr3); allCards.Add(pr3);
+                contentStack.Children.Add(panelProhibited);
+
+                // --- TAB 4: AUTHENTIC URDU MASAIL ---
+                StackPanel panelUrdu = new StackPanel { Visibility = Visibility.Collapsed };
+                panelUrdu.Children.Add(CreateGuideSectionHeader("📚 Authentic Urdu Citations from Bahar-e-Shariat & Fatawa Razawiyya"));
+
+                Border u1 = CreateUrduCard(
+                    "عصر کی تاخیر اور اصفرارِ شمس (۲۰ منٹ)",
+                    "بہارِ شریعت، جلد ۱، حصہ ۳، صفحہ ۴۵۶، مسئلہ ۱۲",
+                    "البتہ اس روز اگر عصر کی نماز نہیں پڑھی تو اگرچہ آفتاب ڈوبتا ہو پڑھ لے مگر اتنی تاخیر کرنا حرام ہے ۔ حدیث میں اس کو منافق کی نماز فرمایا... اور اس وقت سے کہ آفتاب پر نگاہ ٹھہرنے لگے ڈوبنے تک غروب ہے یہ وقت بھی ۲۰ منٹ ہے ۔",
+                    "Delaying Asr until the sun disc pales (final 20m) without a valid excuse is Haram. Only today's delayed Fard may be performed before sunset.");
+
+                Border u2 = CreateUrduCard(
+                    "اوقاتِ ممنوعہ میں نماز کی حرمت اور ۲۰ منٹ کی حد",
+                    "بہارِ شریعت، جلد ۱، حصہ ۳، صفحہ ۴۵۸، مسئلہ ۲۱",
+                    "تجربہ سے ثابت ہوا کہ قرصِ آفتاب میں یہ زردی اس وقت آ جاتی ہے جب غروب میں بیس منٹ باقی رہتے ہیں... یوں ہی بعدِ طلوع بیس منٹ کے بعد جوازِ نماز کا وقت ہو جاتا ہے ۔",
+                    "Empirical verification confirms solar paleness begins 20 minutes before sunset. Likewise, exactly 20 minutes after sunrise, the prohibited window ends.");
+
+                Border u3 = CreateUrduCard(
+                    "ظہر کے پورے وقت کا بلا کراہت ہونا",
+                    "بہارِ شریعت، جلد ۱، حصہ ۳، صفحہ ۴۶۱، مسئلہ ۳۵",
+                    "فجر اور ظہر کے پورے وقت اول سے آخر تک بلا کراہت ہیں ۔ یعنی یہ نمازیں اپنے وقت کے جس حصے میں پڑھی جائیں اصلاً مکروہ نہیں ۔",
+                    "Unlike Asr or Maghrib, the entire window of Zuhr from Zawal until Misl-e-Sani is free of inherent Karahat.");
+
+                Border u4 = CreateUrduCard(
+                    "مغرب میں تعجیل اور ستارے گتھنے کی کراہت",
+                    "بہارِ شریعت، جلد ۱، حصہ ۳، صفحہ ۴۵۷، مسئلہ ۱۵",
+                    "روزِ ابر کے سوا مغرب میں ہمیشہ تعجیل مستحب ہے اور دو رکعت سے زائد کی تاخیر مکروہِ تنزیہی اور اگر بغیر عذرِ سفر و مرض وغیرہ اتنی تاخیر کی کہ ستارے گتھ گئے تو مکروہِ تحریمی ۔",
+                    "Prompt prayer (Ta'jeel) in Maghrib is universally Mustahabb. Delaying until stars cluster densely (final 15m) without valid excuse is Makruh Tahrimi.");
+
+                Border u5 = CreateUrduCard(
+                    "عشا آدھی رات کے بعد مؤخر کرنے کی کراہت",
+                    "بہارِ شریعت، جلد ۱، حصہ ۳، صفحہ ۴۵۷، مسئلہ ۱۶",
+                    "عشا میں تہائی رات تک تاخیر مستحب ہے اور آدھی رات تک تاخیر مباح یعنی جب کہ آدھی رات ہونے سے پہلے فرض پڑھ چکے اور اتنی تاخیر کہ رات ڈھل گئی مکروہ ہے کہ باعثِ تقلیلِ جماعت ہے ۔",
+                    "First 1/3 of the night is Mustahabb; up to Islamic midnight is Mubah; delaying past midnight without valid necessity is Makruh Tanzihi.");
+
+                panelUrdu.Children.Add(u1); allCards.Add(u1);
+                panelUrdu.Children.Add(u2); allCards.Add(u2);
+                panelUrdu.Children.Add(u3); allCards.Add(u3);
+                panelUrdu.Children.Add(u4); allCards.Add(u4);
+                panelUrdu.Children.Add(u5); allCards.Add(u5);
+                contentStack.Children.Add(panelUrdu);
 
                 scroll.Content = contentStack;
-                Grid.SetRow(scroll, 1);
+                Grid.SetRow(scroll, 2);
                 rootGrid.Children.Add(scroll);
 
-                // Footer Buttons
+                // Tab switching action
+                int activeTab = 0;
+                Action<int> switchTab = delegate(int target)
+                {
+                    activeTab = target;
+                    panelColors.Visibility = target == 0 ? Visibility.Visible : Visibility.Collapsed;
+                    panelPrayers.Visibility = target == 1 ? Visibility.Visible : Visibility.Collapsed;
+                    panelProhibited.Visibility = target == 2 ? Visibility.Visible : Visibility.Collapsed;
+                    panelUrdu.Visibility = target == 3 ? Visibility.Visible : Visibility.Collapsed;
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        bool isSel = (i == target);
+                        tabButtons[i].Background = isSel
+                            ? new SolidColorBrush(System.Windows.Media.Color.FromRgb(16, 185, 129))
+                            : new SolidColorBrush(System.Windows.Media.Color.FromArgb(50, 30, 41, 59));
+                        tabButtons[i].Foreground = isSel
+                            ? System.Windows.Media.Brushes.White
+                            : new SolidColorBrush(System.Windows.Media.Color.FromRgb(148, 163, 184));
+                    }
+                    scroll.ScrollToTop();
+                };
+
+                tabButtons[0].Click += delegate { txtSearch.Text = ""; switchTab(0); };
+                tabButtons[1].Click += delegate { txtSearch.Text = ""; switchTab(1); };
+                tabButtons[2].Click += delegate { txtSearch.Text = ""; switchTab(2); };
+                tabButtons[3].Click += delegate { txtSearch.Text = ""; switchTab(3); };
+
+                // Live search filter
+                txtSearch.TextChanged += delegate
+                {
+                    string q = txtSearch.Text.Trim().ToLowerInvariant();
+                    if (string.IsNullOrEmpty(q))
+                    {
+                        foreach (var c in allCards) c.Visibility = Visibility.Visible;
+                        switchTab(activeTab);
+                    }
+                    else
+                    {
+                        panelColors.Visibility = Visibility.Visible;
+                        panelPrayers.Visibility = Visibility.Visible;
+                        panelProhibited.Visibility = Visibility.Visible;
+                        panelUrdu.Visibility = Visibility.Visible;
+
+                        foreach (var c in allCards)
+                        {
+                            string tagText = (c.Tag as string ?? "").ToLowerInvariant();
+                            c.Visibility = tagText.Contains(q) ? Visibility.Visible : Visibility.Collapsed;
+                        }
+                    }
+                };
+
+                // ==================== ROW 3: FOOTER ====================
                 Border footerBorder = new Border
                 {
                     Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(140, 30, 41, 59)),
@@ -1088,7 +1281,7 @@ namespace NamazNativeWidget
                 btnRow.Children.Add(btnClose);
 
                 footerBorder.Child = btnRow;
-                Grid.SetRow(footerBorder, 2);
+                Grid.SetRow(footerBorder, 3);
                 rootGrid.Children.Add(footerBorder);
 
                 rootBorder.Child = rootGrid;
@@ -1103,6 +1296,22 @@ namespace NamazNativeWidget
             }
         }
 
+        private static Button CreateGuideTabButton(string label, bool isSelected)
+        {
+            return new Button
+            {
+                Content = label,
+                FontSize = 10.5,
+                FontWeight = FontWeights.Bold,
+                Foreground = isSelected ? System.Windows.Media.Brushes.White : new SolidColorBrush(System.Windows.Media.Color.FromRgb(148, 163, 184)),
+                Background = isSelected ? new SolidColorBrush(System.Windows.Media.Color.FromRgb(16, 185, 129)) : new SolidColorBrush(System.Windows.Media.Color.FromArgb(50, 30, 41, 59)),
+                BorderThickness = new Thickness(0),
+                Padding = new Thickness(4, 5, 4, 5),
+                Margin = new Thickness(2, 0, 2, 0),
+                Cursor = Cursors.Hand
+            };
+        }
+
         private static Border CreateGuideSectionHeader(string title)
         {
             Border b = new Border
@@ -1110,8 +1319,8 @@ namespace NamazNativeWidget
                 Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(50, 30, 41, 59)),
                 BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(70, 71, 85, 105)),
                 BorderThickness = new Thickness(0, 0, 0, 1),
-                Padding = new Thickness(4, 6, 4, 6),
-                Margin = new Thickness(0, 10, 0, 8)
+                Padding = new Thickness(6, 6, 6, 6),
+                Margin = new Thickness(0, 6, 0, 8)
             };
             TextBlock t = new TextBlock
             {
@@ -1133,7 +1342,8 @@ namespace NamazNativeWidget
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(6),
                 Padding = new Thickness(10, 7, 10, 7),
-                Margin = new Thickness(0, 0, 0, 6)
+                Margin = new Thickness(0, 0, 0, 6),
+                Tag = title + " " + desc
             };
             StackPanel sp = new StackPanel();
             TextBlock tTitle = new TextBlock
@@ -1166,7 +1376,8 @@ namespace NamazNativeWidget
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(6),
                 Padding = new Thickness(10, 7, 10, 7),
-                Margin = new Thickness(0, 0, 0, 6)
+                Margin = new Thickness(0, 0, 0, 6),
+                Tag = title + " " + body
             };
             StackPanel sp = new StackPanel();
             TextBlock tTitle = new TextBlock
@@ -1186,6 +1397,148 @@ namespace NamazNativeWidget
             };
             sp.Children.Add(tTitle);
             sp.Children.Add(tBody);
+            b.Child = sp;
+            return b;
+        }
+
+        private static Border CreateProhibitedCard(string title, string body, string citation)
+        {
+            Border b = new Border
+            {
+                Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(30, 239, 68, 68)),
+                BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(80, 239, 68, 68)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(6),
+                Padding = new Thickness(10, 7, 10, 7),
+                Margin = new Thickness(0, 0, 0, 6),
+                Tag = title + " " + body + " " + citation
+            };
+            StackPanel sp = new StackPanel();
+
+            Grid hGrid = new Grid();
+            hGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            hGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            TextBlock tTitle = new TextBlock
+            {
+                Text = title,
+                FontSize = 11.5,
+                FontWeight = FontWeights.Bold,
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(248, 113, 113))
+            };
+            Grid.SetColumn(tTitle, 0);
+            hGrid.Children.Add(tTitle);
+
+            Border bBadge = new Border
+            {
+                Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(35, 239, 68, 68)),
+                CornerRadius = new CornerRadius(4),
+                Padding = new Thickness(5, 1, 5, 1)
+            };
+            TextBlock tCite = new TextBlock
+            {
+                Text = citation,
+                FontSize = 9.5,
+                FontWeight = FontWeights.SemiBold,
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(252, 165, 165))
+            };
+            bBadge.Child = tCite;
+            Grid.SetColumn(bBadge, 1);
+            hGrid.Children.Add(bBadge);
+            sp.Children.Add(hGrid);
+
+            TextBlock tBody = new TextBlock
+            {
+                Text = body,
+                FontSize = 10.5,
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(226, 232, 240)),
+                Margin = new Thickness(0, 4, 0, 0)
+            };
+            sp.Children.Add(tBody);
+
+            b.Child = sp;
+            return b;
+        }
+
+        private static Border CreateUrduCard(string title, string citation, string urduText, string engSummary)
+        {
+            Border b = new Border
+            {
+                Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(40, 255, 255, 255)),
+                BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(60, 234, 179, 8)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(8),
+                Padding = new Thickness(11, 8, 11, 8),
+                Margin = new Thickness(0, 0, 0, 8),
+                Tag = title + " " + citation + " " + urduText + " " + engSummary
+            };
+            StackPanel sp = new StackPanel();
+
+            Grid gHead = new Grid();
+            gHead.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            gHead.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            TextBlock tTitle = new TextBlock
+            {
+                Text = title,
+                FontSize = 12,
+                FontWeight = FontWeights.Bold,
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(251, 191, 36))
+            };
+            Grid.SetColumn(tTitle, 0);
+            gHead.Children.Add(tTitle);
+
+            Border badge = new Border
+            {
+                Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(30, 234, 179, 8)),
+                CornerRadius = new CornerRadius(4),
+                Padding = new Thickness(6, 1, 6, 1)
+            };
+            TextBlock tCite = new TextBlock
+            {
+                Text = citation,
+                FontSize = 9.5,
+                FontWeight = FontWeights.SemiBold,
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(253, 224, 71))
+            };
+            badge.Child = tCite;
+            Grid.SetColumn(badge, 1);
+            gHead.Children.Add(badge);
+            sp.Children.Add(gHead);
+
+            Border urduBox = new Border
+            {
+                Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(50, 15, 23, 42)),
+                BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(35, 255, 255, 255)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(6),
+                Padding = new Thickness(10, 6, 10, 6),
+                Margin = new Thickness(0, 6, 0, 6)
+            };
+            TextBlock tUrdu = new TextBlock
+            {
+                Text = urduText,
+                FontSize = 13,
+                FlowDirection = FlowDirection.RightToLeft,
+                FontFamily = new System.Windows.Media.FontFamily("Jameel Noori Nastaleeq, Urdu Typesetting, Tahoma, Arial"),
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(254, 240, 138)),
+                TextWrapping = TextWrapping.Wrap,
+                LineHeight = 20
+            };
+            urduBox.Child = tUrdu;
+            sp.Children.Add(urduBox);
+
+            TextBlock tSummary = new TextBlock
+            {
+                Text = engSummary,
+                FontSize = 10.5,
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(203, 213, 225)),
+                TextWrapping = TextWrapping.Wrap,
+                LineHeight = 15
+            };
+            sp.Children.Add(tSummary);
+
             b.Child = sp;
             return b;
         }
@@ -1718,44 +2071,44 @@ namespace NamazNativeWidget
             {
                 if (totalMin <= 20)
                 {
-                    txtSubtext.Text = string.Format("Iftar at {0}  •  ⚠️ Makruh Time  (Click for peek)", FormatTime12(windowEnd));
+                    txtSubtext.Text = string.Format("Iftar at {0}  •  ⚠️ Makruh Time", FormatTime12(windowEnd));
                 }
                 else
                 {
-                    txtSubtext.Text = string.Format("Iftar at {0} (Maghrib)  •  Next: Maghrib  (Click for peek)", FormatTime12(windowEnd));
+                    txtSubtext.Text = string.Format("Iftar at {0}  •  Next: Maghrib", FormatTime12(windowEnd));
                 }
             }
             else if (pName == "MAGHRIB")
             {
                 if (totalMin <= 15)
                 {
-                    txtSubtext.Text = string.Format("Ends at {0}  •  ⚠️ Makruh Time (Stars clustered)  (Click for peek)", FormatTime12(windowEnd));
+                    txtSubtext.Text = string.Format("Ends at {0}  •  ⚠️ Makruh (Stars clustered)", FormatTime12(windowEnd));
                 }
                 else
                 {
-                    txtSubtext.Text = string.Format("Ends at {0}  •  Next: Isha  (Click for peek)", FormatTime12(windowEnd));
+                    txtSubtext.Text = string.Format("Ends at {0}  •  Next: Isha", FormatTime12(windowEnd));
                 }
             }
             else if (pName == "ISHA")
             {
                 if (now > tMidnight)
                 {
-                    txtSubtext.Text = string.Format("Past Midnight (Makruh delay)  •  Sehri ends at {0}  (Click for peek)", FormatTime12(windowEnd));
+                    txtSubtext.Text = string.Format("Past Midnight (Makruh delay)  •  Sehri at {0}", FormatTime12(windowEnd));
                 }
                 else
                 {
-                    txtSubtext.Text = string.Format("Ends at {0} (Fajr)  •  Tahajjud window  (Click for peek)", FormatTime12(windowEnd));
+                    txtSubtext.Text = string.Format("Ends at {0}  •  Tahajjud Window", FormatTime12(windowEnd));
                 }
             }
             else if (now < tFajr)
             {
                 if (now > tMidnight)
                 {
-                    txtSubtext.Text = string.Format("Past Midnight (Makruh delay)  •  Sehri ends at {0}  (Click for peek)", FormatTime12(tFajr));
+                    txtSubtext.Text = string.Format("Past Midnight (Makruh delay)  •  Sehri at {0}", FormatTime12(tFajr));
                 }
                 else
                 {
-                    txtSubtext.Text = string.Format("Sehri ends at {0}  •  Tahajjud window  (Click for peek)", FormatTime12(tFajr));
+                    txtSubtext.Text = string.Format("Sehri ends at {0}  •  Tahajjud Window", FormatTime12(tFajr));
                 }
             }
             else if (now >= tSunrise && now < tDhuhr)
@@ -1779,7 +2132,7 @@ namespace NamazNativeWidget
             }
             else
             {
-                txtSubtext.Text = string.Format("Ends at {0}  •  Next: {1}  (Click for peek)", FormatTime12(windowEnd), nextName);
+                txtSubtext.Text = string.Format("Ends at {0}  •  Next: {1}", FormatTime12(windowEnd), nextName);
             }
 
             // Update System Tray Tooltip
