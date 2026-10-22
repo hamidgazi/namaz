@@ -1,6 +1,6 @@
 {
-  "version": "1.6.7",
+  "version": "1.7.0",
   "name": "Namaz Times",
-  "updated": "2026-10-14",
-  "changelog": "Comprehensive Suite Upgrade: Windows System Tray (Close-to-Tray), Today's Schedule Peek Grid, Frosted Glass Opacity, Awqat al-Nahy Prohibited Times Shield, Audio Chime notifications, and Instant Mobile Phone QR Code."
+  "updated": "2026-10-22",
+  "changelog": "v1.7.0: Bahar-e-Shariat Fiqh calibration (Asr ends strictly at Sunset 6:11 PM, Maghrib at Sunset with +3m Iftar precaution), minimal 2-button header, unified Tools & Settings modal, above-the-fold hero card, dual-time horizons with Fiqh chips, and live dynamic Sunnah/Nawafil drawer pill."
 }

@@ -67,6 +67,16 @@ function runBaharTimingGuideTests() {
     assert.ok(!cs.includes('(Click for peek)'), 'Footer subtext must not contain truncated (Click for peek)');
   });
 
+  // Test 5: Asr strictly terminates at Sunset (Ghurub) and is never extended by Iftar precaution
+  test('BG-05: Asr strictly terminates at Sunset (Ghurub) and is never extended by Iftar precaution', () => {
+    const cs = fs.readFileSync(namazWidgetCsPath, 'utf8');
+    assert.ok(cs.includes('windowEnd = tSunset; // Asr ends strictly at Sunset!'), 'NamazWidget Asr windowEnd must be tSunset');
+    assert.ok(cs.includes('s.Maghrib = RoundForward(maghribRaw); // Maghrib prayer starts strictly at sunset'), 'Maghrib prayer start in widget must be sunset');
+    const html = fs.readFileSync(indexHtmlPath, 'utf8');
+    assert.ok(html.includes('now >= tAsr && now < tSunset'), 'index.html Asr window must terminate at tSunset');
+    assert.ok(html.includes('now >= tSunset && now < tMaghrib'), 'index.html must handle Iftar precaution window between Sunset and Maghrib Adhan');
+  });
+
   return results;
 }
 

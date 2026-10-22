@@ -3033,6 +3033,369 @@
       }
     }
 
+    /* =========================================================================
+       MODERN REDESIGN & DECLUTTERING (BAHAR-E-SHARIAT INTEGRATED)
+       ========================================================================= */
+
+    /* Header Guide Pill & Tools Menu Button */
+    .btn-guide-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 20px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .btn-guide-pill:hover {
+      background: rgba(16, 185, 129, 0.22);
+      border-color: rgba(16, 185, 129, 0.55);
+      transform: translateY(-1px);
+    }
+    .btn-guide-pill:active {
+      transform: scale(0.96);
+    }
+    .guide-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .guide-text {
+      letter-spacing: 0.3px;
+    }
+
+    .icon-btn-tools {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .icon-btn-tools:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .icon-btn-tools:active {
+      transform: scale(0.95);
+    }
+    .icon-btn-tools svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Unified Tools & Settings Drawer Modal */
+    .modal-tools-card {
+      max-width: 450px;
+      width: 92%;
+      background: #0d1520;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+      animation: modalFadeIn 0.22s ease-out;
+    }
+    .modal-tools-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .tools-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0 0 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tools-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.35;
+    }
+    .tools-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin: 12px 0 8px 2px;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+    .tool-tile-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px 13px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      min-height: 72px;
+      color: inherit;
+    }
+    .tool-tile-btn:hover {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      transform: translateY(-2px);
+    }
+    .tool-tile-btn:active {
+      transform: scale(0.97);
+    }
+    .tool-tile-icon-box {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 7px;
+      color: #34d399;
+      flex-shrink: 0;
+    }
+    .tool-tile-icon-box svg {
+      width: 16px;
+      height: 16px;
+    }
+    .tool-tile-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+    .tool-tile-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+    .tools-settings-full-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 15px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      min-height: 52px;
+      color: inherit;
+    }
+    .tools-settings-full-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+    .tools-settings-full-btn:active {
+      transform: scale(0.98);
+    }
+    .tools-settings-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tools-settings-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+      flex-shrink: 0;
+    }
+    .tools-settings-icon-box svg {
+      width: 17px;
+      height: 17px;
+    }
+    .tools-settings-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .tools-settings-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      display: block;
+    }
+    .tools-settings-chevron {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* Prayer Cards Dual-Time Subline & Bahar-e-Shariat Chips */
+    .prayer-card {
+      display: flex;
+      flex-direction: column;
+      padding: 11px 14px;
+      border-radius: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      margin-bottom: 7px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .prayer-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .prayer-main-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .p-window-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+      flex-wrap: wrap;
+    }
+    .p-window-time {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .fiqh-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1.5px 6px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .chip-mustahabb {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    .chip-makruh {
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .chip-prohib {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+    .fiqh-expand-detail {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.28);
+      border-left: 3px solid var(--emerald-accent);
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: #cbd5e1;
+      animation: fadeInFast 0.18s ease-out;
+    }
+    .fiqh-expand-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+    .fiqh-expand-masla {
+      color: #38bdf8;
+      font-size: 10.5px;
+      font-weight: 600;
+      direction: rtl;
+    }
+    .fiqh-expand-detail p {
+      margin: 0;
+    }
+    @keyframes fadeInFast {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Live Sunnah Status Badges */
+    .sunnah-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 10.5px;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+    .badge-active-gold {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .badge-active-purple {
+      background: rgba(168, 85, 247, 0.2);
+      color: #d8b4fe;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+    .badge-prohib {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    /* Streamlined Hero Card without redundant wall-clock */
+    .sticky-note-pin-bar,
+    .sticky-clock-display-strip {
+      display: none !important;
+    }
+    body.widget-mode .sticky-clock-display-strip {
+      display: flex !important;
+    }
+    .hero-card {
+      padding: 16px 18px 14px;
+    }
+    .hero-arch-bg {
+      opacity: 0.05;
+    }
+
   </style>
 </head>
 <body>
@@ -3100,53 +3463,17 @@
           </div>
         </button>
 
-        <!-- Right Actions: Share Image, Share App, Settings Gear (Always Visible) -->
+        <!-- Right Actions: Guide Pill & Tools Menu (Minimal, Uncluttered) -->
         <div class="header-actions">
-          <button id="btnToggleMiniWidget" class="sticky-nav-pill-btn" title="Toggle Compact Mini Widget (Big Font)" aria-label="Toggle Compact Mini Widget">
-            <span class="sticky-pin-icon" aria-hidden="true">🗗</span>
-            <span class="btn-text">Mini Widget</span>
+          <button id="btnOpenTimingGuide" class="btn-guide-pill" title="Bahar-e-Shariat Timing Guide &amp; Color Logic" aria-label="Open Timing Guide">
+            <span class="guide-icon" aria-hidden="true">📖</span>
+            <span class="guide-text">Guide</span>
           </button>
-          <button id="btnStickyClockHeader" class="sticky-nav-pill-btn" title="Open Desktop Sticky Note Clock (Always on Top)" aria-label="Open Desktop Sticky Note Clock">
-            <span class="sticky-pin-icon" aria-hidden="true">📌</span>
-            <span class="btn-text">Always on Top</span>
-          </button>
-          <button id="btnOpenPhoneQR" class="sticky-nav-pill-btn" title="Open on Mobile Phone (QR Code)" aria-label="Open on Phone QR Code">
-            <span class="sticky-pin-icon" aria-hidden="true">📱</span>
-            <span class="btn-text">Phone QR</span>
-          </button>
-          <button id="btnOpenTimingGuide" class="sticky-nav-pill-btn" title="Bahar-e-Shariat Timing Guide & Color Logic" aria-label="Open Timing Guide">
-            <span class="sticky-pin-icon" aria-hidden="true">📖</span>
-            <span class="btn-text">Timing Guide</span>
-          </button>
-          <button id="btnShareImage" class="icon-btn" title="Share Timetable Card (WhatsApp)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <circle cx="8.5" cy="8.5" r="1.5"></circle>
-              <polyline points="21 15 16 10 5 21"></polyline>
-            </svg>
-          </button>
-          <button id="btnShareApp" class="icon-btn" title="Share with Friends & Family">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"></circle>
-              <circle cx="6" cy="12" r="3"></circle>
-              <circle cx="18" cy="19" r="3"></circle>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-            </svg>
-          </button>
-          <button id="btnOpenAlmanac" class="icon-btn" title="Annual Prayer Almanac & Analysis" aria-label="Open Annual Prayer Almanac">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"></circle>
-              <line x1="3.6" y1="9" x2="20.4" y2="9"></line>
-              <line x1="3.6" y1="15" x2="20.4" y2="15"></line>
-              <path d="M11.5 3a17 17 0 0 0 0 18"></path>
-              <path d="M12.5 3a17 17 0 0 1 0 18"></path>
-            </svg>
-          </button>
-          <button id="btnOpenSettings" class="icon-btn" title="Settings">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          <button id="btnOpenToolsMenu" class="icon-btn-tools" title="Tools, Almanac &amp; Settings" aria-label="Open Tools and Settings Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="1.5"></circle>
+              <circle cx="19" cy="12" r="1.5"></circle>
+              <circle cx="5" cy="12" r="1.5"></circle>
             </svg>
           </button>
         </div>
@@ -3171,7 +3498,7 @@
             </svg>
             Hanafi
           </span>
-          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.6.6</span>
+          <span id="headerVersionBadge" class="version-badge" title="Installed App Version">v1.7.0</span>
         </div>
       </div>
 
@@ -3301,175 +3628,247 @@
         </div>
 
         <!-- Fajr -->
-        <div id="rowFajr" class="prayer-card">
-          <div class="prayer-left">
-            <div class="prayer-bubble b-fajr">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 18a5 5 0 0 0-10 0"></path>
-                <line x1="12" y1="9" x2="12" y2="2"></line>
-                <line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line>
-                <line x1="1" y1="18" x2="3" y2="18"></line>
-                <line x1="21" y1="18" x2="23" y2="18"></line>
-                <line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line>
-              </svg>
-            </div>
-            <div class="prayer-title-group">
-              <div class="prayer-name-arabic">
-                <span class="p-eng">Fajr</span>
-                <span class="p-ar" lang="ar" dir="rtl">الفجر</span>
-                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+        <div id="rowFajr" class="prayer-card" role="button" tabindex="0" aria-expanded="false" title="Click for Bahar-e-Shariat ruling">
+          <div class="prayer-main-row">
+            <div class="prayer-left">
+              <div class="prayer-bubble b-fajr">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 18a5 5 0 0 0-10 0"></path>
+                  <line x1="12" y1="9" x2="12" y2="2"></line>
+                  <line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line>
+                  <line x1="1" y1="18" x2="3" y2="18"></line>
+                  <line x1="21" y1="18" x2="23" y2="18"></line>
+                  <line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line>
+                </svg>
               </div>
-              <span class="p-desc">Dawn Twilight (Karachi 18&deg;)</span>
+              <div class="prayer-title-group">
+                <div class="prayer-name-arabic">
+                  <span class="p-eng">Fajr</span>
+                  <span class="p-ar" lang="ar" dir="rtl">الفجر</span>
+                  <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+                </div>
+                <div class="p-window-row">
+                  <span id="windowFajr" class="p-window-time">05:10 AM &ndash; 06:24 AM</span>
+                  <span class="fiqh-chip chip-mustahabb">🟢 Isfar Mustahabb</span>
+                </div>
+              </div>
+            </div>
+            <div class="prayer-right">
+              <span id="timeFajr" class="p-clock">05:10 AM</span>
+              <button class="bell-btn active" data-prayer="Fajr" title="Toggle Sound">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              </button>
             </div>
           </div>
-          <div class="prayer-right">
-            <span id="timeFajr" class="p-clock">05:10 AM</span>
-            <button class="bell-btn active" data-prayer="Fajr" title="Toggle Sound">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            </button>
+          <div id="fiqhDetailFajr" class="fiqh-expand-detail" style="display: none;">
+            <div class="fiqh-expand-header">
+              <span>📖 Bahar-e-Shariat, Hissa 3</span>
+              <span class="fiqh-expand-masla">مسئلہ ۶ و ۱۱ (ص ۴۵۱، ۴۵۶)</span>
+            </div>
+            <p><strong>Ruling:</strong> Fajr begins at Subh-e-Sadiq (True Dawn) and ends strictly at Sunrise. For men, <em>Isfar</em> (delaying until the light spreads so that reciting 40&ndash;50 verses with Tartil is possible) is Mustahabb. For women, praying in early darkness is always Mustahabb.</p>
           </div>
         </div>
 
         <!-- Sunrise (Tulu) -->
-        <div id="rowSunrise" class="prayer-card sunrise-row">
-          <div class="prayer-left">
-            <div class="prayer-bubble b-sunrise">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
-            </div>
-            <div class="prayer-title-group">
-              <div class="prayer-name-arabic">
-                <span class="p-eng">Sunrise (Tulu)</span>
-                <span class="p-ar" lang="ar" dir="rtl">الشروق</span>
+        <div id="rowSunrise" class="prayer-card sunrise-row" role="button" tabindex="0" aria-expanded="false" title="Click for Bahar-e-Shariat ruling">
+          <div class="prayer-main-row">
+            <div class="prayer-left">
+              <div class="prayer-bubble b-sunrise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
               </div>
-              <span class="p-desc">Prohibited prayer window starts</span>
+              <div class="prayer-title-group">
+                <div class="prayer-name-arabic">
+                  <span class="p-eng">Sunrise (Tulu)</span>
+                  <span class="p-ar" lang="ar" dir="rtl">الشروق</span>
+                </div>
+                <div class="p-window-row">
+                  <span id="windowSunrise" class="p-window-time">20m Forbidden Window</span>
+                  <span class="fiqh-chip chip-prohib">🚫 Strict Prohibition</span>
+                </div>
+              </div>
+            </div>
+            <div class="prayer-right">
+              <span id="timeSunrise" class="p-clock">06:24 AM</span>
             </div>
           </div>
-          <div class="prayer-right">
-            <span id="timeSunrise" class="p-clock">06:24 AM</span>
+          <div id="fiqhDetailSunrise" class="fiqh-expand-detail" style="display: none;">
+            <div class="fiqh-expand-header">
+              <span>📖 Bahar-e-Shariat, Hissa 3</span>
+              <span class="fiqh-expand-masla">اوقاتِ ممنوعہ، مسئلہ ۱ (ص ۴۵۸)</span>
+            </div>
+            <p><strong>Ruling:</strong> From the moment the sun's upper rim rises until it ascends at least one spear's length (approx. 20 minutes), all Sajdah and Salah (Fard, Qaza, Nafl, and Sajdah-e-Tilawat) are <em>Makruh Tahrimi</em> (strictly forbidden). Wait 20 minutes before Ishraq.</p>
           </div>
         </div>
 
         <!-- Dhuhr / Jummah on Fridays -->
-        <div id="rowDhuhr" class="prayer-card">
-          <div class="prayer-left">
-            <div class="prayer-bubble b-dhuhr">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-            </div>
-            <div class="prayer-title-group">
-              <div class="prayer-name-arabic">
-                <span id="labelDhuhr" class="p-eng">Dhuhr</span>
-                <span id="arDhuhr" class="p-ar" lang="ar" dir="rtl">الظهر</span>
-                <span id="badgeJummah" class="p-jummah-tag" style="display: none;">Jummah</span>
-                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+        <div id="rowDhuhr" class="prayer-card" role="button" tabindex="0" aria-expanded="false" title="Click for Bahar-e-Shariat ruling">
+          <div class="prayer-main-row">
+            <div class="prayer-left">
+              <div class="prayer-bubble b-dhuhr">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
               </div>
-              <span class="p-desc">After Solar Transit (Zawal)</span>
+              <div class="prayer-title-group">
+                <div class="prayer-name-arabic">
+                  <span id="labelDhuhr" class="p-eng">Dhuhr</span>
+                  <span id="arDhuhr" class="p-ar" lang="ar" dir="rtl">الظهر</span>
+                  <span id="badgeJummah" class="p-jummah-tag" style="display: none;">Jummah</span>
+                  <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+                </div>
+                <div class="p-window-row">
+                  <span id="windowDhuhr" class="p-window-time">12:37 PM &ndash; 05:04 PM</span>
+                  <span class="fiqh-chip chip-mustahabb">🟢 Ta'jeel (Winter) / Tabreed (Summer)</span>
+                </div>
+              </div>
+            </div>
+            <div class="prayer-right">
+              <span id="timeDhuhr" class="p-clock">12:37 PM</span>
+              <button class="bell-btn active" data-prayer="Dhuhr" title="Toggle Sound">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              </button>
             </div>
           </div>
-          <div class="prayer-right">
-            <span id="timeDhuhr" class="p-clock">12:37 PM</span>
-            <button class="bell-btn active" data-prayer="Dhuhr" title="Toggle Sound">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            </button>
+          <div id="fiqhDetailDhuhr" class="fiqh-expand-detail" style="display: none;">
+            <div class="fiqh-expand-header">
+              <span>📖 Bahar-e-Shariat, Hissa 3</span>
+              <span class="fiqh-expand-masla">مسئلہ ۸، ۹ و ۱۲ (ص ۴۵۱، ۴۵۶)</span>
+            </div>
+            <p><strong>Ruling:</strong> Starts immediately after Zawal (meridian zenith transit) and ends at Misl-e-Sani (2&times; shadow length, Hanafi). In summer, <em>Tabreed</em> (cooling/delay) is Mustahabb for congregation; in winter, <em>Ta'jeel</em> (promptness) is Mustahabb. On Fridays, Jummah replaces Dhuhr.</p>
           </div>
         </div>
 
         <!-- Asr (Hanafi 2x) -->
-        <div id="rowAsr" class="prayer-card">
-          <div class="prayer-left">
-            <div class="prayer-bubble b-asr">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="4"></circle>
-                <path d="M12 2v2"></path>
-                <path d="M12 20v2"></path>
-                <path d="m4.93 4.93 1.41 1.41"></path>
-                <path d="m17.66 17.66 1.41 1.41"></path>
-                <path d="M2 12h2"></path>
-                <path d="M20 12h2"></path>
-                <path d="m6.34 17.66-1.41 1.41"></path>
-                <path d="m19.07 4.93-1.41 1.41"></path>
-              </svg>
-            </div>
-            <div class="prayer-title-group">
-              <div class="prayer-name-arabic">
-                <span class="p-eng">Asr</span>
-                <span class="p-ar" lang="ar" dir="rtl">العصر</span>
-                <span class="p-hanafi-tag">Hanafi (2&times;)</span>
-                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+        <div id="rowAsr" class="prayer-card" role="button" tabindex="0" aria-expanded="false" title="Click for Bahar-e-Shariat ruling">
+          <div class="prayer-main-row">
+            <div class="prayer-left">
+              <div class="prayer-bubble b-asr">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
               </div>
-              <span class="p-desc">Misl-e-Sani (2&times; shadow length)</span>
+              <div class="prayer-title-group">
+                <div class="prayer-name-arabic">
+                  <span class="p-eng">Asr</span>
+                  <span class="p-ar" lang="ar" dir="rtl">العصر</span>
+                  <span class="p-hanafi-tag">Hanafi (2&times;)</span>
+                  <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+                </div>
+                <div class="p-window-row">
+                  <span id="windowAsr" class="p-window-time">05:04 PM &ndash; 06:50 PM (Sunset)</span>
+                  <span class="fiqh-chip chip-makruh">⚠️ Last 20m Makruh</span>
+                </div>
+              </div>
+            </div>
+            <div class="prayer-right">
+              <span id="timeAsr" class="p-clock">05:04 PM</span>
+              <button class="bell-btn active" data-prayer="Asr" title="Toggle Sound">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              </button>
             </div>
           </div>
-          <div class="prayer-right">
-            <span id="timeAsr" class="p-clock">05:04 PM</span>
-            <button class="bell-btn active" data-prayer="Asr" title="Toggle Sound">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            </button>
+          <div id="fiqhDetailAsr" class="fiqh-expand-detail" style="display: none;">
+            <div class="fiqh-expand-header">
+              <span>📖 Bahar-e-Shariat, Hissa 3</span>
+              <span class="fiqh-expand-masla">مسئلہ ۱۰، ۱۱ و ۱۴ (ص ۴۵۱، ۴۵۶، ۴۵۸)</span>
+            </div>
+            <p><strong>Ruling:</strong> Asr ends strictly at <strong>Sunset</strong>. Moderate delay (<em>Ta'kheer Mustahabb</em>) is encouraged while the sun is bright white. Delaying until the sun turns pale yellow (<em>Isfirar</em> &ndash; approx. last 20 minutes) such that one can look at it without dazzling is <em>Makruh Tahrimi</em>. If delayed, today's Asr must still be prayed before sunset.</p>
           </div>
         </div>
 
         <!-- Maghrib -->
-        <div id="rowMaghrib" class="prayer-card">
-          <div class="prayer-left">
-            <div class="prayer-bubble b-maghrib">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 18a5 5 0 0 0-10 0"></path>
-                <line x1="12" y1="2" x2="12" y2="9"></line>
-                <line x1="1" y1="18" x2="3" y2="18"></line>
-                <line x1="21" y1="18" x2="23" y2="18"></line>
-              </svg>
-            </div>
-            <div class="prayer-title-group">
-              <div class="prayer-name-arabic">
-                <span class="p-eng">Maghrib</span>
-                <span class="p-ar" lang="ar" dir="rtl">المغرب</span>
-                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+        <div id="rowMaghrib" class="prayer-card" role="button" tabindex="0" aria-expanded="false" title="Click for Bahar-e-Shariat ruling">
+          <div class="prayer-main-row">
+            <div class="prayer-left">
+              <div class="prayer-bubble b-maghrib">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 18a5 5 0 0 0-10 0"></path>
+                  <line x1="12" y1="2" x2="12" y2="9"></line>
+                  <line x1="1" y1="18" x2="3" y2="18"></line>
+                  <line x1="21" y1="18" x2="23" y2="18"></line>
+                </svg>
               </div>
-              <span class="p-desc">Sunset & Iftar (+3m Ihtiyat)</span>
+              <div class="prayer-title-group">
+                <div class="prayer-name-arabic">
+                  <span class="p-eng">Maghrib</span>
+                  <span class="p-ar" lang="ar" dir="rtl">المغرب</span>
+                  <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+                </div>
+                <div class="p-window-row">
+                  <span id="windowMaghrib" class="p-window-time">06:50 PM &ndash; 08:05 PM</span>
+                  <span class="fiqh-chip chip-mustahabb">⚡ Ta'jeel Mustahabb</span>
+                </div>
+              </div>
+            </div>
+            <div class="prayer-right">
+              <span id="timeMaghrib" class="p-clock">06:53 PM</span>
+              <button class="bell-btn active" data-prayer="Maghrib" title="Toggle Sound">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              </button>
             </div>
           </div>
-          <div class="prayer-right">
-            <span id="timeMaghrib" class="p-clock">06:53 PM</span>
-            <button class="bell-btn active" data-prayer="Maghrib" title="Toggle Sound">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            </button>
+          <div id="fiqhDetailMaghrib" class="fiqh-expand-detail" style="display: none;">
+            <div class="fiqh-expand-header">
+              <span>📖 Bahar-e-Shariat, Hissa 3</span>
+              <span class="fiqh-expand-masla">مسئلہ ۱۲ و ۱۵ (ص ۴۵۲، ۴۵۷)</span>
+            </div>
+            <p><strong>Ruling:</strong> Begins immediately at <strong>Sunset</strong>. Hastening (<em>Ta'jeel</em>) without delay is Mustahabb. Delaying beyond two Rakat without valid travel excuse is Makruh Tanzihi; delaying until stars interlace is Makruh Tahrimi. +3 min Ihtiyat is strictly for Iftar precaution and Adhan certainty.</p>
           </div>
         </div>
 
         <!-- Isha -->
-        <div id="rowIsha" class="prayer-card">
-          <div class="prayer-left">
-            <div class="prayer-bubble b-isha">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-            </div>
-            <div class="prayer-title-group">
-              <div class="prayer-name-arabic">
-                <span class="p-eng">Isha</span>
-                <span class="p-ar" lang="ar" dir="rtl">العشاء</span>
-                <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+        <div id="rowIsha" class="prayer-card" role="button" tabindex="0" aria-expanded="false" title="Click for Bahar-e-Shariat ruling">
+          <div class="prayer-main-row">
+            <div class="prayer-left">
+              <div class="prayer-bubble b-isha">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
               </div>
-              <span class="p-desc">White Twilight Disappearance (18&deg;)</span>
+              <div class="prayer-title-group">
+                <div class="prayer-name-arabic">
+                  <span class="p-eng">Isha</span>
+                  <span class="p-ar" lang="ar" dir="rtl">العشاء</span>
+                  <span class="active-indicator-tag"><span class="active-dot"></span>Now</span>
+                </div>
+                <div class="p-window-row">
+                  <span id="windowIsha" class="p-window-time">08:05 PM &ndash; Dawn</span>
+                  <span class="fiqh-chip chip-mustahabb">🌙 1st 1/3 Mustahabb</span>
+                </div>
+              </div>
+            </div>
+            <div class="prayer-right">
+              <span id="timeIsha" class="p-clock">08:05 PM</span>
+              <button class="bell-btn active" data-prayer="Isha" title="Toggle Sound">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              </button>
             </div>
           </div>
-          <div class="prayer-right">
-            <span id="timeIsha" class="p-clock">08:05 PM</span>
-            <button class="bell-btn active" data-prayer="Isha" title="Toggle Sound">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            </button>
+          <div id="fiqhDetailIsha" class="fiqh-expand-detail" style="display: none;">
+            <div class="fiqh-expand-header">
+              <span>📖 Bahar-e-Shariat, Hissa 3</span>
+              <span class="fiqh-expand-masla">مسئلہ ۱۳ و ۱۶ (ص ۴۵۲، ۴۵۷)</span>
+            </div>
+            <p><strong>Ruling:</strong> Begins when white twilight completely vanishes (18&deg; Karachi depression). Delaying to the first third (1/3) of the night is Mustahabb; up to Midnight (Nisf al-Layl) is Mubah; delaying past midnight without valid necessity is Makruh Tanzihi.</p>
           </div>
         </div>
 
@@ -3481,7 +3880,8 @@
           <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
-          <span>Sunnah, Zawal &amp; Nawafil Times</span>
+          <span id="txtSunnahTriggerTitle">Sunnah, Zawal &amp; Nawafil Times</span>
+          <span id="slotSunnahLiveBadge" class="sunnah-live-badge" style="display:none;"></span>
         </div>
         <span class="trigger-chevron">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -3512,7 +3912,7 @@
       </div>
     
       <div class="version-display-row">
-        <span class="version-pill">App Version: <strong id="footerVersionText">v1.6.6</strong></span>
+        <span class="version-pill">App Version: <strong id="footerVersionText">v1.7.0</strong></span>
         <button id="btnCheckUpdateFooter" class="btn-check-update" title="Check for latest update">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
@@ -3674,7 +4074,7 @@
           <div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <h3 class="modal-title" id="almanacModalTitle">Annual Prayer Almanac</h3>
-              <span id="almanacModalVersionTag" class="version-badge" style="font-size: 9.5px; padding: 2px 6px;">v1.6.6</span>
+              <span id="almanacModalVersionTag" class="version-badge" style="font-size: 9.5px; padding: 2px 6px;">v1.7.0</span>
             </div>
             <p style="font-size: 11px; color: var(--emerald-accent); font-weight: 600;" id="almanacLocationSubtitle">Adajan Patiya, Surat</p>
           </div>
@@ -3785,7 +4185,7 @@
           <div class="setting-group" style="border-color: rgba(16, 185, 129, 0.25);">
             <div class="setting-label">
               <span>App Version & Updates</span>
-              <span class="setting-badge" id="settingsVersionBadge">v1.6.7</span>
+              <span class="setting-badge" id="settingsVersionBadge">v1.7.0</span>
             </div>
             <p class="setting-explain" id="txtUpdateStatus">
               Surat Hanafi Edition. Automatically checks for updates.
@@ -4230,6 +4630,120 @@
       </div>
     </div>
 
+    <!-- Unified Tools & Settings Menu Modal -->
+    <div id="modalToolsMenu" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalToolsTitle">
+      <div class="modal-dialog modal-tools-card">
+        <div class="modal-tools-header">
+          <div class="tools-header-text">
+            <h2 id="modalToolsTitle" class="tools-title">
+              <span class="tools-title-icon" aria-hidden="true">🛠️</span> Tools &amp; Options
+            </h2>
+            <p class="tools-subtitle">Annual tables, sharing, desktop widgets &amp; preferences</p>
+          </div>
+          <button id="btnCloseToolsMenu" class="btn-modal-close modal-close" aria-label="Close Tools Menu">✕</button>
+        </div>
+
+        <div class="tools-section-label">PRAYER TOOLS &amp; TIMETABLES</div>
+        <div class="tools-grid">
+          <button id="btnOpenAlmanac" class="tool-tile-btn icon-btn" type="button" title="Annual Prayer Almanac &amp; Analysis" aria-label="Open Annual Prayer Almanac">
+            <div class="tool-tile-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"></circle>
+                <line x1="3.6" y1="9" x2="20.4" y2="9"></line>
+                <line x1="3.6" y1="15" x2="20.4" y2="15"></line>
+                <path d="M11.5 3a17 17 0 0 0 0 18"></path>
+                <path d="M12.5 3a17 17 0 0 1 0 18"></path>
+              </svg>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">Prayer Almanac</span>
+              <span class="tool-tile-desc">Full year &amp; solar extremes</span>
+            </div>
+          </button>
+
+          <button id="btnShareImage" class="tool-tile-btn icon-btn" type="button" title="Share Timetable Card (WhatsApp)">
+            <div class="tool-tile-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">WhatsApp Card</span>
+              <span class="tool-tile-desc">Export daily prayer image</span>
+            </div>
+          </button>
+
+          <button id="btnOpenPhoneQR" class="tool-tile-btn icon-btn" type="button" title="Open on Mobile Phone (QR Code)" aria-label="Open on Phone QR Code">
+            <div class="tool-tile-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">Phone QR</span>
+              <span class="tool-tile-desc">Scan to view on mobile</span>
+            </div>
+          </button>
+
+          <button id="btnShareApp" class="tool-tile-btn icon-btn" type="button" title="Share with Friends &amp; Family">
+            <div class="tool-tile-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">Share App</span>
+              <span class="tool-tile-desc">Send link to family</span>
+            </div>
+          </button>
+
+          <button id="btnStickyClockHeader" class="tool-tile-btn icon-btn" type="button" title="Open Desktop Sticky Note Clock (Always on Top)" aria-label="Open Desktop Sticky Note Clock">
+            <div class="tool-tile-icon-box">
+              <span style="font-size: 16px;" aria-hidden="true">📌</span>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">Always on Top</span>
+              <span class="tool-tile-desc">Floating desktop sticky clock</span>
+            </div>
+          </button>
+
+          <button id="btnToggleMiniWidget" class="tool-tile-btn icon-btn" type="button" title="Toggle Compact Mini Widget (Big Font)" aria-label="Toggle Compact Mini Widget">
+            <div class="tool-tile-icon-box">
+              <span style="font-size: 16px;" aria-hidden="true">🗗</span>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">Mini Widget</span>
+              <span class="tool-tile-desc">Ultra-compact big countdown</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="tools-section-label">CONFIGURATION &amp; SETTINGS</div>
+        <button id="btnOpenSettings" class="tools-settings-full-btn icon-btn" type="button" title="Settings">
+          <div class="tools-settings-left">
+            <div class="tools-settings-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </div>
+            <div class="tools-settings-info">
+              <span class="tools-settings-title">Calculation &amp; Fiqh Settings</span>
+              <span class="tools-settings-desc">Precautionary margins (Ihtiyat), Auto-Silent, Themes</span>
+            </div>
+          </div>
+          <span class="tools-settings-chevron" aria-hidden="true">›</span>
+        </button>
+      </div>
+    </div>
+
   <script>
     // --- 100+ INDIAN CITIES DATABASE ---
     const INDIAN_CITIES = [
@@ -4499,6 +5013,7 @@
       const dhuhrStartRaw = dhuhrTransit + (1.0 / 60.0); // +1 min solar disc clearance precaution
       const dhuhr = roundForward(dhuhrStartRaw);
       const asr = roundForward(asrRaw);
+      const sunset = roundBackward(maghribRaw);
       const maghrib = roundForward(maghribRaw + (maghribBufferMin / 60.0));
       const isha = roundForward(ishaRaw);
       const suhoor = roundBackward(fajrRaw - (suhoorBufferMin / 60.0));
@@ -4510,7 +5025,7 @@
       const nightDuration = fixHour(24.0 - maghribRaw + fajrRaw);
       const tahajjudStart = roundBackward(fixHour(maghribRaw + (nightDuration * (2.0 / 3.0))));
 
-      return { fajr, sunrise, dhuhr, asr, maghrib, isha, suhoor, dahwa, zawalStart, ishraq, chasht, tahajjudStart, shafiAsr, dhuhrTransit, noonAltitude, noonShadow };
+      return { fajr, sunrise, dhuhr, asr, sunset, maghrib, isha, suhoor, dahwa, zawalStart, ishraq, chasht, tahajjudStart, shafiAsr, dhuhrTransit, noonAltitude, noonShadow };
     }
 
     function formatTime12(decimalHour) {
@@ -5004,6 +5519,29 @@
       if (elMaghrib) elMaghrib.innerText = formatTime12(prayerSchedule.maghrib);
       if (elIsha) elIsha.innerText = formatTime12(prayerSchedule.isha);
 
+      // Dual-Time Prayer Windows (Bahar-e-Shariat Exact Horizons)
+      const elWindowFajr = document.getElementById('windowFajr');
+      const elWindowSunrise = document.getElementById('windowSunrise');
+      const elWindowDhuhr = document.getElementById('windowDhuhr');
+      const elWindowAsr = document.getElementById('windowAsr');
+      const elWindowMaghrib = document.getElementById('windowMaghrib');
+      const elWindowIsha = document.getElementById('windowIsha');
+
+      const fajrStr = formatTime12(prayerSchedule.fajr);
+      const sunriseStr = formatTime12(prayerSchedule.sunrise);
+      const dhuhrStr = formatTime12(prayerSchedule.dhuhr);
+      const asrStr = formatTime12(prayerSchedule.asr);
+      const sunsetStr = formatTime12(prayerSchedule.sunset || prayerSchedule.maghrib);
+      const maghribStr = formatTime12(prayerSchedule.maghrib);
+      const ishaStr = formatTime12(prayerSchedule.isha);
+
+      if (elWindowFajr) elWindowFajr.innerText = `${fajrStr} – ${sunriseStr}`;
+      if (elWindowSunrise) elWindowSunrise.innerText = `${sunriseStr} – ${formatTime12(prayerSchedule.sunrise + 20/60)}`;
+      if (elWindowDhuhr) elWindowDhuhr.innerText = `${dhuhrStr} – ${asrStr}`;
+      if (elWindowAsr) elWindowAsr.innerText = `${asrStr} – ${sunsetStr} (Sunset)`;
+      if (elWindowMaghrib) elWindowMaghrib.innerText = `${sunsetStr} – ${ishaStr}`;
+      if (elWindowIsha) elWindowIsha.innerText = `${ishaStr} – ${fajrStr} (Dawn)`;
+
       const elSehri = document.getElementById('txtSehriTime');
       const elIftar = document.getElementById('txtIftarTime');
       if (elSehri) elSehri.innerText = formatTime12(prayerSchedule.suhoor);
@@ -5087,6 +5625,7 @@
       const tZawal = decimalToDateTime(todaySchedule.zawalStart, todayDate);
       const tDhuhr = decimalToDateTime(todaySchedule.dhuhr, todayDate);
       const tAsr = decimalToDateTime(todaySchedule.asr, todayDate);
+      const tSunset = decimalToDateTime(todaySchedule.sunset || todaySchedule.maghrib, todayDate);
       const tMaghrib = decimalToDateTime(todaySchedule.maghrib, todayDate);
       const tIsha = decimalToDateTime(todaySchedule.isha, todayDate);
 
@@ -5166,23 +5705,40 @@
           silentPrayer: dhuhrName,
           silentStart: tDhuhr
         };
-      } else if (now >= tAsr && now < tMaghrib) {
-        const isAsrMakruh = (now >= new Date(tMaghrib.getTime() - 20 * 60 * 1000));
+      } else if (now >= tAsr && now < tSunset) {
+        const isAsrMakruh = (now >= new Date(tSunset.getTime() - 20 * 60 * 1000));
         state = {
           theme: 'theme-asr',
           title: 'Asr',
           arabic: 'العصر',
           tag: isAsrMakruh ? '⚠️ Makruh Time &bull; Sun Pale (Isfirar)' : 'Current Salah &bull; Active Now',
-          desc: isAsrMakruh ? `Only today's delayed Fard allowed &bull; Maghrib in &le; 20 min` : `Window: ${formatTime12(todaySchedule.asr)} &ndash; ${formatTime12(todaySchedule.maghrib)} (Hanafi 2&times;)`,
-          target: `Next: Maghrib at ${formatTime12(todaySchedule.maghrib)} (Sunset &amp; Iftar)`,
+          desc: isAsrMakruh ? `Only today's delayed Fard allowed &bull; Sunset in &le; 20 min` : `Window: ${formatTime12(todaySchedule.asr)} &ndash; ${formatTime12(todaySchedule.sunset)} (Hanafi 2&times;)`,
+          target: `Next: Maghrib at ${formatTime12(todaySchedule.sunset)} (Sunset)`,
           countdownLabel: 'Remaining in Asr',
-          targetDate: tMaghrib,
+          targetDate: tSunset,
           prevDate: tAsr,
           prevLabel: `Asr ${formatTime12(todaySchedule.asr)}`,
-          nextLabel: `Maghrib ${formatTime12(todaySchedule.maghrib)}`,
+          nextLabel: `Sunset ${formatTime12(todaySchedule.sunset)}`,
           activeRowId: 'rowAsr',
           silentPrayer: 'Asr',
           silentStart: tAsr
+        };
+      } else if (now >= tSunset && now < tMaghrib) {
+        state = {
+          theme: 'theme-maghrib',
+          title: 'Maghrib',
+          arabic: 'المغرب',
+          tag: '⏳ Iftar Precaution (احتیاط افطار) &bull; Sun Has Set',
+          desc: `Asr is finished &bull; Sun set at ${formatTime12(todaySchedule.sunset)} &bull; Break fast at ${formatTime12(todaySchedule.maghrib)} (+3m Ihtiyat)`,
+          target: `Iftar &amp; Adhan at ${formatTime12(todaySchedule.maghrib)}`,
+          countdownLabel: 'Iftar &amp; Adhan in',
+          targetDate: tMaghrib,
+          prevDate: tSunset,
+          prevLabel: `Sunset ${formatTime12(todaySchedule.sunset)}`,
+          nextLabel: `Iftar ${formatTime12(todaySchedule.maghrib)}`,
+          activeRowId: 'rowMaghrib',
+          silentPrayer: 'Maghrib',
+          silentStart: tSunset
         };
       } else if (now >= tMaghrib && now < tIsha) {
         const isMaghribMakruh = (now >= new Date(tIsha.getTime() - 15 * 60 * 1000));
@@ -5191,16 +5747,16 @@
           title: 'Maghrib',
           arabic: 'المغرب',
           tag: isMaghribMakruh ? '⚠️ Makruh Delay &bull; Stars Clustered' : 'Current Salah &bull; Active Now',
-          desc: isMaghribMakruh ? `Makruh Tahrimi to delay past dense stars &bull; Isha in &le; 15 min` : `Window: ${formatTime12(todaySchedule.maghrib)} &ndash; ${formatTime12(todaySchedule.isha)} (Ta'jeel Mustahabb)`,
+          desc: isMaghribMakruh ? `Makruh Tahrimi to delay past dense stars &bull; Isha in &le; 15 min` : `Window: ${formatTime12(todaySchedule.sunset)} &ndash; ${formatTime12(todaySchedule.isha)} (Ta'jeel Mustahabb)`,
           target: `Next: Isha at ${formatTime12(todaySchedule.isha)} (Karachi 18&deg;)`,
           countdownLabel: 'Remaining in Maghrib',
           targetDate: tIsha,
-          prevDate: tMaghrib,
-          prevLabel: `Maghrib ${formatTime12(todaySchedule.maghrib)}`,
+          prevDate: tSunset,
+          prevLabel: `Maghrib ${formatTime12(todaySchedule.sunset)}`,
           nextLabel: `Isha ${formatTime12(todaySchedule.isha)}`,
           activeRowId: 'rowMaghrib',
           silentPrayer: 'Maghrib',
-          silentStart: tMaghrib
+          silentStart: tSunset
         };
       } else if (now >= tIsha) {
         const nightSpanMs = tNextFajr.getTime() - tMaghrib.getTime();
@@ -5373,6 +5929,44 @@
         } else {
           txtMosqueStatus.innerText = 'Standby: Will mute during prayer congregation (first 20 mins)';
           txtMosqueStatus.style.color = 'var(--text-muted)';
+        }
+      }
+
+      // Dynamic Sunnah Trigger Pill Status (Bahar-e-Shariat Live Awareness)
+      const elSunnahTitle = document.getElementById('txtSunnahTriggerTitle');
+      const elSunnahBadge = document.getElementById('slotSunnahLiveBadge');
+      if (elSunnahTitle && elSunnahBadge) {
+        const tIshraq = decimalToDateTime(todaySchedule.ishraq, todayDate);
+        const tTahajjud = decimalToDateTime(todaySchedule.tahajjudStart, todaySchedule.tahajjudStart > 12 ? yesterday : todayDate);
+
+        if (now >= tSunrise && now < new Date(tSunrise.getTime() + 20 * 60 * 1000)) {
+          elSunnahTitle.innerText = "Sunrise Window (Makruh Tahrimi)";
+          elSunnahBadge.innerText = "🚫 20m Prohibited";
+          elSunnahBadge.className = "sunnah-live-badge badge-prohib";
+          elSunnahBadge.style.display = "inline-flex";
+        } else if (now >= new Date(tSunrise.getTime() + 20 * 60 * 1000) && now < new Date(tIshraq.getTime() + 45 * 60 * 1000)) {
+          elSunnahTitle.innerText = "Ishraq Sunnah Window Active";
+          elSunnahBadge.innerText = "✨ Ishraq Active";
+          elSunnahBadge.className = "sunnah-live-badge badge-active-gold";
+          elSunnahBadge.style.display = "inline-flex";
+        } else if (now >= new Date(tIshraq.getTime() + 45 * 60 * 1000) && now < tZawal) {
+          elSunnahTitle.innerText = "Chasht (Salat al-Duha) Window";
+          elSunnahBadge.innerText = "☀️ Chasht Active";
+          elSunnahBadge.className = "sunnah-live-badge badge-active-gold";
+          elSunnahBadge.style.display = "inline-flex";
+        } else if (now >= tZawal && now < tDhuhr) {
+          elSunnahTitle.innerText = "Zawal Zenith Window (Makruh Tahrimi)";
+          elSunnahBadge.innerText = "🚫 Zawal Prohibited";
+          elSunnahBadge.className = "sunnah-live-badge badge-prohib";
+          elSunnahBadge.style.display = "inline-flex";
+        } else if ((now >= tTahajjud && now < tFajr) || (todaySchedule.tahajjudStart > 12 && now.getHours() >= 23)) {
+          elSunnahTitle.innerText = "Tahajjud Window (Blessed Last 1/3)";
+          elSunnahBadge.innerText = "🌙 Tahajjud Active";
+          elSunnahBadge.className = "sunnah-live-badge badge-active-purple";
+          elSunnahBadge.style.display = "inline-flex";
+        } else {
+          elSunnahTitle.innerText = "Sunnah, Zawal & Nawafil Times";
+          elSunnahBadge.style.display = "none";
         }
       }
     }
@@ -5747,7 +6341,7 @@
 
       ctx.font = "700 16px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#10b981';
-      ctx.fillText("Namaz Times v1.6.6 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
+      ctx.fillText("Namaz Times v1.7.0 • Calculated via Jean Meeus Solar Ephemeris Engine", width / 2, 1208);
 
       ctx.font = "600 14px system-ui, -apple-system, sans-serif";
       ctx.fillStyle = '#475569';
@@ -6107,6 +6701,54 @@
         simColorPreview.innerHTML = `<strong>${title}</strong><div style="font-size: 10.5px; color: #cbd5e1; margin-top: 3px;">${desc}</div>`;
       });
     }
+
+    // --- UNIFIED TOOLS & SETTINGS MENU CONTROLLER ---
+    const btnOpenToolsMenu = document.getElementById('btnOpenToolsMenu');
+    const modalToolsMenu = document.getElementById('modalToolsMenu');
+    const btnCloseToolsMenu = document.getElementById('btnCloseToolsMenu');
+
+    if (btnOpenToolsMenu && modalToolsMenu) {
+      btnOpenToolsMenu.addEventListener('click', () => openModal(modalToolsMenu));
+      if (btnCloseToolsMenu) {
+        btnCloseToolsMenu.addEventListener('click', () => closeModal(modalToolsMenu));
+      }
+      modalToolsMenu.addEventListener('click', (e) => {
+        if (e.target === modalToolsMenu) closeModal(modalToolsMenu);
+      });
+    }
+
+    // Auto-close tools menu when invoking sub-tools
+    ['btnOpenAlmanac', 'btnShareImage', 'btnShareApp', 'btnOpenPhoneQR', 'btnStickyClockHeader', 'btnToggleMiniWidget', 'btnOpenSettings'].forEach(toolId => {
+      const el = document.getElementById(toolId);
+      if (el) {
+        el.addEventListener('click', () => {
+          if (modalToolsMenu && modalToolsMenu.classList.contains('open')) {
+            closeModal(modalToolsMenu);
+          }
+        });
+      }
+    });
+
+    // --- PRAYER CARD FIQH ACCORDION TOGGLE CONTROLLER ---
+    document.querySelectorAll('.prayer-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Prevent toggle if user clicked the bell notification button
+        if (e.target.closest && e.target.closest('.bell-btn')) return;
+        const detail = card.querySelector('.fiqh-expand-detail');
+        if (detail) {
+          const isOpen = detail.style.display !== 'none';
+          document.querySelectorAll('.fiqh-expand-detail').forEach(d => {
+            d.style.display = 'none';
+            const parent = d.closest('.prayer-card');
+            if (parent) parent.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            detail.style.display = 'block';
+            card.setAttribute('aria-expanded', 'true');
+          }
+        }
+      });
+    });
 
     // --- ANNUAL ALMANAC MODAL CONTROLLER ---
     function renderAnnualAlmanacView() {
@@ -7104,7 +7746,7 @@
       });
     }
 
-    const CURRENT_APP_VERSION = "1.6.6";
+    const CURRENT_APP_VERSION = "1.7.0";
 
     async function checkForAppUpdates(isManual = false) {
       const txtStatus = document.getElementById('txtUpdateStatus');
@@ -7136,6 +7778,9 @@
               alert('New version v' + remoteVersion + ' is available! Tap "Update Now" to get the latest features.');
             }
           } else {
+            const updateBanner = document.getElementById('updateBanner');
+            if (updateBanner) updateBanner.style.display = 'none';
+
             if (txtStatus) {
               txtStatus.innerText = 'You are on the latest version (v' + CURRENT_APP_VERSION + ').';
             }
@@ -7160,13 +7805,26 @@
       }
     }
 
-    function applyAppUpdate() {
-      if ('caches' in window) {
-        caches.keys().then(keys => {
-          keys.forEach(k => caches.delete(k));
-        });
+    async function applyAppUpdate() {
+      const btnReload = document.getElementById('btnReloadUpdate');
+      if (btnReload) btnReload.innerText = 'Updating...';
+
+      try {
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map(r => r.unregister()));
+        }
+      } catch (e) {
+        console.warn('Cache clearance error:', e);
       }
-      window.location.reload(true);
+
+      // Hard reload bypassing HTTP cache
+      const cleanUrl = window.location.origin + window.location.pathname + '?_upd=' + Date.now() + window.location.hash;
+      window.location.replace(cleanUrl);
     }
 
     const btnReloadUpdate = document.getElementById('btnReloadUpdate');

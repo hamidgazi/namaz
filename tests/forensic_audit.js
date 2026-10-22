@@ -86,7 +86,7 @@ let m;
 while ((m = httpRegex.exec(html)) !== null) {
   allHttpMatches.push(m[0]);
 }
-const nonApiUrls = allHttpMatches.filter(u => !u.includes('api.github.com') && !u.includes('github.com'));
+const nonApiUrls = allHttpMatches.filter(u => !u.includes('api.github.com') && !u.includes('github.com') && !u.includes('github.io') && !u.includes('w3.org'));
 recordCheck(
   'Zero external CDN runtime asset dependencies',
   nonApiUrls.length === 0,

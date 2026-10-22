@@ -36,6 +36,9 @@ namespace NamazNativeWidget
         private MenuItem menuOpacity100;
         private MenuItem menuOpacity85;
         private MenuItem menuOpacity70;
+        private string ihtiyatMode = "MOSQUE";
+        private MenuItem menuIhtiyatMosque;
+        private MenuItem menuIhtiyatAstro;
 
         // Hero Section
         private TextBlock txtCountdownNum;
@@ -654,6 +657,29 @@ namespace NamazNativeWidget
 
             menu.Items.Add(menuOpacity);
 
+            // Precautionary Margins (Ihtiyat) Submenu
+            MenuItem menuIhtiyat = new MenuItem { Header = "⚖️ Precautionary Margins (Ihtiyat)" };
+
+            menuIhtiyatMosque = new MenuItem
+            {
+                Header = "🕌 Indian Mosque Standard (+3m Iftar) — Default",
+                IsCheckable = true,
+                IsChecked = (ihtiyatMode == "MOSQUE")
+            };
+            menuIhtiyatMosque.Click += delegate { SetIhtiyatMode("MOSQUE"); };
+            menuIhtiyat.Items.Add(menuIhtiyatMosque);
+
+            menuIhtiyatAstro = new MenuItem
+            {
+                Header = "🔭 Strict Astronomical (0m Buffer)",
+                IsCheckable = true,
+                IsChecked = (ihtiyatMode == "ASTRONOMICAL")
+            };
+            menuIhtiyatAstro.Click += delegate { SetIhtiyatMode("ASTRONOMICAL"); };
+            menuIhtiyat.Items.Add(menuIhtiyatAstro);
+
+            menu.Items.Add(menuIhtiyat);
+
             menu.Items.Add(new Separator());
 
             MenuItem menuOpen = new MenuItem { Header = "🌐 Open Full Timetable (Browser)" };
@@ -714,6 +740,15 @@ namespace NamazNativeWidget
             if (menuOpacity85 != null) menuOpacity85.IsChecked = Math.Abs(widgetOpacity - 0.85) < 0.05;
             if (menuOpacity70 != null) menuOpacity70.IsChecked = Math.Abs(widgetOpacity - 0.70) < 0.05;
             SaveConfig();
+        }
+
+        private void SetIhtiyatMode(string mode)
+        {
+            ihtiyatMode = (mode == "ASTRONOMICAL") ? "ASTRONOMICAL" : "MOSQUE";
+            if (menuIhtiyatMosque != null) menuIhtiyatMosque.IsChecked = (ihtiyatMode == "MOSQUE");
+            if (menuIhtiyatAstro != null) menuIhtiyatAstro.IsChecked = (ihtiyatMode == "ASTRONOMICAL");
+            SaveConfig();
+            UpdateTimings();
         }
 
         private void FullExit()
@@ -1585,6 +1620,12 @@ namespace NamazNativeWidget
                                 isSoundEnabled = bool.Parse(val);
                                 if (menuSound != null) menuSound.IsChecked = isSoundEnabled;
                             }
+                            if (key == "IhtiyatMode")
+                            {
+                                ihtiyatMode = (val == "ASTRONOMICAL") ? "ASTRONOMICAL" : "MOSQUE";
+                                if (menuIhtiyatMosque != null) menuIhtiyatMosque.IsChecked = (ihtiyatMode == "MOSQUE");
+                                if (menuIhtiyatAstro != null) menuIhtiyatAstro.IsChecked = (ihtiyatMode == "ASTRONOMICAL");
+                            }
                         }
                     }
                 }
@@ -1614,8 +1655,8 @@ namespace NamazNativeWidget
             {
                 if (!Directory.Exists(configDir)) Directory.CreateDirectory(configDir);
                 string text = string.Format(CultureInfo.InvariantCulture,
-                    "Left={0}\nTop={1}\nTopmost={2}\nIsLargeMode={3}\nOpacity={4}\nIsSoundEnabled={5}\n",
-                    this.Left, this.Top, this.Topmost, isLargeMode, widgetOpacity, isSoundEnabled);
+                    "Left={0}\nTop={1}\nTopmost={2}\nIsLargeMode={3}\nOpacity={4}\nIsSoundEnabled={5}\nIhtiyatMode={6}\n",
+                    this.Left, this.Top, this.Topmost, isLargeMode, widgetOpacity, isSoundEnabled, ihtiyatMode);
                 File.WriteAllText(configFile, text);
             }
             catch { }
@@ -1694,6 +1735,8 @@ namespace NamazNativeWidget
             public double Asr;
             public double Maghrib;
             public double Isha;
+            public double Sunset;
+            public double Iftar;
         }
 
         private PrayerSchedule CalculateSchedule(DateTime date)
@@ -1727,7 +1770,11 @@ namespace NamazNativeWidget
             s.Sunrise = RoundBackward(sunriseRaw);
             s.Dhuhr = RoundForward(dhuhrTransit + (1.0 / 60.0));
             s.Asr = RoundForward(asrRaw);
-            s.Maghrib = RoundForward(maghribRaw + (3.0 / 60.0));
+            s.Sunset = RoundBackward(maghribRaw);
+            s.Maghrib = RoundForward(maghribRaw); // Maghrib prayer starts strictly at sunset (6:11 PM)
+            s.Iftar = (ihtiyatMode == "ASTRONOMICAL")
+                ? RoundForward(maghribRaw)
+                : RoundForward(maghribRaw + (3.0 / 60.0)); // +3m precaution for Iftar & Adhan
             s.Isha = RoundForward(ishaRaw);
             return s;
         }
@@ -1761,7 +1808,9 @@ namespace NamazNativeWidget
             DateTime tSunrise = DecToDateTime(today.Sunrise, now);
             DateTime tDhuhr = DecToDateTime(today.Dhuhr, now);
             DateTime tAsr = DecToDateTime(today.Asr, now);
+            DateTime tSunset = DecToDateTime(today.Sunset, now);
             DateTime tMaghrib = DecToDateTime(today.Maghrib, now);
+            DateTime tIftar = DecToDateTime(today.Iftar, now);
             DateTime tIsha = DecToDateTime(today.Isha, now);
 
             DateTime tomorrow = now.AddDays(1);
@@ -1771,19 +1820,19 @@ namespace NamazNativeWidget
             DateTime yesterday = now.AddDays(-1);
             PrayerSchedule yday = CalculateSchedule(yesterday);
             DateTime tYesterdayIsha = DecToDateTime(yday.Isha, yesterday);
-            DateTime tYesterdayMaghrib = DecToDateTime(yday.Maghrib, yesterday);
+            DateTime tYesterdaySunset = DecToDateTime(yday.Sunset, yesterday);
 
             // Calculate Islamic Midnight (Nisf-ul-Layl: exact midpoint between Sunset & Dawn as per Bahar-e-Shariat)
             DateTime tMidnight;
             if (now < tFajr)
             {
-                TimeSpan nightSpan = tFajr - tYesterdayMaghrib;
-                tMidnight = tYesterdayMaghrib + TimeSpan.FromSeconds(nightSpan.TotalSeconds / 2.0);
+                TimeSpan nightSpan = tFajr - tYesterdaySunset;
+                tMidnight = tYesterdaySunset + TimeSpan.FromSeconds(nightSpan.TotalSeconds / 2.0);
             }
             else
             {
-                TimeSpan nightSpan = tNextFajr - tMaghrib;
-                tMidnight = tMaghrib + TimeSpan.FromSeconds(nightSpan.TotalSeconds / 2.0);
+                TimeSpan nightSpan = tNextFajr - tSunset;
+                tMidnight = tSunset + TimeSpan.FromSeconds(nightSpan.TotalSeconds / 2.0);
             }
 
             // Update Schedule Peek Grid values
@@ -1793,14 +1842,25 @@ namespace NamazNativeWidget
                 peekTimes[i].Text = FormatTime12(peekDt[i]);
             }
 
+            bool isFriday = now.DayOfWeek == DayOfWeek.Friday;
+            string dhuhrName = isFriday ? "JUMMAH" : "DHUHR";
+            peekNames[2].Text = dhuhrName;
+
+            peekCells[0].ToolTip = string.Format("Fajr (Subh Sadiq): {0}\nDawn Begins (End of Sehri)", FormatTime12(tFajr));
+            peekCells[1].ToolTip = string.Format("Sunrise (Tulu): {0}\nProhibited Window: Next 20 min until Ishraq", FormatTime12(tSunrise));
+            peekCells[2].ToolTip = string.Format("{0}: {1}\nBegins after Solar Zenith (Zawal)", dhuhrName, FormatTime12(tDhuhr));
+            peekCells[3].ToolTip = string.Format("Asr (Misl-e-Sani): {0}\nEnds strictly at Sunset: {1}\nMakruh window begins: 20 min before sunset ({2})",
+                FormatTime12(tAsr), FormatTime12(tSunset), FormatTime12(tSunset.AddMinutes(-20)));
+            peekCells[4].ToolTip = string.Format("Maghrib: {0} (Sunset — Asr ends & Maghrib starts)\nIftar Cut-Off: {1} ({2})",
+                FormatTime12(tMaghrib),
+                FormatTime12(tIftar),
+                ihtiyatMode == "MOSQUE" ? "+3 min (Indian Mosque Standard Precaution)" : "0 min (Strict Astronomical)");
+            peekCells[5].ToolTip = string.Format("Isha (Shafaq Abyad): {0}\nIslamic Midnight: {1}", FormatTime12(tIsha), FormatTime12(tMidnight));
+
             string pName = "SALAH";
             DateTime windowStart = tDhuhr;
             DateTime windowEnd = tAsr;
             string nextName = "Dhuhr";
-
-            bool isFriday = now.DayOfWeek == DayOfWeek.Friday;
-            string dhuhrName = isFriday ? "JUMMAH" : "DHUHR";
-            peekNames[2].Text = dhuhrName;
 
             // Determine Active Prayer Window
             int activePeekIndex = 2; // Default Dhuhr
@@ -1829,18 +1889,18 @@ namespace NamazNativeWidget
                 nextName = "Asr";
                 activePeekIndex = 2;
             }
-            else if (now >= tAsr && now < tMaghrib)
+            else if (now >= tAsr && now < tSunset)
             {
                 pName = "ASR";
                 windowStart = tAsr;
-                windowEnd = tMaghrib;
+                windowEnd = tSunset; // Asr ends strictly at Sunset! Never extended!
                 nextName = "Maghrib";
                 activePeekIndex = 3;
             }
-            else if (now >= tMaghrib && now < tIsha)
+            else if (now >= tSunset && now < tIsha)
             {
                 pName = "MAGHRIB";
-                windowStart = tMaghrib;
+                windowStart = tSunset;
                 windowEnd = tIsha;
                 nextName = "Isha";
                 activePeekIndex = 4;
@@ -1904,9 +1964,9 @@ namespace NamazNativeWidget
                 isProhibited = true;
                 prohibitedMsg = "🚫 ZAWAL PROHIBITION (Midday zenith — All prayers prohibited)";
             }
-            else if (now >= tMaghrib.AddMinutes(-20) && now < tMaghrib)
+            else if (now >= tSunset.AddMinutes(-20) && now < tSunset)
             {
-                // 3. Sunset / Isfirar Prohibition (last 20m of Asr)
+                // 3. Sunset / Isfirar Prohibition (last 20m of Asr before sunset)
                 isProhibited = true;
                 prohibitedMsg = "⚠️ MAKRUH TIME (Asr sun pale — Avoid voluntary prayers)";
             }
@@ -2071,16 +2131,24 @@ namespace NamazNativeWidget
             {
                 if (totalMin <= 20)
                 {
-                    txtSubtext.Text = string.Format("Iftar at {0}  •  ⚠️ Makruh Time", FormatTime12(windowEnd));
+                    txtSubtext.Text = (ihtiyatMode == "MOSQUE")
+                        ? string.Format("Sunset: {0}  •  Iftar: {1}  •  ⚠️ Makruh", FormatTime12(tSunset), FormatTime12(tIftar))
+                        : string.Format("Sunset at {0}  •  ⚠️ Makruh Time", FormatTime12(tSunset));
                 }
                 else
                 {
-                    txtSubtext.Text = string.Format("Iftar at {0}  •  Next: Maghrib", FormatTime12(windowEnd));
+                    txtSubtext.Text = (ihtiyatMode == "MOSQUE")
+                        ? string.Format("Sunset: {0}  •  Iftar: {1}", FormatTime12(tSunset), FormatTime12(tIftar))
+                        : string.Format("Sunset at {0}  •  Next: Maghrib", FormatTime12(tSunset));
                 }
             }
             else if (pName == "MAGHRIB")
             {
-                if (totalMin <= 15)
+                if (now < tIftar && ihtiyatMode == "MOSQUE")
+                {
+                    txtSubtext.Text = string.Format("⚠️ Iftar Precaution: Break fast at {0} (+3m Ihtiyat)", FormatTime12(tIftar));
+                }
+                else if (totalMin <= 15)
                 {
                     txtSubtext.Text = string.Format("Ends at {0}  •  ⚠️ Makruh (Stars clustered)", FormatTime12(windowEnd));
                 }

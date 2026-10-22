@@ -131,6 +131,7 @@ function calculateAccurateHanafiTimes(lat, lng, date, ihtiyatMode = 'MOSQUE') {
   const sunrise = roundBackward(sunriseRaw);
   const dhuhr = roundForward(dhuhrTransit);
   const asr = roundForward(asrRaw);
+  const sunset = roundBackward(maghribRaw);
   const maghrib = roundForward(maghribRaw + (maghribBufferMin / 60.0));
   const isha = roundForward(ishaRaw);
   const suhoor = roundBackward(fajrRaw - (suhoorBufferMin / 60.0));
@@ -142,7 +143,7 @@ function calculateAccurateHanafiTimes(lat, lng, date, ihtiyatMode = 'MOSQUE') {
   const nightDuration = fixHour(24.0 - maghribRaw + fajrRaw);
   const tahajjudStart = roundBackward(fixHour(maghribRaw + (nightDuration * (2.0 / 3.0))));
 
-  return { fajr, sunrise, dhuhr, asr, maghrib, isha, suhoor, dahwa, zawalStart, ishraq, chasht, tahajjudStart };
+  return { fajr, sunrise, dhuhr, asr, sunset, maghrib, isha, suhoor, dahwa, zawalStart, ishraq, chasht, tahajjudStart };
 }
 
 // Islamic Month Names
