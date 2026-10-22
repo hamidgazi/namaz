@@ -3102,7 +3102,7 @@
 
     /* Unified Tools & Settings Drawer Modal */
     .modal-tools-card {
-      max-width: 450px;
+      max-width: 460px;
       width: 92%;
       background: #0d1520;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -3110,12 +3110,13 @@
       padding: 22px 20px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
       animation: modalFadeIn 0.22s ease-out;
+      box-sizing: border-box;
     }
     .modal-tools-header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -3140,169 +3141,272 @@
       color: #94a3b8;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      margin: 12px 0 8px 2px;
+      margin: 14px 0 8px 2px;
     }
     .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 9px;
-      margin-bottom: 14px;
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+      margin-bottom: 14px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
+
+    /* Force full-tile dimensional styling over default 44x44 icon-btn */
+    .modal-tools-card .icon-btn,
+    .modal-tools-card button.icon-btn,
+    button.tool-tile-btn,
     .tool-tile-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 12px 13px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s ease;
-      min-height: 72px;
-      color: inherit;
+      width: 100% !important;
+      height: auto !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      min-height: 80px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      padding: 12px 14px !important;
+      border-radius: 14px !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+      cursor: pointer !important;
+      text-align: left !important;
+      transition: all 0.2s ease !important;
+      color: inherit !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
     }
-    .tool-tile-btn:hover {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: rgba(16, 185, 129, 0.35);
+    .tool-tile-btn:hover,
+    .modal-tools-card .tool-tile-btn:hover {
+      background: rgba(16, 185, 129, 0.12) !important;
+      border-color: rgba(16, 185, 129, 0.35) !important;
       transform: translateY(-2px);
     }
-    .tool-tile-btn:active {
+    .tool-tile-btn:active,
+    .modal-tools-card .tool-tile-btn:active {
       transform: scale(0.97);
     }
     .tool-tile-icon-box {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 7px;
-      color: #34d399;
-      flex-shrink: 0;
+      width: 32px !important;
+      height: 32px !important;
+      min-width: 32px !important;
+      min-height: 32px !important;
+      border-radius: 8px !important;
+      background: rgba(16, 185, 129, 0.14) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-bottom: 8px !important;
+      color: #34d399 !important;
+      flex-shrink: 0 !important;
     }
     .tool-tile-icon-box svg {
-      width: 16px;
-      height: 16px;
+      width: 17px !important;
+      height: 17px !important;
+      display: block !important;
+    }
+    .tool-tile-info {
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
     }
     .tool-tile-title {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: #f1f5f9;
-      line-height: 1.25;
-      margin-bottom: 2px;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      color: #f1f5f9 !important;
+      line-height: 1.25 !important;
+      margin-bottom: 3px !important;
+      display: block !important;
+      text-align: left !important;
     }
     .tool-tile-desc {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      line-height: 1.3;
+      font-size: 11px !important;
+      color: var(--text-muted) !important;
+      line-height: 1.35 !important;
+      display: block !important;
+      text-align: left !important;
     }
+
+    /* Full width settings button */
+    .modal-tools-card .tools-settings-full-btn,
+    .modal-tools-card button.tools-settings-full-btn,
     .tools-settings-full-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 13px 15px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s ease;
-      min-height: 52px;
-      color: inherit;
+      width: 100% !important;
+      height: auto !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      min-height: 56px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 13px 16px !important;
+      border-radius: 14px !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      cursor: pointer !important;
+      text-align: left !important;
+      transition: all 0.2s ease !important;
+      color: inherit !important;
+      box-sizing: border-box !important;
     }
-    .tools-settings-full-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+    .tools-settings-full-btn:hover,
+    .modal-tools-card .tools-settings-full-btn:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.2) !important;
       transform: translateY(-1px);
     }
-    .tools-settings-full-btn:active {
+    .tools-settings-full-btn:active,
+    .modal-tools-card .tools-settings-full-btn:active {
       transform: scale(0.98);
     }
     .tools-settings-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
     }
     .tools-settings-icon-box {
-      width: 32px;
-      height: 32px;
-      border-radius: 9px;
-      background: rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #38bdf8;
-      flex-shrink: 0;
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      min-height: 34px !important;
+      border-radius: 9px !important;
+      background: rgba(56, 189, 248, 0.14) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: #38bdf8 !important;
+      flex-shrink: 0 !important;
     }
     .tools-settings-icon-box svg {
-      width: 17px;
-      height: 17px;
+      width: 18px !important;
+      height: 18px !important;
+      display: block !important;
     }
     .tools-settings-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #f1f5f9;
-      display: block;
-      margin-bottom: 2px;
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      color: #f1f5f9 !important;
+      display: block !important;
+      margin-bottom: 2px !important;
     }
     .tools-settings-desc {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      display: block;
+      font-size: 11px !important;
+      color: var(--text-muted) !important;
+      display: block !important;
     }
     .tools-settings-chevron {
-      font-size: 18px;
-      color: var(--text-muted);
-      font-weight: 300;
+      font-size: 20px !important;
+      color: var(--text-muted) !important;
+      font-weight: 300 !important;
     }
 
-    /* Prayer Cards Dual-Time Subline & Bahar-e-Shariat Chips */
+    /* Optimum & Compact Prayer Cards Layout (Bahar-e-Shariat Redesign) */
+    .prayer-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 5px !important;
+    }
     .prayer-card {
-      display: flex;
-      flex-direction: column;
-      padding: 11px 14px;
-      border-radius: 14px;
+      display: flex !important;
+      flex-direction: column !important;
+      padding: 7px 12px !important;
+      border-radius: 11px !important;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      margin-bottom: 7px;
+      margin-bottom: 0 !important;
+      min-height: 44px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
     }
     .prayer-card:hover {
       border-color: rgba(255, 255, 255, 0.18);
       background: rgba(255, 255, 255, 0.06);
     }
+    .prayer-card.sunrise-row {
+      padding: 5px 12px !important;
+      min-height: 40px;
+    }
     .prayer-main-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
+    }
+    .prayer-left {
+      display: flex !important;
+      align-items: center !important;
+      gap: 9px !important;
+      min-width: 0 !important;
+    }
+    .prayer-bubble {
+      width: 30px !important;
+      height: 30px !important;
+      min-width: 30px !important;
+      border-radius: 8px !important;
+    }
+    .prayer-bubble svg {
+      width: 15px !important;
+      height: 15px !important;
+    }
+    .prayer-name-arabic {
+      gap: 5px !important;
+      line-height: 1.15 !important;
+    }
+    .p-eng {
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+    }
+    .p-ar {
+      font-size: 14.5px !important;
     }
     .p-window-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 3px;
-      flex-wrap: wrap;
+      display: flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      margin-top: 1.5px !important;
+      flex-wrap: wrap !important;
     }
     .p-window-time {
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
+      font-size: 10.5px !important;
+      color: #94a3b8 !important;
+      font-weight: 500 !important;
+      font-variant-numeric: tabular-nums !important;
     }
     .fiqh-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      padding: 1.5px 6px;
-      border-radius: 5px;
-      font-size: 10px;
-      font-weight: 600;
-      line-height: 1.3;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 2.5px !important;
+      padding: 1px 5px !important;
+      border-radius: 4px !important;
+      font-size: 9.5px !important;
+      font-weight: 600 !important;
+      line-height: 1.25 !important;
+    }
+    .prayer-right {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      flex-shrink: 0 !important;
+    }
+    .p-clock {
+      font-size: 14.5px !important;
+      font-weight: 800 !important;
+      padding: 2.5px 7px !important;
+      border-radius: 6px !important;
+    }
+    .bell-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 8px;
+    }
+    .bell-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
     }
     .chip-mustahabb {
       background: rgba(16, 185, 129, 0.12);
@@ -3463,17 +3567,23 @@
           </div>
         </button>
 
-        <!-- Right Actions: Guide Pill & Tools Menu (Minimal, Uncluttered) -->
+        <!-- Right Actions: Guide Pill, Tools Menu & Direct Settings (Modern, Accessible) -->
         <div class="header-actions">
           <button id="btnOpenTimingGuide" class="btn-guide-pill" title="Bahar-e-Shariat Timing Guide &amp; Color Logic" aria-label="Open Timing Guide">
             <span class="guide-icon" aria-hidden="true">📖</span>
             <span class="guide-text">Guide</span>
           </button>
-          <button id="btnOpenToolsMenu" class="icon-btn-tools" title="Tools, Almanac &amp; Settings" aria-label="Open Tools and Settings Menu">
+          <button id="btnOpenToolsMenu" class="icon-btn-tools" title="Tools &amp; Almanac" aria-label="Open Tools and Almanac Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="1.5"></circle>
               <circle cx="19" cy="12" r="1.5"></circle>
               <circle cx="5" cy="12" r="1.5"></circle>
+            </svg>
+          </button>
+          <button id="btnOpenSettings" class="icon-btn-tools icon-btn" title="Settings &amp; Calculation Preferences" aria-label="Open Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
           </button>
         </div>
@@ -4706,7 +4816,9 @@
 
           <button id="btnStickyClockHeader" class="tool-tile-btn icon-btn" type="button" title="Open Desktop Sticky Note Clock (Always on Top)" aria-label="Open Desktop Sticky Note Clock">
             <div class="tool-tile-icon-box">
-              <span style="font-size: 16px;" aria-hidden="true">📌</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 3l5 5-4 4-2-2-4 4v3l-3 3-3-3 3-3h3l4-4-2-2 3-3z"></path>
+              </svg>
             </div>
             <div class="tool-tile-info">
               <span class="tool-tile-title">Always on Top</span>
@@ -4716,7 +4828,10 @@
 
           <button id="btnToggleMiniWidget" class="tool-tile-btn icon-btn" type="button" title="Toggle Compact Mini Widget (Big Font)" aria-label="Toggle Compact Mini Widget">
             <div class="tool-tile-icon-box">
-              <span style="font-size: 16px;" aria-hidden="true">🗗</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <rect x="9" y="9" width="8" height="8" rx="1" ry="1"></rect>
+              </svg>
             </div>
             <div class="tool-tile-info">
               <span class="tool-tile-title">Mini Widget</span>
@@ -4726,7 +4841,7 @@
         </div>
 
         <div class="tools-section-label">CONFIGURATION &amp; SETTINGS</div>
-        <button id="btnOpenSettings" class="tools-settings-full-btn icon-btn" type="button" title="Settings">
+        <button id="btnOpenSettingsFromTools" class="tools-settings-full-btn" type="button" title="Open Settings">
           <div class="tools-settings-left">
             <div class="tools-settings-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -6718,7 +6833,7 @@
     }
 
     // Auto-close tools menu when invoking sub-tools
-    ['btnOpenAlmanac', 'btnShareImage', 'btnShareApp', 'btnOpenPhoneQR', 'btnStickyClockHeader', 'btnToggleMiniWidget', 'btnOpenSettings'].forEach(toolId => {
+    ['btnOpenAlmanac', 'btnShareImage', 'btnShareApp', 'btnOpenPhoneQR', 'btnStickyClockHeader', 'btnToggleMiniWidget', 'btnOpenSettings', 'btnOpenSettingsFromTools'].forEach(toolId => {
       const el = document.getElementById(toolId);
       if (el) {
         el.addEventListener('click', () => {
@@ -6728,6 +6843,16 @@
         });
       }
     });
+
+    const btnOpenSettingsFromTools = document.getElementById('btnOpenSettingsFromTools');
+    if (btnOpenSettingsFromTools) {
+      btnOpenSettingsFromTools.addEventListener('click', () => {
+        if (modalToolsMenu && modalToolsMenu.classList.contains('open')) {
+          closeModal(modalToolsMenu);
+        }
+        openModal(modalSettings);
+      });
+    }
 
     // --- PRAYER CARD FIQH ACCORDION TOGGLE CONTROLLER ---
     document.querySelectorAll('.prayer-card').forEach(card => {
