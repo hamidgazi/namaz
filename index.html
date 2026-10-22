@@ -45,10 +45,32 @@
       --amber-accent: #f59e0b;
       --rose-accent: #f43f5e;
       --indigo-accent: #6366f1;
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
+
+      /* Fibonacci & Golden Ratio (φ ≈ 1.618) Spatial Tokens */
+      --space-xxs: 3px;
+      --space-xs: 5px;
+      --space-sm: 8px;
+      --space-md: 13px;
+      --space-lg: 21px;
+      --space-xl: 34px;
+      --space-xxl: 55px;
+
+      /* Fibonacci Border Radii */
+      --radius-xs: 5px;
+      --radius-sm: 8px;
+      --radius-md: 13px;
+      --radius-lg: 21px;
+      --radius-xl: 34px;
+
+      /* Golden Ratio Typography Modular Scale */
+      --font-micro: 10px;
+      --font-caption: 11px;
+      --font-body-sm: 13px;
+      --font-body: 15px;
+      --font-title-sm: 18px;
+      --font-title-md: 21px;
+      --font-title-hero: 34px;
+
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       --font-arabic: 'Traditional Arabic', 'Simplified Arabic', 'Amiri', 'Geeza Pro', 'Damascus', 'Noto Naskh Arabic', 'Arabic Typesetting', 'Sakkal Majalla', 'Segoe UI', Tahoma, Arial, sans-serif;
@@ -1559,11 +1581,11 @@
       max-width: 400px;
       background: #111827;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 24px;
+      border-radius: var(--radius-lg);
       max-height: 85vh;
       display: flex;
       flex-direction: column;
-      padding: 22px;
+      padding: var(--space-lg);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
       animation: popIn 0.22s cubic-bezier(0.2, 0, 0, 1);
       overscroll-behavior: contain;
@@ -2778,13 +2800,13 @@
       }
 
       .app-shell {
-        max-width: 960px;
+        max-width: 987px; /* Fibonacci 987px */
         width: 100%;
         margin: 0 auto;
       }
 
       .header {
-        padding: 14px 20px 10px;
+        padding: var(--space-md) var(--space-lg) var(--space-sm);
       }
 
       .sticky-nav-pill-btn {
@@ -2792,15 +2814,15 @@
       }
 
       .day-nav {
-        margin-top: 8px;
-        padding-top: 8px;
+        margin-top: var(--space-sm);
+        padding-top: var(--space-sm);
       }
 
       .app-body {
         display: grid;
-        grid-template-columns: minmax(350px, 420px) 1fr;
-        gap: 16px 22px;
-        padding: 16px 20px 24px;
+        grid-template-columns: minmax(350px, 38.2%) 1fr; /* Golden Split (38.2% : 61.8%) */
+        gap: var(--space-lg); /* Fibonacci 21px */
+        padding: var(--space-lg); /* Fibonacci 21px */
         align-items: start;
       }
 
@@ -2812,16 +2834,17 @@
         top: 16px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: var(--space-md);
         z-index: 5;
       }
 
       #heroCard {
         grid-column: auto;
         grid-row: auto;
-        padding: 18px 20px;
+        padding: var(--space-lg);
         background: linear-gradient(145deg, rgba(17, 24, 39, 0.95) 0%, rgba(13, 21, 39, 0.98) 100%);
         border: 1px solid rgba(16, 185, 129, 0.35);
+        border-radius: var(--radius-lg);
         box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
@@ -2842,24 +2865,25 @@
       .prayer-list {
         grid-column: 2;
         grid-row: 1 / span 2;
-        gap: 10px !important;
+        gap: var(--space-md) !important; /* Fibonacci 13px */
       }
 
       .prayer-card {
-        padding: 12px 16px !important;
+        padding: var(--space-md) var(--space-lg) !important; /* 13px 21px */
+        border-radius: var(--radius-md) !important; /* 13px */
       }
 
       .prayer-card.sunrise-row {
-        padding: 9px 16px !important;
+        padding: var(--space-sm) var(--space-lg) !important; /* 8px 21px */
       }
 
       .prayer-bubble {
-        width: 38px;
-        height: 38px;
+        width: var(--space-xl);
+        height: var(--space-xl);
       }
       .prayer-bubble svg {
-        width: 18px;
-        height: 18px;
+        width: 17px;
+        height: 17px;
       }
     }
 
@@ -3100,14 +3124,14 @@
       height: 20px;
     }
 
-    /* Unified Tools & Settings Drawer Modal */
+    /* Unified Tools & Settings Drawer Modal (Golden Fibonacci Polish) */
     .modal-tools-card {
       max-width: 460px;
       width: 92%;
       background: #0d1520;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 22px 20px;
+      border-radius: var(--radius-lg) !important; /* Fibonacci 21px */
+      padding: var(--space-lg) !important; /* Fibonacci 21px */
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
       animation: modalFadeIn 0.22s ease-out;
       box-sizing: border-box;
@@ -3116,8 +3140,8 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .tools-title {
@@ -3127,27 +3151,27 @@
       margin: 0 0 3px 0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--space-sm);
     }
     .tools-subtitle {
-      font-size: 11.5px;
+      font-size: var(--font-caption);
       color: var(--text-muted);
       margin: 0;
       line-height: 1.35;
     }
     .tools-section-label {
-      font-size: 10px;
+      font-size: var(--font-micro);
       font-weight: 700;
       color: #94a3b8;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      margin: 14px 0 8px 2px;
+      margin: var(--space-md) 0 var(--space-sm) 2px;
     }
     .tools-grid {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 10px !important;
-      margin-bottom: 14px !important;
+      gap: var(--space-md) !important; /* Fibonacci 13px */
+      margin-bottom: var(--space-md) !important; /* Fibonacci 13px */
       width: 100% !important;
       box-sizing: border-box !important;
     }
@@ -3166,8 +3190,8 @@
       flex-direction: column !important;
       align-items: flex-start !important;
       justify-content: flex-start !important;
-      padding: 12px 14px !important;
-      border-radius: 14px !important;
+      padding: var(--space-md) 15px !important; /* Fibonacci 13px */
+      border-radius: var(--radius-md) !important; /* Fibonacci 13px */
       background: rgba(255, 255, 255, 0.05) !important;
       border: 1px solid rgba(255, 255, 255, 0.09) !important;
       cursor: pointer !important;
@@ -3188,16 +3212,16 @@
       transform: scale(0.97);
     }
     .tool-tile-icon-box {
-      width: 32px !important;
-      height: 32px !important;
-      min-width: 32px !important;
-      min-height: 32px !important;
-      border-radius: 8px !important;
+      width: var(--space-xl) !important; /* Fibonacci 34px */
+      height: var(--space-xl) !important;
+      min-width: var(--space-xl) !important;
+      min-height: var(--space-xl) !important;
+      border-radius: var(--radius-sm) !important; /* Fibonacci 8px */
       background: rgba(16, 185, 129, 0.14) !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      margin-bottom: 8px !important;
+      margin-bottom: var(--space-sm) !important;
       color: #34d399 !important;
       flex-shrink: 0 !important;
     }
@@ -3214,16 +3238,16 @@
       justify-content: flex-start !important;
     }
     .tool-tile-title {
-      font-size: 13px !important;
+      font-size: var(--font-body-sm) !important; /* 13px */
       font-weight: 700 !important;
       color: #f1f5f9 !important;
       line-height: 1.25 !important;
-      margin-bottom: 3px !important;
+      margin-bottom: var(--space-xxs) !important;
       display: block !important;
       text-align: left !important;
     }
     .tool-tile-desc {
-      font-size: 11px !important;
+      font-size: var(--font-caption) !important; /* 11px */
       color: var(--text-muted) !important;
       line-height: 1.35 !important;
       display: block !important;
@@ -3243,7 +3267,8 @@
       flex-direction: row !important;
       align-items: center !important;
       justify-content: space-between !important;
-      padding: 13px 16px !important;
+      padding: var(--space-md) 16px !important; /* Fibonacci 13px */
+      border-radius: var(--radius-md) !important; /* Fibonacci 13px */
       border-radius: 14px !important;
       background: rgba(255, 255, 255, 0.05) !important;
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -3304,17 +3329,17 @@
       font-weight: 300 !important;
     }
 
-    /* Optimum, Balanced & Dignified Prayer Cards Layout (Bahar-e-Shariat Redesign) */
+    /* Optimum, Balanced & Dignified Prayer Cards Layout (Golden Ratio & Bahar-e-Shariat) */
     .prayer-list {
       display: flex !important;
       flex-direction: column !important;
-      gap: 8px !important;
+      gap: var(--space-sm) !important; /* Fibonacci 8px */
     }
     .prayer-card {
       display: flex !important;
       flex-direction: column !important;
-      padding: 10px 14px !important;
-      border-radius: 13px !important;
+      padding: 10px 13px !important; /* Fibonacci 13px */
+      border-radius: var(--radius-md) !important; /* Fibonacci 13px */
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       margin-bottom: 0 !important;
@@ -3327,7 +3352,7 @@
       background: rgba(255, 255, 255, 0.06);
     }
     .prayer-card.sunrise-row {
-      padding: 8px 14px !important;
+      padding: var(--space-sm) 13px !important; /* Fibonacci 8px 13px */
       min-height: 40px;
     }
     .prayer-main-row {
@@ -3341,12 +3366,13 @@
       align-items: center !important;
       gap: 11px !important;
       min-width: 0 !important;
+      flex: 1 1 61.8% !important; /* Golden Ratio identity area */
     }
     .prayer-bubble {
-      width: 34px !important;
-      height: 34px !important;
-      min-width: 34px !important;
-      border-radius: 9px !important;
+      width: var(--space-xl) !important; /* Fibonacci 34px */
+      height: var(--space-xl) !important;
+      min-width: var(--space-xl) !important;
+      border-radius: var(--radius-sm) !important; /* Fibonacci 8px */
     }
     .prayer-bubble svg {
       width: 16px !important;
@@ -3357,7 +3383,7 @@
       line-height: 1.2 !important;
     }
     .p-eng {
-      font-size: 15px !important;
+      font-size: var(--font-body) !important; /* 15px */
       font-weight: 750 !important;
       letter-spacing: -0.01em !important;
     }
@@ -3367,12 +3393,12 @@
     .p-window-row {
       display: flex !important;
       align-items: center !important;
-      gap: 6px !important;
-      margin-top: 3px !important;
+      gap: var(--space-xs) !important; /* Fibonacci 5px */
+      margin-top: var(--space-xxs) !important; /* Fibonacci 3px */
       flex-wrap: wrap !important;
     }
     .p-window-time {
-      font-size: 11px !important;
+      font-size: var(--font-caption) !important; /* 11px */
       color: #94a3b8 !important;
       font-weight: 500 !important;
       font-variant-numeric: tabular-nums !important;
@@ -3380,29 +3406,29 @@
     .fiqh-chip {
       display: inline-flex !important;
       align-items: center !important;
-      gap: 3px !important;
+      gap: var(--space-xxs) !important; /* Fibonacci 3px */
       padding: 1.5px 6px !important;
-      border-radius: 5px !important;
-      font-size: 10px !important;
+      border-radius: var(--radius-xs) !important; /* Fibonacci 5px */
+      font-size: var(--font-micro) !important; /* 10px */
       font-weight: 600 !important;
       line-height: 1.3 !important;
     }
     .prayer-right {
       display: flex !important;
       align-items: center !important;
-      gap: 8px !important;
+      gap: var(--space-sm) !important; /* Fibonacci 8px */
       flex-shrink: 0 !important;
     }
     .p-clock {
-      font-size: 15px !important;
+      font-size: var(--font-body) !important; /* 15px */
       font-weight: 800 !important;
-      padding: 3px 8px !important;
+      padding: var(--space-xxs) var(--space-sm) !important; /* 3px 8px */
       border-radius: 6px !important;
     }
     .bell-btn {
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 8px;
+      border-radius: var(--radius-sm); /* Fibonacci 8px */
     }
     .bell-btn:hover {
       background: rgba(255, 255, 255, 0.05);
@@ -3485,7 +3511,7 @@
       border: 1px solid rgba(239, 68, 68, 0.4);
     }
 
-    /* Streamlined Hero Card without redundant wall-clock */
+    /* Streamlined Hero Card: Golden Ratio (φ ≈ 1.618) Architecture */
     .sticky-note-pin-bar,
     .sticky-clock-display-strip {
       display: none !important;
@@ -3494,10 +3520,49 @@
       display: flex !important;
     }
     .hero-card {
-      padding: 16px 18px 14px;
+      padding: 14px 18px 13px !important;
+      border-radius: var(--radius-lg) !important; /* Fibonacci 21px */
     }
     .hero-arch-bg {
       opacity: 0.05;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+      position: relative;
+      z-index: 2;
+    }
+    @media (min-width: 360px) {
+      .hero-top {
+        display: grid !important;
+        grid-template-columns: 61.8% 38.2% !important; /* Golden Ratio Split */
+        align-items: flex-start !important;
+        gap: var(--space-md) !important;
+      }
+    }
+    .hero-countdown-clock {
+      font-size: 30px !important;
+      line-height: 1.15 !important;
+    }
+    .hero-prayer-title {
+      font-size: 32px !important;
+      line-height: 1.1 !important;
+    }
+    .hero-arabic-title {
+      font-size: var(--font-title-md) !important; /* 21px */
+    }
+    .hero-progress-container {
+      margin-top: var(--space-md) !important; /* 13px */
+    }
+    .hero-progress-track {
+      height: var(--space-xs) !important; /* Fibonacci 5px */
+      border-radius: var(--radius-xs) !important;
+    }
+    .hero-progress-labels {
+      margin-top: var(--space-xs) !important; /* 5px */
+      font-size: var(--font-micro) !important;
     }
 
   </style>
