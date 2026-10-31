@@ -3565,6 +3565,316 @@
       font-size: var(--font-micro) !important;
     }
 
+
+    /* =========================================================================
+       DIGITAL TASBIH & DHIKR COUNTER (GOLDEN RATIO φ ≈ 1.618)
+       ========================================================================= */
+    .tool-tile-btn.tasbih-featured-tile {
+      grid-column: 1 / -1 !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 12px !important;
+      min-height: 68px !important;
+      padding: 12px 16px !important;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(15, 23, 42, 0.7) 100%) !important;
+      border: 1px solid rgba(16, 185, 129, 0.35) !important;
+      border-radius: var(--radius-md) !important;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08);
+    }
+    .tool-tile-btn.tasbih-featured-tile:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
+      border-color: rgba(16, 185, 129, 0.6) !important;
+      transform: translateY(-2px);
+    }
+    .tool-tile-btn.tasbih-featured-tile .tool-tile-icon-box {
+      margin-bottom: 0 !important;
+      background: rgba(16, 185, 129, 0.22) !important;
+      color: #34d399 !important;
+    }
+
+    .modal-tasbih-card {
+      max-width: 440px;
+      width: 94%;
+      background: #0b111d;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-lg) !important; /* Fibonacci 21px */
+      padding: var(--space-lg) var(--space-md) var(--space-md) !important; /* 21px 13px 13px */
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.85);
+      animation: modalFadeIn 0.22s ease-out;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .modal-tasbih-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .tasbih-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .tasbih-modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tasbih-lap-badge {
+      font-size: var(--font-micro);
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 2px 7px;
+      border-radius: var(--radius-xs);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .tasbih-header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .tasbih-toggle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tasbih-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .tasbih-toggle-btn.active {
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    /* Preset Selection Bar */
+    .tasbih-preset-bar {
+      width: 100%;
+      display: flex;
+      gap: var(--space-xs);
+      overflow-x: auto;
+      padding: var(--space-xxs) 0 var(--space-sm);
+      margin-bottom: var(--space-xs);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tasbih-preset-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .tasbih-preset-pill {
+      white-space: nowrap;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .tasbih-preset-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .tasbih-preset-pill.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.35) 100%);
+      color: #34d399;
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Active Dhikr Card */
+    .tasbih-dhikr-card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-md);
+      padding: var(--space-md) var(--space-sm);
+      text-align: center;
+      margin-bottom: var(--space-sm);
+      box-sizing: border-box;
+    }
+    .tasbih-arabic {
+      font-family: var(--font-arabic);
+      font-size: 26px;
+      color: #f1f5f9;
+      line-height: 1.35;
+      margin-bottom: 4px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+    .tasbih-translit {
+      font-size: 13.5px;
+      font-weight: 750;
+      color: #34d399;
+      letter-spacing: 0.02em;
+    }
+    .tasbih-meaning {
+      font-size: var(--font-caption);
+      color: #94a3b8;
+      margin-top: 2px;
+      font-style: italic;
+    }
+    .tasbih-step-info {
+      font-size: 10.5px;
+      color: #64748b;
+      margin-top: var(--space-xs);
+      font-weight: 600;
+    }
+
+    /* Giant Tactile Tap Sphere */
+    .tasbih-tap-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: var(--space-xs) 0 var(--space-md);
+    }
+    .tasbih-sphere-btn {
+      position: relative;
+      width: 184px;
+      height: 184px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #1e293b 0%, #0f172a 70%, #020617 100%);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.15), inset 0 -4px 8px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      outline: none;
+      transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .tasbih-sphere-btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.8), inset 0 3px 6px rgba(0, 0, 0, 0.5);
+    }
+    .tasbih-progress-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transform: rotate(-90deg);
+    }
+    .tasbih-progress-ring .ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 6;
+    }
+    .tasbih-progress-ring .ring-fill {
+      fill: none;
+      stroke: url(#tasbihRingGrad);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 552.92;
+      stroke-dashoffset: 552.92;
+      transition: stroke-dashoffset 0.15s ease-out;
+    }
+    .tasbih-sphere-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .tasbih-num {
+      font-family: var(--font-mono);
+      font-size: 52px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.02em;
+    }
+    .tasbih-target-sub {
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-top: 3px;
+    }
+    .tasbih-tap-hint {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: rgba(52, 211, 153, 0.75);
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Footer & Meta Stats */
+    .tasbih-footer-bar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: var(--space-sm);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      box-sizing: border-box;
+    }
+    .tasbih-meta-stats {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .tasbih-meta-stats strong {
+      color: #34d399;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-left: 3px;
+    }
+    .tasbih-footer-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .tasbih-btn-action {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .tasbih-btn-action:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+    .tasbih-btn-action:active {
+      transform: scale(0.96);
+    }
+
   </style>
 </head>
 <body>
@@ -4820,6 +5130,27 @@
 
         <div class="tools-section-label">PRAYER TOOLS &amp; TIMETABLES</div>
         <div class="tools-grid">
+          <!-- Featured Digital Tasbih Tile -->
+          <button id="btnOpenTasbih" class="tool-tile-btn icon-btn tasbih-featured-tile" type="button" title="Digital Tasbih &amp; Dhikr Counter" aria-label="Open Digital Tasbih Counter">
+            <div class="tool-tile-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="5" r="2"></circle>
+                <circle cx="17" cy="7" r="2"></circle>
+                <circle cx="19" cy="12" r="2"></circle>
+                <circle cx="17" cy="17" r="2"></circle>
+                <circle cx="12" cy="19" r="2"></circle>
+                <circle cx="7" cy="17" r="2"></circle>
+                <circle cx="5" cy="12" r="2"></circle>
+                <circle cx="7" cy="7" r="2"></circle>
+                <path d="M12 21v2"></path>
+              </svg>
+            </div>
+            <div class="tool-tile-info">
+              <span class="tool-tile-title">Digital Tasbih</span>
+              <span class="tool-tile-desc">Interactive Dhikr counter &amp; beads with haptics</span>
+            </div>
+          </button>
+
           <button id="btnOpenAlmanac" class="tool-tile-btn icon-btn" type="button" title="Annual Prayer Almanac &amp; Analysis" aria-label="Open Annual Prayer Almanac">
             <div class="tool-tile-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -4921,6 +5252,96 @@
           </div>
           <span class="tools-settings-chevron" aria-hidden="true">›</span>
         </button>
+      </div>
+    </div>
+
+    <!-- Dedicated Digital Tasbih & Dhikr Counter Modal -->
+    <div id="modalTasbih" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tasbihTitle">
+      <div class="modal-dialog modal-tasbih-card">
+        <!-- SVG Definitions for Radial Gradient Ring -->
+        <svg width="0" height="0" style="position: absolute;">
+          <defs>
+            <linearGradient id="tasbihRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#34d399"/>
+              <stop offset="100%" stop-color="#10b981"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <div class="modal-tasbih-header">
+          <div class="tasbih-header-left">
+            <h2 id="tasbihTitle" class="tasbih-modal-title">
+              <span class="tasbih-title-icon" aria-hidden="true">📿</span> Digital Tasbih
+            </h2>
+            <span id="tasbihLapBadge" class="tasbih-lap-badge">Lap 1</span>
+          </div>
+          <div class="tasbih-header-actions">
+            <button id="btnToggleTasbihSound" class="tasbih-toggle-btn active" type="button" title="Toggle Sound Click" aria-label="Toggle Sound Click">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+              </svg>
+            </button>
+            <button id="btnToggleTasbihVibrate" class="tasbih-toggle-btn active" type="button" title="Toggle Haptic Vibration" aria-label="Toggle Haptic Vibration">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <path d="M2 8v8M22 8v8"></path>
+              </svg>
+            </button>
+            <button id="btnCloseTasbih" class="btn-modal-close modal-close" type="button" aria-label="Close Tasbih">✕</button>
+          </div>
+        </div>
+
+        <!-- Dhikr Preset Tabs -->
+        <div class="tasbih-preset-bar" role="tablist">
+          <button class="tasbih-preset-pill active" data-preset="fatimah" type="button">Tasbih-e-Fatimah</button>
+          <button class="tasbih-preset-pill" data-preset="istighfar" type="button">Astaghfirullah</button>
+          <button class="tasbih-preset-pill" data-preset="durood" type="button">Durood Shareef</button>
+          <button class="tasbih-preset-pill" data-preset="kalimah" type="button">Kalimah Tayyibah</button>
+          <button class="tasbih-preset-pill" data-preset="free" type="button">Free Count</button>
+        </div>
+
+        <!-- Active Dhikr Display -->
+        <div class="tasbih-dhikr-card">
+          <div id="tasbihArabicText" class="tasbih-arabic" lang="ar" dir="rtl">سُبْحَانَ ٱللَّٰهِ</div>
+          <div id="tasbihTranslitText" class="tasbih-translit">Subḥānallāh</div>
+          <div id="tasbihMeaningText" class="tasbih-meaning">Glory be to Allah</div>
+          <div id="tasbihStepInfo" class="tasbih-step-info">Step 1 of 3 &bull; Target: 33</div>
+        </div>
+
+        <!-- Interactive Tap Sphere with SVG Radial Progress -->
+        <div class="tasbih-tap-container">
+          <button id="btnTasbihTap" class="tasbih-sphere-btn" type="button" aria-label="Tap to count Dhikr">
+            <svg class="tasbih-progress-ring" viewBox="0 0 200 200">
+              <circle class="ring-bg" cx="100" cy="100" r="88"></circle>
+              <circle id="tasbihProgressCircle" class="ring-fill" cx="100" cy="100" r="88"></circle>
+            </svg>
+            <div class="tasbih-sphere-content">
+              <span id="tasbihCountDisplay" class="tasbih-num">0</span>
+              <span id="tasbihTargetDisplay" class="tasbih-target-sub">/ 33</span>
+              <span class="tasbih-tap-hint">TAP ANYWHERE</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Bottom Action Controls -->
+        <div class="tasbih-footer-bar">
+          <div class="tasbih-meta-stats">
+            <span class="meta-label">Total Today:</span>
+            <strong id="tasbihTotalLifetime" class="meta-value">0</strong>
+          </div>
+          <div class="tasbih-footer-actions">
+            <button id="btnTasbihReset" class="tasbih-btn-action" type="button" title="Reset Current Count">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              Reset
+            </button>
+            <button id="btnTasbihNextStep" class="tasbih-btn-action" type="button" title="Advance to Next Dhikr Step">
+              Next &rarr;
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -6898,7 +7319,7 @@
     }
 
     // Auto-close tools menu when invoking sub-tools
-    ['btnOpenAlmanac', 'btnShareImage', 'btnShareApp', 'btnOpenPhoneQR', 'btnStickyClockHeader', 'btnToggleMiniWidget', 'btnOpenSettings', 'btnOpenSettingsFromTools'].forEach(toolId => {
+    ['btnOpenAlmanac', 'btnShareImage', 'btnShareApp', 'btnOpenPhoneQR', 'btnStickyClockHeader', 'btnToggleMiniWidget', 'btnOpenSettings', 'btnOpenSettingsFromTools', 'btnOpenTasbih'].forEach(toolId => {
       const el = document.getElementById(toolId);
       if (el) {
         el.addEventListener('click', () => {
@@ -8052,6 +8473,275 @@
 
     refreshAllTimings();
     setInterval(updateLiveHero, 1000);
+
+    // --- DIGITAL TASBIH & DHIKR CONTROLLER ---
+    const TASBIH_PRESETS = {
+      fatimah: {
+        name: "Tasbih-e-Fatimah",
+        steps: [
+          { arabic: "سُبْحَانَ ٱللَّٰهِ", translit: "Subḥānallāh", meaning: "Glory be to Allah", target: 33 },
+          { arabic: "ٱلْحَمْدُ لِلَّٰهِ", translit: "Al-ḥamdu lillāh", meaning: "All praise is for Allah", target: 33 },
+          { arabic: "ٱللَّٰهُ أَكْبَرُ", translit: "Allāhu Akbar", meaning: "Allah is the Greatest", target: 34 }
+        ]
+      },
+      istighfar: {
+        name: "Astaghfirullah",
+        steps: [
+          { arabic: "أَسْتَغْفِرُ ٱللَّٰهَ", translit: "Astaghfirullāh", meaning: "I seek forgiveness from Allah", target: 100 }
+        ]
+      },
+      durood: {
+        name: "Durood Shareef",
+        steps: [
+          { arabic: "ٱللَّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ", translit: "Allāhumma ṣalli ʿalā Muḥammad", meaning: "O Allah, send blessings upon Muhammad", target: 100 }
+        ]
+      },
+      kalimah: {
+        name: "Kalimah Tayyibah",
+        steps: [
+          { arabic: "لَا إِلَٰهَ إِلَّا ٱللَّٰهُ", translit: "Lā ilāha illallāh", meaning: "There is no deity but Allah", target: 100 }
+        ]
+      },
+      free: {
+        name: "Free Count",
+        steps: [
+          { arabic: "ذِكْرُ ٱللَّٰهِ", translit: "Dhikrullāh", meaning: "Remembrance of Allah", target: 33 }
+        ]
+      }
+    };
+
+    const tasbihState = {
+      presetKey: safeStorageGet('namaz_tasbih_preset', 'fatimah'),
+      stepIndex: parseInt(safeStorageGet('namaz_tasbih_step', '0'), 10) || 0,
+      count: parseInt(safeStorageGet('namaz_tasbih_count', '0'), 10) || 0,
+      lapCount: parseInt(safeStorageGet('namaz_tasbih_lap', '1'), 10) || 1,
+      totalLifetime: parseInt(safeStorageGet('namaz_tasbih_total', '0'), 10) || 0,
+      soundEnabled: safeStorageGet('namaz_tasbih_sound', 'true') === 'true',
+      vibrateEnabled: safeStorageGet('namaz_tasbih_vibrate', 'true') === 'true'
+    };
+
+    function playTasbihClick() {
+      if (!tasbihState.soundEnabled) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+      } catch (e) {}
+    }
+
+    function triggerTasbihHaptic(isTargetMet = false) {
+      if (!tasbihState.vibrateEnabled || !navigator.vibrate) return;
+      try {
+        if (isTargetMet) {
+          navigator.vibrate([40, 60, 80]);
+        } else {
+          navigator.vibrate(22);
+        }
+      } catch (e) {}
+    }
+
+    function renderTasbihUI() {
+      const preset = TASBIH_PRESETS[tasbihState.presetKey] || TASBIH_PRESETS.fatimah;
+      if (tasbihState.stepIndex >= preset.steps.length) tasbihState.stepIndex = 0;
+      const step = preset.steps[tasbihState.stepIndex];
+
+      const elArabic = document.getElementById('tasbihArabicText');
+      const elTranslit = document.getElementById('tasbihTranslitText');
+      const elMeaning = document.getElementById('tasbihMeaningText');
+      const elStepInfo = document.getElementById('tasbihStepInfo');
+      const elCount = document.getElementById('tasbihCountDisplay');
+      const elTarget = document.getElementById('tasbihTargetDisplay');
+      const elLap = document.getElementById('tasbihLapBadge');
+      const elTotal = document.getElementById('tasbihTotalLifetime');
+      const elRing = document.getElementById('tasbihProgressCircle');
+      const btnSound = document.getElementById('btnToggleTasbihSound');
+      const btnVibrate = document.getElementById('btnToggleTasbihVibrate');
+
+      if (elArabic) elArabic.textContent = step.arabic;
+      if (elTranslit) elTranslit.textContent = step.translit;
+      if (elMeaning) elMeaning.textContent = step.meaning;
+      if (elStepInfo) {
+        elStepInfo.textContent = preset.steps.length > 1
+          ? `Step ${tasbihState.stepIndex + 1} of ${preset.steps.length} • Target: ${step.target}`
+          : `Target: ${step.target}`;
+      }
+      if (elCount) elCount.textContent = tasbihState.count;
+      if (elTarget) elTarget.textContent = `/ ${step.target}`;
+      if (elLap) elLap.textContent = `Lap ${tasbihState.lapCount}`;
+      if (elTotal) elTotal.textContent = tasbihState.totalLifetime;
+
+      if (btnSound) {
+        btnSound.classList.toggle('active', tasbihState.soundEnabled);
+        btnSound.title = tasbihState.soundEnabled ? 'Sound: ON' : 'Sound: Muted';
+      }
+      if (btnVibrate) {
+        btnVibrate.classList.toggle('active', tasbihState.vibrateEnabled);
+        btnVibrate.title = tasbihState.vibrateEnabled ? 'Haptics: ON' : 'Haptics: OFF';
+      }
+
+      // Radial Ring Stroke Dashoffset (Circumference ≈ 552.92 for r=88)
+      if (elRing) {
+        const circum = 552.92;
+        const progress = Math.min(1, Math.max(0, tasbihState.count / step.target));
+        const offset = circum * (1 - progress);
+        elRing.style.strokeDashoffset = offset.toFixed(2);
+      }
+
+      // Update active preset pill
+      document.querySelectorAll('.tasbih-preset-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('data-preset') === tasbihState.presetKey);
+      });
+    }
+
+    function handleTasbihTap() {
+      const preset = TASBIH_PRESETS[tasbihState.presetKey] || TASBIH_PRESETS.fatimah;
+      const step = preset.steps[tasbihState.stepIndex];
+
+      tasbihState.count++;
+      tasbihState.totalLifetime++;
+      safeStorageSet('namaz_tasbih_total', tasbihState.totalLifetime.toString());
+
+      const isTargetMet = tasbihState.count >= step.target;
+      triggerTasbihHaptic(isTargetMet);
+      playTasbihClick();
+
+      if (isTargetMet) {
+        if (tasbihState.stepIndex < preset.steps.length - 1) {
+          // Advance to next step in chain (e.g. SubhanAllah -> Alhamdulillah)
+          tasbihState.stepIndex++;
+          tasbihState.count = 0;
+          showToast(`Completed! Next: ${preset.steps[tasbihState.stepIndex].translit}`);
+        } else {
+          // Finished full cycle
+          tasbihState.stepIndex = 0;
+          tasbihState.count = 0;
+          tasbihState.lapCount++;
+          safeStorageSet('namaz_tasbih_lap', tasbihState.lapCount.toString());
+          showToast(`Masha'Allah! Completed Lap ${tasbihState.lapCount - 1} 🎉`);
+        }
+      }
+
+      safeStorageSet('namaz_tasbih_step', tasbihState.stepIndex.toString());
+      safeStorageSet('namaz_tasbih_count', tasbihState.count.toString());
+      renderTasbihUI();
+    }
+
+    function setTasbihPreset(key) {
+      if (!TASBIH_PRESETS[key]) return;
+      tasbihState.presetKey = key;
+      tasbihState.stepIndex = 0;
+      tasbihState.count = 0;
+      safeStorageSet('namaz_tasbih_preset', key);
+      safeStorageSet('namaz_tasbih_step', '0');
+      safeStorageSet('namaz_tasbih_count', '0');
+      renderTasbihUI();
+    }
+
+    function resetTasbihCount() {
+      tasbihState.count = 0;
+      safeStorageSet('namaz_tasbih_count', '0');
+      renderTasbihUI();
+      showToast('Counter reset to 0');
+    }
+
+    function nextTasbihStep() {
+      const preset = TASBIH_PRESETS[tasbihState.presetKey] || TASBIH_PRESETS.fatimah;
+      tasbihState.stepIndex = (tasbihState.stepIndex + 1) % preset.steps.length;
+      tasbihState.count = 0;
+      safeStorageSet('namaz_tasbih_step', tasbihState.stepIndex.toString());
+      safeStorageSet('namaz_tasbih_count', '0');
+      renderTasbihUI();
+    }
+
+    // Wiring up Tasbih Event Listeners
+    const modalTasbih = document.getElementById('modalTasbih');
+    const btnOpenTasbih = document.getElementById('btnOpenTasbih');
+    const btnCloseTasbih = document.getElementById('btnCloseTasbih');
+    const btnTasbihTap = document.getElementById('btnTasbihTap');
+    const btnTasbihReset = document.getElementById('btnTasbihReset');
+    const btnTasbihNextStep = document.getElementById('btnTasbihNextStep');
+    const btnToggleTasbihSound = document.getElementById('btnToggleTasbihSound');
+    const btnToggleTasbihVibrate = document.getElementById('btnToggleTasbihVibrate');
+
+    if (btnOpenTasbih && modalTasbih) {
+      btnOpenTasbih.addEventListener('click', () => {
+        if (modalToolsMenu && modalToolsMenu.classList.contains('open')) {
+          closeModal(modalToolsMenu);
+        }
+        renderTasbihUI();
+        openModal(modalTasbih);
+      });
+    }
+
+    if (btnCloseTasbih && modalTasbih) {
+      btnCloseTasbih.addEventListener('click', () => closeModal(modalTasbih));
+    }
+
+    if (modalTasbih) {
+      modalTasbih.addEventListener('click', (e) => {
+        if (e.target === modalTasbih) closeModal(modalTasbih);
+      });
+    }
+
+    if (btnTasbihTap) {
+      btnTasbihTap.addEventListener('click', handleTasbihTap);
+    }
+
+    if (btnTasbihReset) {
+      btnTasbihReset.addEventListener('click', resetTasbihCount);
+    }
+
+    if (btnTasbihNextStep) {
+      btnTasbihNextStep.addEventListener('click', nextTasbihStep);
+    }
+
+    if (btnToggleTasbihSound) {
+      btnToggleTasbihSound.addEventListener('click', () => {
+        tasbihState.soundEnabled = !tasbihState.soundEnabled;
+        safeStorageSet('namaz_tasbih_sound', tasbihState.soundEnabled ? 'true' : 'false');
+        renderTasbihUI();
+      });
+    }
+
+    if (btnToggleTasbihVibrate) {
+      btnToggleTasbihVibrate.addEventListener('click', () => {
+        tasbihState.vibrateEnabled = !tasbihState.vibrateEnabled;
+        safeStorageSet('namaz_tasbih_vibrate', tasbihState.vibrateEnabled ? 'true' : 'false');
+        renderTasbihUI();
+      });
+    }
+
+    // Preset pills click listeners
+    document.querySelectorAll('.tasbih-preset-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const preset = pill.getAttribute('data-preset');
+        if (preset) setTasbihPreset(preset);
+      });
+    });
+
+    // Keyboard Spacebar / Enter tap support when modal is active
+    document.addEventListener('keydown', (e) => {
+      if (modalTasbih && modalTasbih.classList.contains('open')) {
+        if (e.code === 'Space' || e.key === ' ') {
+          e.preventDefault();
+          handleTasbihTap();
+        } else if (e.key === 'Escape') {
+          closeModal(modalTasbih);
+        }
+      }
+    });
+
+    // Initialize initial Tasbih UI
+    renderTasbihUI();
+
   </script>
 </body>
 </html>

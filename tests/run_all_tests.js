@@ -13,6 +13,7 @@ const { runAnnualPhase2UITests } = require('./annual_analysis_phase2_ui.test.js'
 const { runTimetablePhase1Tests } = require('./annual_timetable_phase1.test.js');
 const { runTimetablePhase2UITests } = require('./annual_timetable_phase2_ui.test.js');
 const { runBaharTimingGuideTests } = require('./bahar_timing_guide.test.js');
+const { runTasbihCounterTests } = require('./tasbih_counter.test.js');
 
 const THRESHOLDS = {
   tier1Min: 50,
@@ -115,6 +116,15 @@ async function main() {
   console.log(`   [PASS] ${bgPassed}/${bgResults.length} tests passed in ${bgDuration} ms\n`);
   allResults = allResults.concat(bgResults.map(r => ({ ...r, tier: 'Bahar Guide' })));
 
+  // --- DIGITAL TASBIH & DHIKR COUNTER ---
+  console.log('>> [TASBIH COUNTER] Running Digital Tasbih & Dhikr Counter Suite...');
+  const tasbihStart = performance.now();
+  const tasbihResults = runTasbihCounterTests();
+  const tasbihDuration = (performance.now() - tasbihStart).toFixed(2);
+  const tasbihPassed = tasbihResults.filter(r => r.passed).length;
+  console.log(`   [PASS] ${tasbihPassed}/${tasbihResults.length} tests passed in ${tasbihDuration} ms\n`);
+  allResults = allResults.concat(tasbihResults.map(r => ({ ...r, tier: 'Tasbih Counter' })));
+
   // --- TIER 5 (Adversarial Ephemeris & Stress Suite) ---
   const includeTier5 = process.argv.includes('--tier5') || process.argv.includes('--include-tier5') || process.argv.includes('--all');
   let t5Results = [];
@@ -144,6 +154,7 @@ async function main() {
   console.log(` Timetable Phase 1 (Engine)      :  ${tt1Passed.toString().padStart(3)} / ${tt1Results.length.toString().padEnd(3)} passed  (Min req: 10)`);
   console.log(` Timetable Phase 2 & 3 (UI)      :  ${tt2Passed.toString().padStart(3)} / ${tt2Results.length.toString().padEnd(3)} passed  (Min req: 8)`);
   console.log(` Bahar-e-Shariat Fiqh Engine     :  ${bgPassed.toString().padStart(3)} / ${bgResults.length.toString().padEnd(3)} passed  (Min req: 4)`);
+  console.log(` Digital Tasbih & Dhikr Suite    :  ${tasbihPassed.toString().padStart(3)} / ${tasbihResults.length.toString().padEnd(3)} passed  (Min req: 5)`);
   if (includeTier5) {
     console.log(` Tier 5 (Adversarial Ephemeris)  :  ${t5Passed.toString().padStart(3)} / ${t5Results.length.toString().padEnd(3)} passed  (Min req: ${THRESHOLDS.tier5Min})`);
   }
